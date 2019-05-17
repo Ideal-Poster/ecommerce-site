@@ -1,15 +1,43 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Navigation = styled.div`
-  background: grey;
+const height = 60;
+const heightString = height.toString() + 'px';
+
+const Navigation =  styled.div`
+  display: flexbox;
+  background: #040404;
+  height: ${heightString};
+  width: 100%;
+  > * {
+    display: flex;
+  }
 `
+const IconContainer = styled.div`
+  border-right: 1px solid grey;
+`
+const Icon = styled.h2`
+  color: white;
+  margin: 0;
+  height: 100%;
+  width: 130px;
+  transform: translateY(50%);
+  text-transform: uppercase;
+  text-align: center;
+`
+
 class Navbar extends React.Component {
   render() {
     return (
-      <Navigation>
-        <p>Navbar</p>
-      </Navigation>
+      // <Bar>
+        <Navigation>
+          <IconContainer>
+            <Icon>
+              Rebel
+            </Icon>
+          </IconContainer>
+        </Navigation>
+      // </Bar>å
     )
   }
 }
