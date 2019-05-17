@@ -8245,6 +8245,11 @@ react-app-polyfill@^1.0.1:
     regenerator-runtime "0.13.2"
     whatwg-fetch "3.0.0"
 
+react-awesome-styled-grid@^2.2.5:
+  version "2.2.5"
+  resolved "https://registry.yarnpkg.com/react-awesome-styled-grid/-/react-awesome-styled-grid-2.2.5.tgz#8deef65587371945d277727931ed440aecc9a93e"
+  integrity sha512-zdXuH11Xhm8w/oVVtRvZ+36WN3HV0+2dJ8LlpaXs/JZELZxvc4Ldl2Esa4HtrJpElAHcxcYiTBwqOiayn+HcfA==
+
 react-dev-utils@^9.0.1:
   version "9.0.1"
   resolved "https://registry.yarnpkg.com/react-dev-utils/-/react-dev-utils-9.0.1.tgz#5c03d85a0b2537d0c46af7165c24a7dfb274bef2"
