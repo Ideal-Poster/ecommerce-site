@@ -1,16 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 import {BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
+import App from './components/App';
+import Brands from './components/products/Brands';
+import Navbar from './components/Navbar';
+
 ReactDOM.render(
   <Router>
+    <Navbar/>
     <Switch>
-      <App>
-        <Route path="/" component={App} ></Route >
-      </App>
+      <div style={{marginTop: '60px'}}>
+        <Route exact path="/" component={App} />
+        <Route path="/brands" component={Brands}/>
+      </div>
     </Switch>
   </Router>,
   document.getElementById('root')

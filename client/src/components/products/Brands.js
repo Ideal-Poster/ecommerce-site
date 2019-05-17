@@ -1,4 +1,4 @@
-import React from '../components/auth/node_modules/react';
+import React from 'react';
 
 class Brands extends React.Component {
 
