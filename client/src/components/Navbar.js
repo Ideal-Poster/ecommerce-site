@@ -12,8 +12,9 @@ const Navigation =  styled.div`
   position: absolute;
   top: 0;
   z-index: 1;
-  font-family: 'Elephant';
+  font-family: 'Calibre';
   overflow: hidden;
+  text-transform: uppercase;
 `
 const IconContainer = styled.div`
   border-right: 1px solid #343434;
@@ -27,11 +28,13 @@ const Icon = styled.h2`
 const Selections = styled.div`
   flex: 1;
   display: flex;
-  padding-left:15px;
+  font-size: 12px;
+  font-family: 'Helvetica';
+  font-weight: 900;
 `
 const NavLink = styled.p`
   color: white;
-  font-size: 14px;
+  /* letter-spacing: -0.5px; */
   &:hover {
    color: gray;
   }
@@ -40,14 +43,13 @@ const NavLink = styled.p`
 class Navbar extends React.Component {
 
   render() {
-    const options =  ['brands', 'bategories', 'realeases'].map((link) => {
+    const options =  ['brands', 'categories', 'releases'].map((link) => {
       return(
         <Link
           to={`${link}`}
           style={{
             textDecoration:'none',
-            marginLeft: '15px',
-            marginRight: '15px'}}>
+            marginLeft: '25px'}}>
           <NavLink>{`${link}`}</NavLink>
         </Link>
       );
