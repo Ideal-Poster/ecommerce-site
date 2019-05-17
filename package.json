@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@kiwicom/orbit-components": "^0.41.0"
+  }
+}
