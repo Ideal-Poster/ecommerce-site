@@ -3,6 +3,9 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import BrandsComp from './Brands';
 // import { Container, Row, Col } from 'react-awesome-styled-grid'
+import anime from 'animejs';
+
+
 
 const Navigation =  styled.div`
   width: 100%;
@@ -50,16 +53,40 @@ const Sections = styled.div`
 
 class Navbar extends React.Component {
 
+
+  constructor(props) {
+    super(props);
+    this.brandsComp = React.createRef();
+  }
+
+  componentDidMount() {
+    console.log(this.brandsComp);
+
+  }
+
+  displayDropdown = () => {
+    // setTimeout(() => {
+      console.log(this.brandsComp);
+
+    // }, 2000);
+
+    // anime({
+    //   targets:
+    // })
+  }
+
   render() {
-    const options =  ['brands', 'categories', 'releases'].map((link) => {
+    const options =  ['brands', 'categories', 'releases'].map((link, i) => {
       return(
         <Link
           to={`${link}`}
           style={{
             textDecoration:'none',
             marginLeft: '25px'
-          }}>
-          <NavLink>{`${link}`}</NavLink>
+          }}
+          key={`link-${i}`}
+          onMouseEnter={this.displayDropdown}>
+          <NavLink key={`navbar-link-${i}`}>{`${link}`}</NavLink>
         </Link>
       );
     })
@@ -78,9 +105,11 @@ class Navbar extends React.Component {
             {options}
           </Selections>
         </Navigation>
-        <Sections>
-          <BrandsComp/>
+
+        <Sections >
+          <BrandsComp ref={this.brandsComp}/>
         </Sections>
+        {/* <p style={{margintTop: '600px'}}>hellp</p> */}
       </div>
     )
   }

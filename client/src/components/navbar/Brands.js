@@ -20,29 +20,30 @@ const Brand = styled.li`
   list-style: none;
 `;
 
-const BrandsComp = () => {
-  return(
-    <Brands>
-      <BrandsSections>
-        <ul>
-          <Brand>Nike</Brand>
-          <Brand>Puma</Brand>
-          <Brand>Converse</Brand>
-          <Brand>Adidas</Brand>
-          <Brand>North Face</Brand>
+class BrandsComp extends React.Component {
 
-        </ul>
-      </BrandsSections>
+  render() {
+    const brandNames = ['Nike', 'Puma', 'Converse', 'Adidas', 'North Face'].map((brand, i) => {
+      return <Brand key={`brand-${i}`}>{ brand }</Brand>
+    });
+    return(
+      <Brands>
+        <BrandsSections>
+          <ul>
+            {brandNames}
+          </ul>
+        </BrandsSections>
 
-      <BrandsSections>
-      </BrandsSections>
+        <BrandsSections>
+        </BrandsSections>
 
-      <BrandsSections>
-      </BrandsSections>
+        <BrandsSections>
+        </BrandsSections>
 
-      <BrandsSections>
-      </BrandsSections>
-    </Brands>
-  );
+        <BrandsSections>
+        </BrandsSections>
+      </Brands>
+    );
+  }
 }
 export default BrandsComp;
