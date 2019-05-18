@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link }from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import BrandsComp from './Brands';
+// import { Container, Row, Col } from 'react-awesome-styled-grid'
 
 const Navigation =  styled.div`
   width: 100%;
@@ -28,16 +30,22 @@ const Icon = styled.h2`
 const Selections = styled.div`
   flex: 1;
   display: flex;
-  font-size: 12px;
-  font-family: 'Helvetica';
+  font-size: 13px;
+  font-family: 'Separat';
   font-weight: 900;
 `
 const NavLink = styled.p`
   color: white;
-  /* letter-spacing: -0.5px; */
   &:hover {
    color: gray;
   }
+`;
+const Sections = styled.div`
+  position: fixed;
+  height: 300px;
+  display: flex;
+  border-right: 1px solid peru;
+  /* background: orange; */
 `;
 
 class Navbar extends React.Component {
@@ -49,25 +57,31 @@ class Navbar extends React.Component {
           to={`${link}`}
           style={{
             textDecoration:'none',
-            marginLeft: '25px'}}>
+            marginLeft: '25px'
+          }}>
           <NavLink>{`${link}`}</NavLink>
         </Link>
       );
     })
 
     return (
-      <Navigation>
-        <IconContainer>
-          <Link to="/" style={{textDecoration: 'none'}}>
-            <Icon>
-              Rebel
-            </Icon>
-          </Link>
-        </IconContainer>
-        <Selections>
-          {options}
-        </Selections>
-      </Navigation>
+      <div>
+        <Navigation>
+          <IconContainer>
+            <Link to="/" style={{textDecoration: 'none'}}>
+              <Icon>
+                Rebel
+              </Icon>
+            </Link>
+          </IconContainer>
+          <Selections>
+            {options}
+          </Selections>
+        </Navigation>
+        <Sections>
+          <BrandsComp/>
+        </Sections>
+      </div>
     )
   }
 }
