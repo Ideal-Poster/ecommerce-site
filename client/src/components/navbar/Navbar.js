@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import BrandsComp from './Brands';
+import CategoriesComp from './Categories';
+
 // import { Container, Row, Col } from 'react-awesome-styled-grid'
 import anime from 'animejs';
 
@@ -57,7 +59,8 @@ const Sections = styled.div`
 
 class Navbar extends React.Component {
   state = {
-    brandsOpen: false
+    brands: false,
+    categories: false
   }
   isAnimating = false;
   exit = false;
@@ -77,17 +80,19 @@ class Navbar extends React.Component {
       opacity: 0,
       duration,
       complete: () => {
-        console.log('hide: closed');
-        this.setState({ brandsOpen: false });
+        // console.log('hide: closed');
+        this.setState({ brands: false });
       }
     });
   }
-  displayDropdown = () => {
+  displayDropdown = (compName) => {
+    console.log('hello');
+
     const duration = 200;
     this.hideAnimation.seek(duration);
-    this.setState({ brandsOpen: true }, () => {
+    this.setState({ [compName]: true }, () => {
       this.displayAnimation = anime({
-        targets: '.brandsComp',
+        targets: '.' + compName + 'Comp',
         autoplay: false,
         easing: 'easeInOutQuad',
         opacity: 1,
@@ -95,7 +100,7 @@ class Navbar extends React.Component {
         // delay: 200,
         complete: function() {
           this.isAnimating = false;
-          console.log('display: open');
+          // console.log('display: open');
         }
       });
 
@@ -106,24 +111,24 @@ class Navbar extends React.Component {
   }
 
 
-  hideDropdown = () => {
+  hideDropdown = (compName) => {
     const duration = 200;
     this.hideAnimation = anime({
-      targets: '.brandsComp',
+      targets: '.' + compName + 'Comp',
       autoplay: false,
       easing: 'easeInOutQuad',
       opacity: 0,
       // delay: 200,
       duration,
       complete: () => {
-        console.log('hide: closed');
-        this.setState({ brandsOpen: false });
+        // console.log('hide: closed');
+        this.setState({ [compName]: false });
       }
     });
     this.hideAnimation.play();
   }
   render() {
-    const options =  ['brands', 'categories', 'releases'].map((link, i) => {
+    const options = ['brands', 'categories', 'releases'].map((link, i) => {
       return(
         <Link
           to={`${link}`}
@@ -132,8 +137,8 @@ class Navbar extends React.Component {
             marginLeft: '25px'
           }}
           key={`link-${i}`}
-          onMouseEnter={this.displayDropdown}
-          onMouseLeave={this.hideDropdown}>
+          onMouseEnter={() => {this.displayDropdown(link)}}
+          onMouseLeave={() => {this.hideDropdown(link)}}>
           <NavLink key={`navbar-link-${i}`}>{`${link}`}</NavLink>
         </Link>
       );
@@ -155,8 +160,11 @@ class Navbar extends React.Component {
         </Navigation>
 
         <Sections >
-          {this.state.brandsOpen &&
+          {this.state.brands &&
             <BrandsComp/>
+          }
+          {this.state.categories &&
+            <CategoriesComp/>
           }
         </Sections>
         {/* <p style={{margintTop: '600px'}}>hellp</p> */}
