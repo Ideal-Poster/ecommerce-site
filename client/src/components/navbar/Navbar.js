@@ -71,7 +71,7 @@ class Navbar extends React.Component {
   }
 
   componentDidMount() {
-    const duration = 400;
+    const duration = 250;
 
     this.hideAnimation = anime({
       targets: '.brandsComp',
@@ -86,9 +86,8 @@ class Navbar extends React.Component {
     });
   }
   displayDropdown = (compName) => {
-    console.log('hello');
-
-    const duration = 200;
+    // console.log('hello');
+    const duration = 250;
     this.hideAnimation.seek(duration);
     this.setState({ [compName]: true }, () => {
       this.displayAnimation = anime({
@@ -110,9 +109,8 @@ class Navbar extends React.Component {
     });
   }
 
-
   hideDropdown = (compName) => {
-    const duration = 200;
+    const duration = 250;
     this.hideAnimation = anime({
       targets: '.' + compName + 'Comp',
       autoplay: false,
@@ -127,6 +125,7 @@ class Navbar extends React.Component {
     });
     this.hideAnimation.play();
   }
+  
   render() {
     const options = ['brands', 'categories', 'releases'].map((link, i) => {
       return(

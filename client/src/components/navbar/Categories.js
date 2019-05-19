@@ -5,7 +5,7 @@ const CategoriesSections = styled.div`
   position: relative;
   border-right: 1px solid #565656;
   height: 100%;
-  width: 25vw;
+  width: 33.333vw;
   background: orange;
   overflow: hidden;
 `;
@@ -16,9 +16,9 @@ const Categories = styled.div`
   display: flex;
   /* opacity: 0; */
 `;
-const Brand = styled.li`
-  list-style: none;
-`;
+// const Brand = styled.li`
+//   list-style: none;
+// `;
 
 class CategoriesComp extends React.Component {
 
@@ -28,12 +28,6 @@ class CategoriesComp extends React.Component {
     // });
     return(
       <Categories className="categoriesComp">
-        <CategoriesSections>
-          {/* <ul>
-            {brandNames}
-          </ul> */}
-        </CategoriesSections>
-
         <CategoriesSections>
         </CategoriesSections>
 
