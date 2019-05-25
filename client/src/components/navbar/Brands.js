@@ -17,6 +17,11 @@ const Brands = styled.div`
 const Brand = styled.li`
   list-style: none;
 `;
+const FeaturedBrand = styled.img`
+  /* ... */
+  width: 100%;
+`;
+
 
 class BrandsComp extends React.Component {
 
@@ -36,6 +41,7 @@ class BrandsComp extends React.Component {
         </BrandsSections>
 
         <BrandsSections>
+          <FeaturedBrand src={require("../../static/shalom-mwenesi-701767-unsplash.jpg")}/>
         </BrandsSections>
 
         <BrandsSections>

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import BrandsComp from './Brands';
 import CategoriesComp from './Categories';
 
-// import { Container, Row, Col } from 'react-awesome-styled-grid'
+
 import anime from 'animejs';
 
 
@@ -12,16 +12,18 @@ import anime from 'animejs';
 const Navigation =  styled.div`
   width: 100%;
   color: #fff;
-  background: #000;
+  background: black;
   display: flex;
   align-items: center;
   height: 60px;
-  position: absolute;
+  position: fixed;
   top: 0;
   z-index: 1;
   font-family: 'Calibre';
   overflow: hidden;
   text-transform: uppercase;
+  /* padding: 0; */
+  /* margin: 0; */
 `
 const IconContainer = styled.div`
   border-right: 1px solid #343434;
@@ -38,13 +40,16 @@ const Selections = styled.div`
   font-size: 13px;
   font-family: 'Arial Monospaced MT Std';
   font-weight: 900;
+  background: plum;
 `
 const NavLink = styled.p`
-transition: color 0.25s;
+  transition: color 0.25s;
   color: white;
   background:green;
-  padding: 0;
-  margin:0;
+  /* transform: translateX(50%); */
+  /* height: 60px; */
+  /* padding: 0; */
+  /* margin:0; */
   &:hover {
    color: gray;
   }
@@ -54,7 +59,7 @@ const Sections = styled.div`
   height: 300px;
   display: flex;
   border-right: 1px solid peru;
-  /* background: orange; */
+  background: orange;
 `;
 
 class Navbar extends React.Component {
@@ -85,6 +90,7 @@ class Navbar extends React.Component {
       }
     });
   }
+
   displayDropdown = (compName) => {
     // console.log('hello');
     const duration = 250;
@@ -125,7 +131,7 @@ class Navbar extends React.Component {
     });
     this.hideAnimation.play();
   }
-  
+
   render() {
     const options = ['brands', 'categories', 'releases'].map((link, i) => {
       return(
@@ -158,7 +164,7 @@ class Navbar extends React.Component {
           </Selections>
         </Navigation>
 
-        <Sections >
+        <Sections>
           {this.state.brands &&
             <BrandsComp/>
           }
