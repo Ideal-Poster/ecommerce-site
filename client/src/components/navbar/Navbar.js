@@ -40,16 +40,14 @@ const Selections = styled.div`
   font-size: 13px;
   font-family: 'Arial Monospaced MT Std';
   font-weight: 900;
-  background: plum;
+  /* background: plum; */
 `
 const NavLink = styled.p`
   transition: color 0.25s;
   color: white;
-  background:green;
-  /* transform: translateX(50%); */
-  /* height: 60px; */
-  /* padding: 0; */
-  /* margin:0; */
+  padding-top: 4px;
+  background: green;
+  height: 100%;
   &:hover {
    color: gray;
   }
@@ -59,7 +57,7 @@ const Sections = styled.div`
   height: 300px;
   display: flex;
   border-right: 1px solid peru;
-  background: orange;
+  /* background: orange; */
 `;
 
 class Navbar extends React.Component {
@@ -110,7 +108,9 @@ class Navbar extends React.Component {
       });
 
       this.isAnimating = true;
-      this.displayAnimation.play();
+      setTimeout(() => {
+        this.displayAnimation.play();
+      }, 100);
 
     });
   }
@@ -129,7 +129,10 @@ class Navbar extends React.Component {
         this.setState({ [compName]: false });
       }
     });
-    this.hideAnimation.play();
+
+    setTimeout(() => {
+      this.hideAnimation.play();
+    }, 100);
   }
 
   render() {
@@ -166,7 +169,7 @@ class Navbar extends React.Component {
 
         <Sections>
           {this.state.brands &&
-            <BrandsComp/>
+            <BrandsComp displayDropdown={this.displayDropdown} hideDropdown={this.hideDropdown}/>
           }
           {this.state.categories &&
             <CategoriesComp/>

@@ -24,6 +24,15 @@ const FeaturedBrand = styled.img`
 
 
 class BrandsComp extends React.Component {
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    console.log(
+      // prevProps,
+      // prevState,
+      snapshot
+      );
+
+  }
+
 
   render() {
     const brandNames = ['Nike', 'Puma', 'Converse', 'Adidas', 'North Face'].map((brand, i) => {
