@@ -24,13 +24,15 @@ const FeaturedBrand = styled.img`
 
 
 class BrandsComp extends React.Component {
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    console.log(
-      // prevProps,
-      // prevState,
-      snapshot
-      );
+  state = { open: false };
 
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    // console.log(
+    //   prevProps,
+    //   prevState,
+    //   snapshot
+    // );
   }
 
 

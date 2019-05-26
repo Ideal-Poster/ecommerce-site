@@ -4,9 +4,8 @@ import { Link } from 'react-router-dom';
 import BrandsComp from './Brands';
 import CategoriesComp from './Categories';
 
-
 import anime from 'animejs';
-
+import { connect } from 'react-redux';
 
 
 const Navigation =  styled.div`
@@ -45,8 +44,8 @@ const Selections = styled.div`
 const NavLink = styled.p`
   transition: color 0.25s;
   color: white;
-  padding-top: 4px;
-  background: green;
+  padding-top: 5px;
+  /* background: green; */
   height: 100%;
   &:hover {
    color: gray;
@@ -70,12 +69,11 @@ class Navbar extends React.Component {
 
   constructor(props) {
     super(props);
-    // this.brandsComp = React.createRef();
+    this.brandsRef = React.createRef();
   }
 
   componentDidMount() {
     const duration = 250;
-
     this.hideAnimation = anime({
       targets: '.brandsComp',
       autoplay: false,
@@ -83,15 +81,14 @@ class Navbar extends React.Component {
       opacity: 0,
       duration,
       complete: () => {
-        // console.log('hide: closed');
         this.setState({ brands: false });
       }
     });
   }
 
   displayDropdown = (compName) => {
-    // console.log('hello');
     const duration = 250;
+
     this.hideAnimation.seek(duration);
     this.setState({ [compName]: true }, () => {
       this.displayAnimation = anime({
@@ -103,16 +100,14 @@ class Navbar extends React.Component {
         // delay: 200,
         complete: function() {
           this.isAnimating = false;
-          // console.log('display: open');
         }
       });
 
       this.isAnimating = true;
-      setTimeout(() => {
-        this.displayAnimation.play();
-      }, 100);
-
+      this.displayAnimation.play();
     });
+
+    console.log(this.brandsRef);
   }
 
   hideDropdown = (compName) => {
@@ -129,10 +124,7 @@ class Navbar extends React.Component {
         this.setState({ [compName]: false });
       }
     });
-
-    setTimeout(() => {
-      this.hideAnimation.play();
-    }, 100);
+    this.hideAnimation.play();
   }
 
   render() {
@@ -145,8 +137,9 @@ class Navbar extends React.Component {
             marginLeft: '25px'
           }}
           key={`link-${i}`}
-          onMouseEnter={() => {this.displayDropdown(link)}}
-          onMouseLeave={() => {this.hideDropdown(link)}}>
+          // onMouseEnter={() => {this.displayDropdown(link)}}
+          // onMouseLeave={() => {this.hideDropdown(link)}}
+          >
           <NavLink key={`navbar-link-${i}`}>{`${link}`}</NavLink>
         </Link>
       );
@@ -169,7 +162,10 @@ class Navbar extends React.Component {
 
         <Sections>
           {this.state.brands &&
-            <BrandsComp displayDropdown={this.displayDropdown} hideDropdown={this.hideDropdown}/>
+            <BrandsComp ref={this.brandsRef}
+            // displayDropdown={this.displayDropdown}
+            // hideDropdown={this.hideDropdown}
+            />
           }
           {this.state.categories &&
             <CategoriesComp/>
@@ -181,4 +177,14 @@ class Navbar extends React.Component {
   }
 }
 
-export default Navbar;
+const mapStateToProps = state => {
+  console.log(state);
+
+  return {
+    brandMenuToggle: state.brandMenuToggle,
+    categoryMenuToggle: state.categoryMenuToggle,
+    releasesMenuToggle: state.releasesMenuToggle
+  }
+}
+
+export default connect(mapStateToProps)(Navbar);

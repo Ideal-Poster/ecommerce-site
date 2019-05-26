@@ -8,16 +8,24 @@ import App from './components/App';
 import Brands from './components/products/Brands';
 import Navbar from './components/navbar/Navbar';
 
+import reducers from './reducers';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+
+const store = createStore(reducers);
+
 ReactDOM.render(
-  <Router>
-    <Navbar/>
-    <Switch>
-      <div style={{marginTop: '60px'}}>
-        <Route exact path="/" component={App} />
-        <Route path="/brands" component={Brands}/>
-      </div>
-    </Switch>
-  </Router>,
+  <Provider store={store}>
+    <Router>
+      <Navbar/>
+      <Switch>
+        <div style={{marginTop: '60px'}}>
+          <Route exact path="/" component={App} />
+          <Route path="/brands" component={Brands}/>
+        </div>
+      </Switch>
+    </Router>
+  </Provider>,
   document.getElementById('root')
 );
 
