@@ -1,10 +1,11 @@
 
 import { combineReducers } from 'redux';
+import { BRANDS_MENU_TOGGLE } from '../actions/types';
 
-const brandToggleReducer = (state = false, action) => {
+const brandsToggleReducer = (state = false, action) => {
   switch (action.type) {
-    case state === false:
-      return true;
+    case BRANDS_MENU_TOGGLE:
+      if (state === false) return true;
     default:
       return false;
   }
@@ -20,7 +21,7 @@ const categoryToggleReducer = (state = false, action) => {
 }
 
 const releasesToggleReducer = (state = false, action) => {
-  switch (action.type) {
+  switch(action.type) {
     case state === false:
       return true;
     default:
@@ -29,7 +30,7 @@ const releasesToggleReducer = (state = false, action) => {
 }
 
 export default combineReducers({
-  brandMenuToggle: brandToggleReducer,
+  brandsMenuToggle: brandsToggleReducer,
   categoryMenuToggle: categoryToggleReducer,
   releasesMenuToggle: releasesToggleReducer
 });

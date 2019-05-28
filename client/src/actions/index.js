@@ -1,12 +1,12 @@
 import {
-  BRAND_MENU_TOGGLE,
+  BRANDS_MENU_TOGGLE,
   CATEGORY_MENU_TOGGLE,
   RELEASE_MENU_TOGGLE
 } from './types';
 
-export const brandMenuToggle = () => {
+export const brandsMenuToggle = () => {
   return {
-    type: BRAND_MENU_TOGGLE
+    type: BRANDS_MENU_TOGGLE
   };
 };
 

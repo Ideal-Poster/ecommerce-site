@@ -6,7 +6,7 @@ const CategoriesSections = styled.div`
   border-right: 1px solid #565656;
   height: 100%;
   width: 33.333vw;
-  background: orange;
+  background: #f7f7f7;
   overflow: hidden;
 `;
 const Categories = styled.div`
@@ -14,7 +14,7 @@ const Categories = styled.div`
   background: orange;
 
   display: flex;
-  /* opacity: 0; */
+  opacity: 0;
 `;
 // const Brand = styled.li`
 //   list-style: none;

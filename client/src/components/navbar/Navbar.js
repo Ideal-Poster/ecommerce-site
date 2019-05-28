@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import BrandsComp from './Brands';
-import CategoriesComp from './Categories';
-
 import anime from 'animejs';
 import { connect } from 'react-redux';
+import { brandsMenuToggle } from '../../actions';
+
+import BrandsComp from './Brands';
+import CategoriesComp from './Categories';
 
 
 const Navigation =  styled.div`
@@ -21,8 +22,6 @@ const Navigation =  styled.div`
   font-family: 'Calibre';
   overflow: hidden;
   text-transform: uppercase;
-  /* padding: 0; */
-  /* margin: 0; */
 `
 const IconContainer = styled.div`
   border-right: 1px solid #343434;
@@ -39,13 +38,11 @@ const Selections = styled.div`
   font-size: 13px;
   font-family: 'Arial Monospaced MT Std';
   font-weight: 900;
-  /* background: plum; */
 `
 const NavLink = styled.p`
   transition: color 0.25s;
   color: white;
   padding-top: 5px;
-  /* background: green; */
   height: 100%;
   &:hover {
    color: gray;
@@ -56,48 +53,41 @@ const Sections = styled.div`
   height: 300px;
   display: flex;
   border-right: 1px solid peru;
-  /* background: orange; */
 `;
 
 class Navbar extends React.Component {
   state = {
-    brands: false,
-    categories: false
+    brandsOpen: false,
+    categoriesOpen: false,
+    releasesOpen: false
   }
+
   isAnimating = false;
   exit = false;
-
-  constructor(props) {
-    super(props);
-    this.brandsRef = React.createRef();
-  }
+  options = ['brands', 'categories', 'releases'];
+  hover = false;
 
   componentDidMount() {
     const duration = 250;
-    this.hideAnimation = anime({
-      targets: '.brandsComp',
-      autoplay: false,
-      easing: 'easeInOutQuad',
-      opacity: 0,
-      duration,
-      complete: () => {
-        this.setState({ brands: false });
-      }
-    });
+    this.hideAnimation = anime({});
+    this.displayAnimation = anime({});
+
   }
 
-  displayDropdown = (compName) => {
-    const duration = 250;
+  displayDropdown = (i) => {
+    const duration = 350;
+    let paused = false;
 
+    // interupt and finish hide animation
     this.hideAnimation.seek(duration);
-    this.setState({ [compName]: true }, () => {
+
+    this.setState({ [this.options[i]+'Open']: true }, () => {
       this.displayAnimation = anime({
-        targets: '.' + compName + 'Comp',
+        targets: '.' + this.options[i] + 'Comp',
         autoplay: false,
         easing: 'easeInOutQuad',
         opacity: 1,
         duration,
-        // delay: 200,
         complete: function() {
           this.isAnimating = false;
         }
@@ -106,39 +96,47 @@ class Navbar extends React.Component {
       this.isAnimating = true;
       this.displayAnimation.play();
     });
-
-    console.log(this.brandsRef);
   }
 
-  hideDropdown = (compName) => {
-    const duration = 250;
+  hideDropdown = i => {
+    const duration = 350;
+
     this.hideAnimation = anime({
-      targets: '.' + compName + 'Comp',
+      targets: '.' + this.options[i] + 'Comp',
       autoplay: false,
       easing: 'easeInOutQuad',
       opacity: 0,
-      // delay: 200,
       duration,
       complete: () => {
-        // console.log('hide: closed');
-        this.setState({ [compName]: false });
+        this.setState({ [this.options[i]+ 'Open']: false });
       }
     });
     this.hideAnimation.play();
   }
 
+  sectionHoverEnter = () => {
+    this.hover = true;
+    this.hideAnimation.reset();
+
+  }
+  sectionHoverLeave = () => {
+    this.hover = false;
+    // console.log(this.hover);
+    this.hideAnimation.play();
+  }
+
+
   render() {
-    const options = ['brands', 'categories', 'releases'].map((link, i) => {
+    const optionLinks = this.options.map((link, i) => {
       return(
         <Link
           to={`${link}`}
-          style={{
-            textDecoration:'none',
-            marginLeft: '25px'
-          }}
+          style={{ textDecoration:'none', marginLeft: '25px' }}
           key={`link-${i}`}
-          // onMouseEnter={() => {this.displayDropdown(link)}}
-          // onMouseLeave={() => {this.hideDropdown(link)}}
+          onMouseEnter={ () => { this.displayDropdown(i) } }
+          onMouseLeave={ () => {
+            this.hideDropdown(i);
+           } }
           >
           <NavLink key={`navbar-link-${i}`}>{`${link}`}</NavLink>
         </Link>
@@ -156,35 +154,34 @@ class Navbar extends React.Component {
             </Link>
           </IconContainer>
           <Selections>
-            {options}
+            {optionLinks}
           </Selections>
         </Navigation>
 
-        <Sections>
-          {this.state.brands &&
-            <BrandsComp ref={this.brandsRef}
-            // displayDropdown={this.displayDropdown}
-            // hideDropdown={this.hideDropdown}
-            />
+        <Sections
+          onMouseEnter={ this.sectionHoverEnter }
+          onMouseLeave={ this.sectionHoverLeave }>
+
+          {this.state.brandsOpen &&
+            <BrandsComp/>
           }
-          {this.state.categories &&
+
+          {this.state.categoriesOpen &&
             <CategoriesComp/>
           }
+
         </Sections>
-        {/* <p style={{margintTop: '600px'}}>hellp</p> */}
       </div>
     )
   }
 }
 
 const mapStateToProps = state => {
-  console.log(state);
-
   return {
-    brandMenuToggle: state.brandMenuToggle,
-    categoryMenuToggle: state.categoryMenuToggle,
-    releasesMenuToggle: state.releasesMenuToggle
+    brandsToggle: state.brandsMenuToggle,
+    categoryToggle: state.categoryMenuToggle,
+    releasesToggle: state.releasesMenuToggle
   }
 }
 
-export default connect(mapStateToProps)(Navbar);
+export default connect(mapStateToProps, { brandsMenuToggle })(Navbar);
