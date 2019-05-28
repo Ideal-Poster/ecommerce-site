@@ -2,12 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import anime from 'animejs';
-import { connect } from 'react-redux';
-import { brandsMenuToggle } from '../../actions';
 
 import BrandsComp from './Brands';
 import CategoriesComp from './Categories';
-
 
 const Navigation =  styled.div`
   width: 100%;
@@ -184,4 +181,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, { brandsMenuToggle })(Navbar);
+export default Navbar;

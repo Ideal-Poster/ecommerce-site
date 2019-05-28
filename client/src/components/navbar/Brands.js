@@ -1,8 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 
-
-
 const BrandsSections = styled.div`
   position: relative;
   border-right: 1px solid #787878;

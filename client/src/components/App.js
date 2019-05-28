@@ -1,17 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-// import { Container, Row, Col } from 'react-awesome-styled-grid'
+
 const Carousel = styled.div`
   /* ... */
 `;
-
 const Image1 = styled.img`
-  /* ... */
-  /* height: 100vh; */
   width: 100vw;
 `;
-
-
 
 const App = () =>  {
   return (
