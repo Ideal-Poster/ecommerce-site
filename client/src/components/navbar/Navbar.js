@@ -82,7 +82,7 @@ class Navbar extends React.Component {
   }
 
   isNavHidden = () => {
-    return window.pageYOffset > 400 && !this.navIsAnimating && this.navDisplayed
+    return this.offset < window.pageYOffset && window.pageYOffset > 200 && !this.navIsAnimating && this.navDisplayed
   }
 
   isNavDisplayed = () => {
@@ -225,12 +225,5 @@ class Navbar extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    brandsToggle: state.brandsMenuToggle,
-    categoryToggle: state.categoryMenuToggle,
-    releasesToggle: state.releasesMenuToggle
-  }
-}
 
 export default Navbar;
