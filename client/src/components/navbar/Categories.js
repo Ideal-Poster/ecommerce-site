@@ -6,13 +6,14 @@ const CategoriesSections = styled.div`
   border-right: 1px solid #565656;
   height: 100%;
   width: 33.333vw;
-  background: #f7f7f7;
+  /* background: #f7f7f7; */
+  background: orange;
   overflow: hidden;
 `;
 const Categories = styled.div`
-  height: 100%;
+  height: 100px;
   background: orange;
-
+  position: fixed;
   display: flex;
   opacity: 0;
 `;

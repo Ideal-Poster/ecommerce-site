@@ -10,9 +10,14 @@ const BrandsSections = styled.div`
   overflow: hidden;
 `;
 const Brands = styled.div`
-  height: 100%;
+  position: fixed;
+  height: 225px;
   display: flex;
   opacity: 0;
+  position: fixed;
+  * > {
+    height: 60px;
+  }
 `;
 const Brand = styled.li`
   list-style: none;

@@ -47,7 +47,7 @@ const NavLink = styled.p`
 `;
 const Sections = styled.div`
   position: fixed;
-  height: 300px;
+  /* height: 300px; */
   display: flex;
   border-right: 1px solid peru;
 `;
@@ -58,22 +58,77 @@ class Navbar extends React.Component {
     categoriesOpen: false,
     releasesOpen: false
   }
-
+  navIsAnimating= false;
   isAnimating = false;
+  navDisplayed = true;
   exit = false;
   options = ['brands', 'categories', 'releases'];
   hover = false;
 
+
+
   componentDidMount() {
-    const duration = 250;
+    this.offset = window.pageYOffset;
     this.hideAnimation = anime({});
     this.displayAnimation = anime({});
+    window.addEventListener('scroll',
+      () => {
+        this.hideNavMenu();
+        this.showNavMenu();
+      }
+    )
+    console.log(this.offset);
 
   }
 
-  displayDropdown = (i) => {
+  isNavHidden = () => {
+    return window.pageYOffset > 400 && !this.navIsAnimating && this.navDisplayed
+  }
+
+  isNavDisplayed = () => {
+    return this.offset > window.pageYOffset && !this.navIsAnimating && !this.navDisplayed
+  }
+
+  hideNavMenu = () => {
+    if (this.isNavHidden()) {
+      this.navIsAnimating = true;
+      anime({
+        targets: '.navMenu',
+        easing: 'easeInOutQuad',
+        translateY: '-60px',
+        duration: 400,
+        delay: 100,
+        complete: () => {
+          this.navIsAnimating = false;
+          this.navDisplayed = false;
+        }
+      });
+    }
+    console.log(
+      this.navIsAnimating
+    );
+
+  }
+
+  showNavMenu = () => {
+    if (this.isNavDisplayed()) {
+      this.navIsAnimating = true;
+      anime({
+        targets: '.navMenu',
+        easing: 'easeInOutQuad',
+        translateY: '0px',
+        duration: 400,
+        complete: () => {
+          this.navIsAnimating = false;
+          this.navDisplayed = true;
+        }
+      });
+    }
+    this.offset = window.pageYOffset;
+  }
+
+  displayDropdown = i => {
     const duration = 350;
-    let paused = false;
 
     // interupt and finish hide animation
     this.hideAnimation.seek(duration);
@@ -85,7 +140,7 @@ class Navbar extends React.Component {
         easing: 'easeInOutQuad',
         opacity: 1,
         duration,
-        complete: function() {
+        complete: () => {
           this.isAnimating = false;
         }
       });
@@ -131,9 +186,7 @@ class Navbar extends React.Component {
           style={{ textDecoration:'none', marginLeft: '25px' }}
           key={`link-${i}`}
           onMouseEnter={ () => { this.displayDropdown(i) } }
-          onMouseLeave={ () => {
-            this.hideDropdown(i);
-           } }
+          onMouseLeave={ () => { this.hideDropdown(i); }}
           >
           <NavLink key={`navbar-link-${i}`}>{`${link}`}</NavLink>
         </Link>
@@ -142,7 +195,7 @@ class Navbar extends React.Component {
 
     return (
       <div>
-        <Navigation>
+        <Navigation className="navMenu">
           <IconContainer>
             <Link to="/" style={{textDecoration: 'none'}}>
               <Icon>
@@ -166,7 +219,6 @@ class Navbar extends React.Component {
           {this.state.categoriesOpen &&
             <CategoriesComp/>
           }
-
         </Sections>
       </div>
     )
