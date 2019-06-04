@@ -9,6 +9,7 @@ const CategoriesSections = styled.div`
   /* background: #f7f7f7; */
   background: orange;
   overflow: hidden;
+  z-index: 10000;
 `;
 const Categories = styled.div`
   height: 100px;

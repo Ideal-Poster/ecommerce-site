@@ -50,6 +50,7 @@ const Sections = styled.div`
   /* height: 300px; */
   display: flex;
   border-right: 1px solid peru;
+  z-index: 10000;
 `;
 
 class Navbar extends React.Component {
@@ -61,7 +62,6 @@ class Navbar extends React.Component {
   navIsAnimating= false;
   isAnimating = false;
   navDisplayed = true;
-  exit = false;
   options = ['brands', 'categories', 'releases'];
   hover = false;
 
@@ -76,13 +76,14 @@ class Navbar extends React.Component {
         this.hideNavMenu();
         this.showNavMenu();
       }
-    )
-    console.log(this.offset);
-
+    );
   }
 
   isNavHidden = () => {
-    return this.offset < window.pageYOffset && window.pageYOffset > 200 && !this.navIsAnimating && this.navDisplayed
+    return this.offset < window.pageYOffset &&
+    window.pageYOffset > 400 &&
+    !this.navIsAnimating &&
+    this.navDisplayed
   }
 
   isNavDisplayed = () => {
@@ -104,10 +105,6 @@ class Navbar extends React.Component {
         }
       });
     }
-    console.log(
-      this.navIsAnimating
-    );
-
   }
 
   showNavMenu = () => {
@@ -173,7 +170,6 @@ class Navbar extends React.Component {
   }
   sectionHoverLeave = () => {
     this.hover = false;
-    // console.log(this.hover);
     this.hideAnimation.play();
   }
 

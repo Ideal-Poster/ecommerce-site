@@ -8,6 +8,7 @@ const BrandsSections = styled.div`
   width: 25vw;
   background: #f7f7f7;
   overflow: hidden;
+  z-index: 1000;
 `;
 const Brands = styled.div`
   position: fixed;
