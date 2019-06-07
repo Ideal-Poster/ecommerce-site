@@ -6,7 +6,8 @@ export default styled.div`
 	grid-template-rows: 100%;
 	grid-template-areas: 'slide';
 	display: grid;
-	position: absolute;
+	position: relative;
   overflow: hidden;
   width: 100vw;
+  height: calc(100vh - 90px);
 `;

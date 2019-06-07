@@ -8,7 +8,6 @@ import slideImg1 from "../static/photo-1513531926349-466f15ec8cc7.jpeg";
 import slideImg2 from "../static/warren-wong-248636-unsplash.jpg";
 import slideImg3 from "../static/photo-1527905804285-2f67b86e3bf6.jpeg";
 
-
 class App extends React.Component {
   isAnimating = false;
   position = [
@@ -24,7 +23,6 @@ class App extends React.Component {
   componentDidMount() {
     this.galleryImages = document.querySelectorAll('.slide');
     this.setSlideshowImages();
-    // this.carouselRight();
   }
 
   carouselRight = () => {
@@ -99,10 +97,13 @@ class App extends React.Component {
     let slides = [ slideImg1, slideImg2, slideImg3 ].map((i) => {
       return <Slide className="slide" img={i}/>
     });
+
     return (
-      <Carousel onClick={this.carouselRight}>
-        {slides}
-      </Carousel>
+      <div>
+        <Carousel onClick={this.carouselRight}>
+          {slides}
+        </Carousel>
+      </div>
     );
   }
 }
