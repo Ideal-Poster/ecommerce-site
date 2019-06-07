@@ -1,23 +1,13 @@
 import React from 'react';
-import styled from 'styled-components';
 import anime from 'animejs';
 
-const Carousel = styled.div`
-	grid-template-columns: 0% 0% 0%;
-	grid-column-gap: 0%;
-	grid-template-rows: 100%;
-	grid-template-areas: 'slide';
-	display: grid;
-	position: absolute;
-  /* overflow: hidden; */
-  width: 100vw;
-`;
+import Carousel from './carousel/Carousel';
+import Slide from './carousel/Slide';
 
-const Image = styled.img`
-  max-width: 100vw;
-  min-width: 100vw;
-  position: relative;
-`;
+import slideImg1 from "../static/photo-1513531926349-466f15ec8cc7.jpeg";
+import slideImg2 from "../static/warren-wong-248636-unsplash.jpg";
+import slideImg3 from "../static/photo-1527905804285-2f67b86e3bf6.jpeg";
+
 
 class App extends React.Component {
   isAnimating = false;
@@ -32,7 +22,7 @@ class App extends React.Component {
   currentSlide = 1;
 
   componentDidMount() {
-    this.galleryImages = document.querySelectorAll('.gallery-image');
+    this.galleryImages = document.querySelectorAll('.slide');
     this.setSlideshowImages();
     // this.carouselRight();
   }
@@ -96,24 +86,22 @@ class App extends React.Component {
   }
 
   setSlideshowImages() {
-    const galleryImages = document.querySelectorAll('.gallery-image');
-
-    anime.set( galleryImages[2], {
+    anime.set( this.galleryImages[2], {
       left: '100vw'
     });
-    anime.set( galleryImages[0], {
+    anime.set( this.galleryImages[0], {
       left: '-100vw'
     });
   }
 
+
   render() {
+    let slides = [ slideImg1, slideImg2, slideImg3 ].map((i) => {
+      return <Slide className="slide" img={i}/>
+    });
     return (
       <Carousel onClick={this.carouselRight}>
-        {/* <SlidesContainer> */}
-          <Image className="gallery-image image1" src={require("../static/photo-1513531926349-466f15ec8cc7.jpeg")}/>
-          <Image className="gallery-image image2" src={require("../static/warren-wong-248636-unsplash.jpg")}/>
-          <Image className="gallery-image image3" src={require("../static/photo-1527905804285-2f67b86e3bf6.jpeg")}/>
-        {/* </SlidesContainer> */}
+        {slides}
       </Carousel>
     );
   }
