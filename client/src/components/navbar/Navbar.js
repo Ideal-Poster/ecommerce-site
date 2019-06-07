@@ -1,57 +1,17 @@
 import React from 'react';
-import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import anime from 'animejs';
 
 import BrandsComp from './Brands';
 import CategoriesComp from './Categories';
-
-const Navigation =  styled.div`
-  width: 100%;
-  color: #fff;
-  background: black;
-  display: flex;
-  align-items: center;
-  height: 60px;
-  position: fixed;
-  top: 0;
-  z-index: 1;
-  font-family: 'Calibre';
-  overflow: hidden;
-  text-transform: uppercase;
-`
-const IconContainer = styled.div`
-  border-right: 1px solid #343434;
-  text-align: center;
-  width: 130px;
-`
-const Icon = styled.h2`
-  color: white;
-  height:  100%;
-`
-const Selections = styled.div`
-  flex: 1;
-  display: flex;
-  font-size: 13px;
-  font-family: 'Arial Monospaced MT Std';
-  font-weight: 900;
-`
-const NavLink = styled.p`
-  transition: color 0.25s;
-  color: white;
-  padding-top: 5px;
-  height: 100%;
-  &:hover {
-   color: gray;
-  }
-`;
-const Sections = styled.div`
-  position: fixed;
-  /* height: 300px; */
-  display: flex;
-  border-right: 1px solid peru;
-  z-index: 10000;
-`;
+import {
+  NavLink,
+  Navigation,
+  IconContainer,
+  Icon,
+  Selections,
+  Sections
+ } from './styled/Navbar';
 
 class Navbar extends React.Component {
   state = {
@@ -64,8 +24,6 @@ class Navbar extends React.Component {
   navDisplayed = true;
   options = ['brands', 'categories', 'releases'];
   hover = false;
-
-
 
   componentDidMount() {
     this.offset = window.pageYOffset;
@@ -220,6 +178,5 @@ class Navbar extends React.Component {
     )
   }
 }
-
 
 export default Navbar;

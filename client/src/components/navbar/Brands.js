@@ -1,31 +1,11 @@
 import React from 'react';
-import styled from 'styled-components';
+import { 
+  Brands,
+  BrandsSections,
+  Brand,
+  FeaturedBrand
+} from './styled/Brands'
 
-const BrandsSections = styled.div`
-  position: relative;
-  border-right: 1px solid #787878;
-  height: 100%;
-  width: 25vw;
-  background: #f7f7f7;
-  overflow: hidden;
-  z-index: 1000;
-`;
-const Brands = styled.div`
-  position: fixed;
-  height: 225px;
-  display: flex;
-  opacity: 0;
-  position: fixed;
-  * > {
-    height: 60px;
-  }
-`;
-const Brand = styled.li`
-  list-style: none;
-`;
-const FeaturedBrand = styled.img`
-  width: 100%;
-`;
 
 class BrandsComp extends React.Component {
 
