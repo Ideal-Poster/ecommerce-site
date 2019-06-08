@@ -8,6 +8,11 @@ import slideImg1 from "../static/photo-1513531926349-466f15ec8cc7.jpeg";
 import slideImg2 from "../static/warren-wong-248636-unsplash.jpg";
 import slideImg3 from "../static/photo-1527905804285-2f67b86e3bf6.jpeg";
 
+import Strapi from 'strapi-sdk-javascript';
+
+const apiUrl = 'http://localhost:1337';
+const strapi = new Strapi(apiUrl);
+
 class App extends React.Component {
   isAnimating = false;
   position = [
@@ -20,9 +25,27 @@ class App extends React.Component {
   ];
   currentSlide = 1;
 
-  componentDidMount() {
+  async componentDidMount() {
     this.galleryImages = document.querySelectorAll('.slide');
     this.setSlideshowImages();
+
+    const response = await strapi.request('POST', '/graphql',{
+      data: {
+        query: `{
+          brands{
+            _id
+            name
+            description
+            createdAt
+            image {
+              name
+            }
+          }
+        }`
+      }
+    });
+    console.log(response);
+
   }
 
   carouselRight = () => {
