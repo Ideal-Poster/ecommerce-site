@@ -14,9 +14,6 @@ const apiUrl = 'http://localhost:1337';
 const strapi = new Strapi(apiUrl);
 
 class App extends React.Component {
-  // state = {
-  //   brands: []
-  // }
   isAnimating = false;
   position = [
     // 0 left out of view
@@ -31,28 +28,6 @@ class App extends React.Component {
   async componentDidMount() {
     this.galleryImages = document.querySelectorAll('.slide');
     this.setSlideshowImages();
-
-    // try {
-    //   const response = await strapi.request('POST', '/graphql',{
-    //     data: {
-    //       query: `{
-    //         brands{
-    //           _id
-    //           name
-    //           description
-    //           image {
-    //             url
-    //           }
-    //         }
-    //       }`
-    //     }
-    //   });
-    //   console.log(response);
-    //   this.setState({brands: response.data.brands})
-    // } catch(error) {
-    //   console.log(error);
-    // }
-
   }
 
   carouselRight = () => {
@@ -124,10 +99,8 @@ class App extends React.Component {
 
 
   render() {
-    // const { brands } = this.state;
-
     let slides = [ slideImg1, slideImg2, slideImg3 ].map((i) => (
-      <Slide className="slide" img={i}/>
+      <Slide className="slide" key={i} img={i}/>
     ));
 
     return (
@@ -135,11 +108,6 @@ class App extends React.Component {
         <Carousel onClick={this.carouselRight}>
           {slides}
         </Carousel>
-
-        {/* {brands.map(brand => (
-          // console.log(brand.image)
-          <img src={`${apiUrl}${brand.image.url}`} alt="hello"/>
-        ))} */}
       </div>
     );
   }

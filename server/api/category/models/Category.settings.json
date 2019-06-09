@@ -1,8 +1,8 @@
 {
   "connection": "default",
-  "collectionName": "brand",
+  "collectionName": "category",
   "info": {
-    "name": "brand",
+    "name": "category",
     "description": ""
   },
   "options": {
@@ -10,21 +10,17 @@
   },
   "attributes": {
     "name": {
-      "type": "string",
-      "required": true
+      "type": "string"
     },
-    "description": {
-      "type": "text"
+    "products": {
+      "collection": "product",
+      "via": "category"
     },
     "image": {
       "model": "file",
       "via": "related",
       "plugin": "upload",
       "required": true
-    },
-    "products": {
-      "collection": "product",
-      "via": "brand"
     }
   }
 }
