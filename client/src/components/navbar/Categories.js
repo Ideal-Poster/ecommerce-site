@@ -1,14 +1,20 @@
 import React from 'react';
-import { Categories, CategoriesSections } from './styled/Categories'
+import { Categories, CategoriesSections, CategoryItem } from './styled/Categories'
 
 class CategoriesComp extends React.Component {
   render() {
-    // const brandNames = ['Nike', 'Puma', 'Converse', 'Adidas', 'North Face'].map((brand, i) => {
-    //   return <Brand key={`brand-${i}`}>{ brand }</Brand>
-    // });
+    const categories = ['Shoes', 'Hats', 'Tops', 'Bottoms'].map((categories, i) => (
+      <CategoryItem key={`category-${i}`}>{ categories }</CategoryItem>
+      // <li key={`navbrand-${i}`}>{brand}</li>
+    ));
+    console.log(this.props);
+
     return(
       <Categories className="categoriesComp">
         <CategoriesSections>
+          <ul>
+            { categories }
+          </ul>
         </CategoriesSections>
 
         <CategoriesSections>

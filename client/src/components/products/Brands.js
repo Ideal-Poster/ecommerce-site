@@ -26,10 +26,10 @@ class Brands extends React.Component {
           }`
         }
       });
-      console.log(response);
+      // console.log(response);
       this.setState({brands: response.data.brands})
     } catch(error) {
-      console.log(error);
+      // console.log(error);
     }
   }
 

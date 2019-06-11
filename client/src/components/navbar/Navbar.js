@@ -133,17 +133,28 @@ class Navbar extends React.Component {
 
 
   render() {
+    const activeLink = 'releases';
     const optionLinks = this.options.map((link, i) => {
       return(
+        link === activeLink ?
         <Link
           to={`${link}`}
           style={{ textDecoration:'none', marginLeft: '25px' }}
           key={`link-${i}`}
           onMouseEnter={ () => { this.displayDropdown(i) } }
           onMouseLeave={ () => { this.hideDropdown(i); }}
+          onClick={ this.sectionHoverLeave }
           >
           <NavLink key={`navbar-link-${i}`}>{`${link}`}</NavLink>
-        </Link>
+        </Link>:
+        <NavLink
+          key={`navbar-link-${i}`}
+          style={{ textDecoration:'none', marginLeft: '25px', cursor: 'pointer' }}
+          onMouseEnter={ () => { this.displayDropdown(i) } }
+          onMouseLeave={ () => { this.hideDropdown(i); }}
+          >{`${link}`}</NavLink>
+
+
       );
     })
 

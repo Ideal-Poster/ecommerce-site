@@ -16,3 +16,7 @@ export const Categories = styled.div`
   overflow: hidden;
   z-index: 10000;
 `;
+
+export const CategoryItem = styled.li`
+  list-style: none;
+`;
