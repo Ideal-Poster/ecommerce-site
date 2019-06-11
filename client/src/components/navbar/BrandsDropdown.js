@@ -7,7 +7,7 @@ import {
 } from './styled/Brands'
 
 
-class BrandsComp extends React.Component {
+class BrandsDropdown extends React.Component {
 
   render() {
     const brandNames = ['Nike', 'Puma', 'Converse', 'Adidas', 'North Face'].map((brand, i) => {
@@ -35,4 +35,4 @@ class BrandsComp extends React.Component {
   }
 }
 
-export default BrandsComp;
+export default BrandsDropdown;

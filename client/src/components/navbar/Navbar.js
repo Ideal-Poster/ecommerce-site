@@ -2,8 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import anime from 'animejs';
 
-import BrandsComp from './Brands';
-import CategoriesComp from './Categories';
+import BrandsDropdown from './BrandsDropdown';
+import CategoriesDropdown from './CategoriesDropdown';
 import {
   NavLink,
   Navigation,
@@ -124,8 +124,8 @@ class Navbar extends React.Component {
   sectionHoverEnter = () => {
     this.hover = true;
     this.hideAnimation.reset();
-
   }
+
   sectionHoverLeave = () => {
     this.hover = false;
     this.hideAnimation.play();
@@ -178,11 +178,11 @@ class Navbar extends React.Component {
           onMouseLeave={ this.sectionHoverLeave }>
 
           {this.state.brandsOpen &&
-            <BrandsComp/>
+            <BrandsDropdown/>
           }
 
           {this.state.categoriesOpen &&
-            <CategoriesComp/>
+            <CategoriesDropdown/>
           }
         </Sections>
       </div>
