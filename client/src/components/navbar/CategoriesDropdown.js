@@ -1,13 +1,14 @@
 import React from 'react';
 import { Categories, CategoriesSections, CategoryItem } from './styled/Categories'
+import { Link } from 'react-router-dom';
 
-class CategoriesComp extends React.Component {
+class CategoriesDropdown extends React.Component {
   render() {
     const categories = ['Shoes', 'Hats', 'Tops', 'Bottoms'].map((categories, i) => (
-      <CategoryItem key={`category-${i}`}>{ categories }</CategoryItem>
-      // <li key={`navbrand-${i}`}>{brand}</li>
+      <Link to={`/categories/${categories.toLowerCase()}/`}>
+        <CategoryItem key={`category-${i}`}>{ categories }</CategoryItem>
+      </Link>
     ));
-    console.log(this.props);
 
     return(
       <Categories className="categoriesComp">
@@ -26,4 +27,4 @@ class CategoriesComp extends React.Component {
     );
   }
 }
-export default CategoriesComp;
+export default CategoriesDropdown;

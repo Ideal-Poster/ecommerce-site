@@ -12,7 +12,7 @@ class Brands extends React.Component {
 
   async componentDidMount() {
     try {
-      const response = await strapi.request('POST', '/graphql',{
+      const response = await strapi.request('POST', '/graphql', {
         data: {
           query: `{
             brands{

@@ -5,7 +5,7 @@ import * as serviceWorker from './serviceWorker';
 import {BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import App from './components/App';
-import Brands from './components/products/Brands';
+import Categories from './components/products/Categories';
 import Navbar from './components/navbar/Navbar';
 
 
@@ -15,7 +15,7 @@ ReactDOM.render(
     <Switch>
       <div style={{marginTop: '60px'}}>
         <Route exact path="/" component={App} />
-        <Route path="/brands" component={Brands}/>
+        <Route path="/categories/:cat" component={Categories}/>
       </div>
     </Switch>
   </Router>,
