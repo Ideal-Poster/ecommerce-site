@@ -6,16 +6,27 @@ const strapi = new Strapi(apiUrl);
 
 class Categories extends React.Component {
   state = {
-    products: []
+    products: [],
+    categoryName: this.props.match.params.cat
   };
+  category: {};
+  categories = [];
 
-  async componentDidMount() {
-    this.category = {};
-    this.categories = [];
-    this.categoryName = this.props.match.params.cat;
+  async componentDidUpdate() {
+    const pathCategory = this.props.match.params.cat;
+    if (this.state.categoryName !== pathCategory) {
+      await this.setState({ categoryName: pathCategory });
+      await this.setCategoryState();
+      await this.requestCategoryProducts();
+      // console.log(this.state.products);
 
+    }
+  }
+
+  async requestCategoryIds() {
+    let response;
     try {
-      const response = await strapi.request('POST', '/graphql', {
+      response = await strapi.request('POST', '/graphql', {
         data: {
           query: `{
             categories {
@@ -25,16 +36,13 @@ class Categories extends React.Component {
           }`
         }
       });
-      // console.log(response);
-      this.categories = response.data.categories;
     } catch (error) {
       console.log(error);
     }
+    this.categories = response.data.categories;
+  }
 
-    this.category = this.categories.find((cat) => {
-      return cat.name === this.categoryName
-    })
-
+  async requestCategoryProducts() {
     try {
       const response = await strapi.request('POST', '/graphql', {
         data: {
@@ -56,16 +64,43 @@ class Categories extends React.Component {
       this.setState({
         products: response.data.category.products
       });
-      // console.log(response);
+      // console.log('products',response);
     } catch (error) {
       console.log(error);
+      this.setState({
+        products: []
+      });
     }
   }
+
+  setCategoryState() {
+    const category = this.categories.find((cat) => {
+      return cat.name === this.state.categoryName
+    });
+
+    this.category = category;
+  }
+
+  async componentDidMount() {
+    await this.requestCategoryIds();
+    // await this.setCategoryState();
+    // this.requestCategoryProducts();
+    // console.log(this.category);
+  }
+
+
 
   render() {
     return (
       <div>
-        <p>Categories</p>
+        {
+          this.state.products.map((product) => (
+            <div>
+              <img src={`${apiUrl}${product.image.url}`} alt={`${product.name}`}/>
+              <h4>{product.name}</h4>
+            </div>
+          ))
+        }
       </div>
     );
   }
