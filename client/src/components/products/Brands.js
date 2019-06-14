@@ -35,10 +35,10 @@ class Brands extends React.Component {
           }`
         }
       });
+      this.brands = response.data.brands;
     } catch (error) {
       console.log(error);
     }
-    this.brands = response.data.brands;
     // console.log(this.brands);
 
   }

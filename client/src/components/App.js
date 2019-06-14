@@ -2,12 +2,12 @@ import React from 'react';
 import anime from 'animejs';
 import { Previous, Next } from 'grommet-icons';
 
-import Carousel from './carousel/Carousel';
-import Slide from './carousel/Slide';
+import {Carousel, Slide, Arrows} from './carousel/Carousel';
 
 import slideImg1 from '../static/photo-1513531926349-466f15ec8cc7.jpeg';
 import slideImg2 from '../static/warren-wong-248636-unsplash.jpg';
 import slideImg3 from '../static/photo-1527905804285-2f67b86e3bf6.jpeg';
+
 
 class App extends React.Component {
   isAnimating = false;
@@ -124,31 +124,16 @@ class App extends React.Component {
     return (
       <div>
         <Carousel>
-          <Previous
-            size='large'
-            onClick={this.carouselLeft}
-            style={{
-              position: 'absolute',
-              height: '100vh',
-              top: 'calc(50vh - 30px)',
-              zIndex: 1000,
-              transform: 'translateY(-50%)',
-              paddingLeft: '5px'
-            }} />
-          <Next
-            size='large'
-            onClick={this.carouselRight}
-            style={{
-              position: 'absolute',
-              height: '100vh',
-              right: 0,
-              top: 'calc(50vh - 30px)',
-              zIndex: 1000,
-              transform: 'translateY(-50%)',
-              cursor: 'pointer',
-              paddingRight: '5px'
-
-            }} />
+          <Arrows>
+            <Previous
+              className="previous"
+              size='large'
+              onClick={this.carouselLeft} />
+            <Next
+              className="next"
+              size='large'
+              onClick={this.carouselRight} />
+          </Arrows>
           {slides}
         </Carousel>
         <br/>

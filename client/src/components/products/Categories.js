@@ -33,10 +33,10 @@ class Categories extends React.Component {
           }`
         }
       });
+      this.categories = response.data.categories;
     } catch (error) {
       console.log(error);
     }
-    this.categories = response.data.categories;
   }
 
   async requestCategoryProducts() {
@@ -69,12 +69,13 @@ class Categories extends React.Component {
   }
 
   setCategoryState() {
-    const category = this.categories.find((cat) => {
-      return cat.name.toLowerCase() ===
-             this.state.categoryName.toLowerCase()
-    });
+    {
+      const category = this.categories.find((cat) => {
+        return cat.name.toLowerCase() === this.state.categoryName.toLowerCase()
+      });
 
-    this.category = category;
+      this.category = category;
+    }
   }
 
   async getProducts() {
