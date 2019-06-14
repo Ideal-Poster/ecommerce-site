@@ -1,12 +1,13 @@
 import React from 'react';
 import anime from 'animejs';
+import { Previous, Next } from 'grommet-icons';
 
 import Carousel from './carousel/Carousel';
 import Slide from './carousel/Slide';
 
-import slideImg1 from "../static/photo-1513531926349-466f15ec8cc7.jpeg";
-import slideImg2 from "../static/warren-wong-248636-unsplash.jpg";
-import slideImg3 from "../static/photo-1527905804285-2f67b86e3bf6.jpeg";
+import slideImg1 from '../static/photo-1513531926349-466f15ec8cc7.jpeg';
+import slideImg2 from '../static/warren-wong-248636-unsplash.jpg';
+import slideImg3 from '../static/photo-1527905804285-2f67b86e3bf6.jpeg';
 
 class App extends React.Component {
   isAnimating = false;
@@ -47,6 +48,28 @@ class App extends React.Component {
     }
   }
 
+  carouselLeft = () => {
+    if (!this.isAnimating) {
+      const currentSlide = this.galleryImages[this.currentSlide];
+      const nextSlide =
+        this.currentSlide === 0 ?
+        this.galleryImages[this.galleryImages.length - 1] :
+        this.galleryImages[this.currentSlide - 1];
+      const prevSlide =
+        this.currentSlide === this.galleryImages.length - 1 ?
+        this.galleryImages[0] :
+        this.galleryImages[this.currentSlide + 1]
+      // // console.log(this.currentSlide, "current", currentSlide, "nrxt", nextSlide,"prv",prevSlide);
+      this.setSlideTo(prevSlide, 0);
+      this.moveSlideTo(nextSlide, 1);
+      this.moveSlideTo(currentSlide, 2);
+
+      this.currentSlide =
+        this.currentSlide === 0 ?
+        this.galleryImages.length - 1 : this.currentSlide - 1;
+    }
+  }
+
   setSlideTo(slide, pos) {
     anime.set(slide ,{
       left: this.position[pos].left,
@@ -58,7 +81,7 @@ class App extends React.Component {
     this.isAnimating = true;
     anime({
       targets: slide,
-      duartion: 500,
+      duration: 500,
       delay: 100,
       easing: 'easeInOutQuad',
       left: this.position[pos].left,
@@ -100,9 +123,42 @@ class App extends React.Component {
 
     return (
       <div>
-        <Carousel onClick={this.carouselRight}>
+        <Carousel>
+          <Previous
+            size='large'
+            onClick={this.carouselLeft}
+            style={{
+              position: 'absolute',
+              height: '100vh',
+              top: 'calc(50vh - 30px)',
+              zIndex: 1000,
+              transform: 'translateY(-50%)',
+              paddingLeft: '5px'
+            }} />
+          <Next
+            size='large'
+            onClick={this.carouselRight}
+            style={{
+              position: 'absolute',
+              height: '100vh',
+              right: 0,
+              top: 'calc(50vh - 30px)',
+              zIndex: 1000,
+              transform: 'translateY(-50%)',
+              cursor: 'pointer',
+              paddingRight: '5px'
+
+            }} />
           {slides}
         </Carousel>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <p>hello</p>
       </div>
     );
   }

@@ -19,7 +19,7 @@ class Navbar extends React.Component {
     categoriesOpen: false,
     releasesOpen: false
   }
-  navIsAnimating= false;
+  navIsAnimating = false;
   isAnimating = false;
   navDisplayed = true;
   options = ['brands', 'categories', 'releases'];
@@ -56,6 +56,14 @@ class Navbar extends React.Component {
         easing: 'easeInOutQuad',
         translateY: '-60px',
         duration: 400,
+        delay: 100
+      });
+
+      anime({
+        targets: '.sections',
+        easing: 'easeInOutQuad',
+        translateY: '-60px',
+        duration: 400,
         delay: 100,
         complete: () => {
           this.navIsAnimating = false;
@@ -70,6 +78,12 @@ class Navbar extends React.Component {
       this.navIsAnimating = true;
       anime({
         targets: '.navMenu',
+        easing: 'easeInOutQuad',
+        translateY: '0px',
+        duration: 400
+      });
+      anime({
+        targets: '.sections',
         easing: 'easeInOutQuad',
         translateY: '0px',
         duration: 400,
@@ -153,8 +167,6 @@ class Navbar extends React.Component {
           onMouseEnter={ () => { this.displayDropdown(i) } }
           onMouseLeave={ () => { this.hideDropdown(i); }}
           >{`${link}`}</NavLink>
-
-
       );
     })
 
@@ -174,6 +186,7 @@ class Navbar extends React.Component {
         </Navigation>
 
         <Sections
+          className="sections"
           onMouseEnter={ this.sectionHoverEnter }
           onMouseLeave={ this.sectionHoverLeave }>
 

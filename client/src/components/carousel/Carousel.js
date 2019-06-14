@@ -9,5 +9,5 @@ export default styled.div`
 	position: relative;
   overflow: hidden;
   width: 100vw;
-  height: calc(100vh - 90px);
+  height: calc(100vh - 60px);
 `;
