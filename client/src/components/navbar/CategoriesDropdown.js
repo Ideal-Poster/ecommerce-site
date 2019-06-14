@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 
 class CategoriesDropdown extends React.Component {
   render() {
-    const categories = ['Shoes', 'Hats', 'Tops', 'Bottoms'].map((categories, i) => (
-      <Link to={`/categories/${categories.toLowerCase()}/`}>
-        <CategoryItem key={`category-${i}`}>{ categories }</CategoryItem>
+    const categories = ['Shoes', 'Hats', 'Tops', 'Bottoms'].map((category, i) => (
+      <Link to={`/categories/${category.toLowerCase()}/`}>
+        <CategoryItem key={`category-${i}`}>{ category }</CategoryItem>
       </Link>
     ));
 

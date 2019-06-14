@@ -16,10 +16,7 @@ class Categories extends React.Component {
     const pathCategory = this.props.match.params.cat;
     if (this.state.categoryName !== pathCategory) {
       await this.setState({ categoryName: pathCategory });
-      await this.setCategoryState();
-      await this.requestCategoryProducts();
-      // console.log(this.state.products);
-
+      this.getProducts();
     }
   }
 
@@ -67,24 +64,27 @@ class Categories extends React.Component {
       // console.log('products',response);
     } catch (error) {
       console.log(error);
-      this.setState({
-        products: []
-      });
+      this.setState({ products: [] });
     }
   }
 
   setCategoryState() {
     const category = this.categories.find((cat) => {
-      return cat.name === this.state.categoryName
+      return cat.name.toLowerCase() ===
+             this.state.categoryName.toLowerCase()
     });
 
     this.category = category;
   }
 
+  async getProducts() {
+    await this.setCategoryState();
+    this.requestCategoryProducts();
+  }
+
   async componentDidMount() {
     await this.requestCategoryIds();
-    // await this.setCategoryState();
-    // this.requestCategoryProducts();
+    this.getProducts();
     // console.log(this.category);
   }
 

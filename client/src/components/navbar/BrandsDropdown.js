@@ -4,15 +4,18 @@ import {
   BrandsSections,
   Brand,
   FeaturedBrand
-} from './styled/Brands'
+} from './styled/Brands';
+import { Link } from 'react-router-dom';
 
 
 class BrandsDropdown extends React.Component {
 
   render() {
-    const brandNames = ['Nike', 'Puma', 'Converse', 'Adidas', 'North Face'].map((brand, i) => {
-      return <Brand key={`brand-${i}`}>{ brand }</Brand>
-    });
+    const brandNames = ['Nike', 'Puma', 'Converse', 'Adidas', 'North Face'].map((brand, i) => (
+      <Link to={`/brands/${brand.toLowerCase()}/`}>
+        <Brand key={`brand-${i}`}>{ brand }</Brand>
+      </Link>
+    ));
     return(
       <Brands className="brandsComp">
         <BrandsSections>
