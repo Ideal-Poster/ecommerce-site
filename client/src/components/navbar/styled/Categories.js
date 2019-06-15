@@ -7,6 +7,7 @@ export const Categories = styled.div`
   opacity: 0;
   background: orange;
 `;
+
  export const CategoriesSections = styled.div`
   position: relative;
   border-right: 1px solid #565656;

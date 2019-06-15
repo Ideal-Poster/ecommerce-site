@@ -33,10 +33,33 @@ export const Arrows = styled.div`
   };
   & > .next {
     right: 0;
-    padding-right: 5px;
+    padding-right: 10px;
+    padding-left: 20px;
   };
   & > .previous {
     left: 0;
-    padding-left: 5px;
+    padding-left: 10px;
+    padding-right: 20px;
   };
 `
+
+export const SlideIndicators = styled.div`
+  position: absolute;
+  left: calc(50vw - 50px);
+  top: calc(100vh - 110px);
+`;
+
+export const SlideIndicator = styled.div`
+  position: absolute;
+  height: 16px;
+  width: 16px;
+  border: 1px solid orange;
+`;
+
+export const ActiveSlideIndicator = styled.div`
+  position: absolute;
+  height: 16px;
+  width: 16px;
+  background: orange;
+  border: 1px solid orange;
+`;

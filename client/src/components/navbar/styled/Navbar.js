@@ -39,6 +39,7 @@ export const NavLink = styled.p`
    color: gray;
   }
 `;
+
 export const Sections = styled.div`
   position: fixed;
   display: flex;

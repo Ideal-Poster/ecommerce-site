@@ -89,8 +89,6 @@ class Categories extends React.Component {
     // console.log(this.category);
   }
 
-
-
   render() {
     return (
       <div>
