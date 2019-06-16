@@ -16,12 +16,6 @@
     "description": {
       "type": "text"
     },
-    "image": {
-      "model": "file",
-      "via": "related",
-      "plugin": "upload",
-      "required": true
-    },
     "products": {
       "collection": "product",
       "via": "brand"

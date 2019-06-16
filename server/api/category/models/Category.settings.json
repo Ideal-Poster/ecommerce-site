@@ -15,12 +15,6 @@
     "products": {
       "collection": "product",
       "via": "category"
-    },
-    "image": {
-      "model": "file",
-      "via": "related",
-      "plugin": "upload",
-      "required": true
     }
   }
 }
