@@ -23,7 +23,8 @@ class Navbar extends React.Component {
   isAnimating = false;
   navDisplayed = true;
   options = ['brands', 'categories', 'releases'];
-  hover = false;
+  hover = [ false,false, false ];
+  activeHover;
 
   componentDidMount() {
     this.offset = window.pageYOffset;
@@ -99,27 +100,42 @@ class Navbar extends React.Component {
   displayDropdown = i => {
     const duration = 350;
 
-    // interupt and finish hide animation
-    this.hideAnimation.seek(duration);
 
-    this.setState({ [this.options[i]+'Open']: true }, () => {
-      this.displayAnimation = anime({
-        targets: '.' + this.options[i] + 'Comp',
-        autoplay: false,
-        easing: 'easeInOutQuad',
-        opacity: 1,
-        duration,
-        complete: () => {
-          this.isAnimating = false;
-        }
+    if (this.activeHover !== i) {
+
+      // interupt and finish hide animation
+      this.hideAnimation.seek(duration);
+
+      this.setState({ [this.options[i]+'Open']: true }, () => {
+        this.displayAnimation = anime({
+          targets: '.' + this.options[i] + 'Comp',
+          autoplay: false,
+          easing: 'easeInOutQuad',
+          opacity: 1,
+          duration,
+          complete: () => {
+            this.isAnimating = false;
+          }
+        });
+
+        this.isAnimating = true;
+        this.displayAnimation.play();
       });
 
-      this.isAnimating = true;
-      this.displayAnimation.play();
-    });
+    } else {
+      // interupt and finish hide animation
+      this.hideAnimation.reset();
+
+      this.sectionHoverEnter();
+    }
+
+
+    this.activeHover = i;
+
   }
 
   hideDropdown = i => {
+
     const duration = 350;
 
     this.hideAnimation = anime({
@@ -130,18 +146,20 @@ class Navbar extends React.Component {
       duration,
       complete: () => {
         this.setState({ [this.options[i]+ 'Open']: false });
+        this.activeHover = null;
+
       }
     });
     this.hideAnimation.play();
   }
 
-  sectionHoverEnter = () => {
-    this.hover = true;
+  sectionHoverEnter = (i) => {
+    this.hover[i] = true;
     this.hideAnimation.reset();
   }
 
-  sectionHoverLeave = () => {
-    this.hover = false;
+  sectionHoverLeave = (i) => {
+    this.hover[i] = false;
     this.hideAnimation.play();
   }
 
@@ -162,14 +180,14 @@ class Navbar extends React.Component {
           key={`navbar-link-${i}`}>{`${link}`}</NavLink>
         </Link> :
 
-        <Link>
+        <a>
           <NavLink
             key={`navbar-link-${i}`}
             onMouseEnter={ () => { this.displayDropdown(i) } }
             onMouseLeave={ () => { this.hideDropdown(i); }}
             >{`${link}`}
           </NavLink>
-        </Link>
+        </a>
       );
     })
 
@@ -190,8 +208,9 @@ class Navbar extends React.Component {
 
         <Sections
           className="sections"
-          onMouseEnter={ this.sectionHoverEnter }
-          onMouseLeave={ this.sectionHoverLeave }>
+          onMouseEnter={ () => { this.sectionHoverEnter(this.activeHover) } }
+          onMouseLeave={ () => { this.sectionHoverLeave(this.activeHover) } }
+          >
 
           {this.state.brandsOpen &&
             <BrandsDropdown/>
