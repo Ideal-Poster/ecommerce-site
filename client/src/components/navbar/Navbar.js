@@ -153,20 +153,23 @@ class Navbar extends React.Component {
         link === activeLink ?
         <Link
           to={`${link}`}
-          style={{ textDecoration:'none', marginLeft: '25px' }}
+          // style={{ background: 'orange'}}
           key={`link-${i}`}
           onMouseEnter={ () => { this.displayDropdown(i) } }
           onMouseLeave={ () => { this.hideDropdown(i); }}
-          onClick={ this.sectionHoverLeave }
-          >
-          <NavLink key={`navbar-link-${i}`}>{`${link}`}</NavLink>
-        </Link>:
-        <NavLink
-          key={`navbar-link-${i}`}
-          style={{ textDecoration:'none', marginLeft: '25px', cursor: 'pointer' }}
-          onMouseEnter={ () => { this.displayDropdown(i) } }
-          onMouseLeave={ () => { this.hideDropdown(i); }}
-          >{`${link}`}</NavLink>
+          onClick={ this.sectionHoverLeave }>
+          <NavLink
+          key={`navbar-link-${i}`}>{`${link}`}</NavLink>
+        </Link> :
+
+        <Link>
+          <NavLink
+            key={`navbar-link-${i}`}
+            onMouseEnter={ () => { this.displayDropdown(i) } }
+            onMouseLeave={ () => { this.hideDropdown(i); }}
+            >{`${link}`}
+          </NavLink>
+        </Link>
       );
     })
 

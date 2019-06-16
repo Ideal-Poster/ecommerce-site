@@ -38,6 +38,9 @@ export const NavLink = styled.p`
   &:hover {
    color: gray;
   }
+  text-decoration: none;
+  margin-left: 25px;
+  cursor: pointer;
 `;
 
 export const Sections = styled.div`

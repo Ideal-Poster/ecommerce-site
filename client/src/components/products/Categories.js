@@ -1,5 +1,7 @@
 import React from 'react';
 import Strapi from 'strapi-sdk-javascript';
+import { Container, Row, Col } from 'react-awesome-styled-grid';
+
 
 const apiUrl = 'http://localhost:1337';
 const strapi = new Strapi(apiUrl);
@@ -91,16 +93,20 @@ class Categories extends React.Component {
 
   render() {
     return (
-      <div>
-        {
-          this.state.products.map((product) => (
-            <div>
-              <img src={`${apiUrl}${product.image.url}`} alt={`${product.name}`}/>
-              <h4>{product.name}</h4>
-            </div>
-          ))
-        }
-      </div>
+      <Container>
+        <Row>
+          {
+            this.state.products.map((product) => (
+              <Col debug xs={2} sm={2}>
+                <div>
+                  <img style={{width: '100%'}} src={`${apiUrl}${product.image.url}`} alt={`${product.name}`}/>
+                  <h4>{product.name}</h4>
+                </div>
+              </Col>
+            ))
+          }
+        </Row>
+      </Container>
     );
   }
 }
