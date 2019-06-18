@@ -1,9 +1,9 @@
 import React from 'react';
 import {BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import Home from './products/Home';
-import Categories from './products/Categories';
-import Brand from './products/Brands';
+import Home from './pages/Home';
+import Categories from './pages/Categories';
+import Brand from './pages/Brands';
 import Navbar from './navbar/Navbar';
 
 class App extends React.Component {
