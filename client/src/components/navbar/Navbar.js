@@ -23,7 +23,6 @@ class Navbar extends React.Component {
   isAnimating = false;
   navDisplayed = true;
   options = ['brands', 'categories', 'releases'];
-  hover = [ false,false, false ];
   activeHover;
 
   componentDidMount() {
@@ -98,46 +97,29 @@ class Navbar extends React.Component {
   }
 
   displayDropdown = i => {
-    const duration = 350;
+    const duration = 200;
+    // interupt and finish hide animation
+    this.hideAnimation.seek(duration);
 
-
-    if (this.activeHover !== i) {
-
-      // interupt and finish hide animation
-      this.hideAnimation.seek(duration);
-
-      this.setState({ [this.options[i]+'Open']: true }, () => {
-        this.displayAnimation = anime({
-          targets: '.' + this.options[i] + 'Comp',
-          autoplay: false,
-          easing: 'easeInOutQuad',
-          opacity: 1,
-          duration,
-          complete: () => {
-            this.isAnimating = false;
-          }
-        });
-
-        this.isAnimating = true;
-        this.displayAnimation.play();
+    this.setState({ [this.options[i]+'Open']: true }, () => {
+      this.displayAnimation = anime({
+        targets: '.' + this.options[i] + 'Comp',
+        autoplay: false,
+        easing: 'easeInOutQuad',
+        opacity: 1,
+        duration,
+        complete: () => {
+          this.isAnimating = false;
+        }
       });
 
-    } else {
-      // interupt and finish hide animation
-      this.hideAnimation.reset();
-
-      this.sectionHoverEnter();
-    }
-
-
-    this.activeHover = i;
-
+      this.isAnimating = true;
+      this.displayAnimation.play();
+    });
   }
 
   hideDropdown = i => {
-
-    const duration = 350;
-
+    const duration = 200;
     this.hideAnimation = anime({
       targets: '.' + this.options[i] + 'Comp',
       autoplay: false,
@@ -147,19 +129,16 @@ class Navbar extends React.Component {
       complete: () => {
         this.setState({ [this.options[i]+ 'Open']: false });
         this.activeHover = null;
-
       }
     });
     this.hideAnimation.play();
   }
 
   sectionHoverEnter = (i) => {
-    this.hover[i] = true;
     this.hideAnimation.reset();
   }
 
-  sectionHoverLeave = (i) => {
-    this.hover[i] = false;
+  sectionHoverLeave = () => {
     this.hideAnimation.play();
   }
 
