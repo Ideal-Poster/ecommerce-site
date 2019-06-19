@@ -119,7 +119,6 @@ class Home extends React.Component {
     });
   }
 
-
   render() {
     let slides = [ slideImg1, slideImg2, slideImg3 ].map((i) => (
       <Slide className="slide" key={i} img={i}/>
@@ -138,9 +137,7 @@ class Home extends React.Component {
               size='large'
               onClick={this.carouselRight} />
           </Arrows>
-
           {slides}
-
           <SlideIndicators>
             {
               this.state.activeSlide === 1 ?

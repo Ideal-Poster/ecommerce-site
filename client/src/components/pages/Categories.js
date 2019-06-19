@@ -1,6 +1,11 @@
 import React from 'react';
 import Strapi from 'strapi-sdk-javascript';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { Container, Row, Col } from 'react-awesome-styled-grid';
+
+import { selectProduct } from '../../actions';
+
 
 
 const apiUrl = 'http://localhost:1337';
@@ -92,16 +97,20 @@ class Categories extends React.Component {
   }
 
   render() {
+    console.log(this.props.productId);
+    
     return (
       <Container>
         <Row>
           {
             this.state.products.map((product) => (
               <Col debug xs={2} sm={2}>
-                <div>
-                  <img style={{width: '100%'}} src={`${apiUrl}${product.image.url}`} alt={`${product.name}`}/>
-                  <h4>{product.name}</h4>
-                </div>
+                <Link>
+                  <div>
+                    <img style={{width: '100%'}} src={`${apiUrl}${product.image.url}`} alt={`${product.name}`}/>
+                    <h4>{product.name}</h4>
+                  </div>
+                </Link>
               </Col>
             ))
           }
@@ -111,4 +120,10 @@ class Categories extends React.Component {
   }
 }
 
-export default Categories;
+const mapStateToProps = state => {
+  return {
+    productId: state.productId
+  }
+};
+
+export default connect(mapStateToProps,{ selectProduct })(Categories);

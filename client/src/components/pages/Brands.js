@@ -11,7 +11,6 @@ class Brands extends React.Component {
   state = {
     products: [],
     brandName: this.props.match.params.brand
-
   }
   brand: {};
   brands = [];
