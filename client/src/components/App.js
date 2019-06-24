@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import Categories from './pages/Categories';
 import Brand from './pages/Brands';
 import Navbar from './navbar/Navbar';
+import Product from './pages/Product';
 
 class App extends React.Component {
   render() {
@@ -16,6 +17,7 @@ class App extends React.Component {
           <Route exact path="/" component={Home} />
           <Route path="/categories/:cat" component={Categories}/>
           <Route path="/brands/:brand" component={Brand}/>
+          <Route path="/product/:productId" component={Product}/>
         </div>
       </Switch>
     </Router>

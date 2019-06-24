@@ -234,7 +234,7 @@ input editFileInput {
 input editProductInput {
   name: String
   price: Float
-  image: ID
+  images: [ID]
   description: String
   brand: ID
   category: ID
@@ -284,7 +284,7 @@ scalar JSON
 """The `Long` scalar type represents 52-bit integers"""
 scalar Long
 
-union Morph = UsersPermissionsMe | UsersPermissionsMeRole | Brand | createBrandPayload | updateBrandPayload | deleteBrandPayload | BrandConnection | BrandAggregator | BrandGroupBy | BrandConnection_id | BrandConnectionId | BrandConnectionCreatedAt | BrandConnectionUpdatedAt | BrandConnectionName | BrandConnectionDescription | Category | createCategoryPayload | updateCategoryPayload | deleteCategoryPayload | CategoryConnection | CategoryAggregator | CategoryGroupBy | CategoryConnection_id | CategoryConnectionId | CategoryConnectionCreatedAt | CategoryConnectionUpdatedAt | CategoryConnectionName | Product | createProductPayload | updateProductPayload | deleteProductPayload | ProductConnection | ProductAggregator | ProductGroupBy | ProductConnection_id | ProductConnectionId | ProductConnectionCreatedAt | ProductConnectionUpdatedAt | ProductConnectionName | ProductConnectionPrice | ProductConnectionImage | ProductConnectionDescription | ProductConnectionBrand | ProductConnectionCategory | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileGroupBy | UploadFileConnection_id | UploadFileConnectionId | UploadFileConnectionCreatedAt | UploadFileConnectionUpdatedAt | UploadFileConnectionName | UploadFileConnectionHash | UploadFileConnectionSha256 | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionProvider | UploadFileConnectionPublic_id | UsersPermissionsPermission | UsersPermissionsRole | createRolePayload | updateRolePayload | deleteRolePayload | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnection_id | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | UsersPermissionsUser | createUserPayload | updateUserPayload | deleteUserPayload | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnection_id | UsersPermissionsUserConnectionId | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole
+union Morph = UsersPermissionsMe | UsersPermissionsMeRole | Brand | createBrandPayload | updateBrandPayload | deleteBrandPayload | BrandConnection | BrandAggregator | BrandGroupBy | BrandConnection_id | BrandConnectionId | BrandConnectionCreatedAt | BrandConnectionUpdatedAt | BrandConnectionName | BrandConnectionDescription | Category | createCategoryPayload | updateCategoryPayload | deleteCategoryPayload | CategoryConnection | CategoryAggregator | CategoryGroupBy | CategoryConnection_id | CategoryConnectionId | CategoryConnectionCreatedAt | CategoryConnectionUpdatedAt | CategoryConnectionName | Product | createProductPayload | updateProductPayload | deleteProductPayload | ProductConnection | ProductAggregator | ProductGroupBy | ProductConnection_id | ProductConnectionId | ProductConnectionCreatedAt | ProductConnectionUpdatedAt | ProductConnectionName | ProductConnectionPrice | ProductConnectionDescription | ProductConnectionBrand | ProductConnectionCategory | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileGroupBy | UploadFileConnection_id | UploadFileConnectionId | UploadFileConnectionCreatedAt | UploadFileConnectionUpdatedAt | UploadFileConnectionName | UploadFileConnectionHash | UploadFileConnectionSha256 | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionProvider | UploadFileConnectionPublic_id | UsersPermissionsPermission | UsersPermissionsRole | createRolePayload | updateRolePayload | deleteRolePayload | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnection_id | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | UsersPermissionsUser | createUserPayload | updateUserPayload | deleteUserPayload | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnection_id | UsersPermissionsUserConnectionId | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole
 
 type Mutation {
   createBrand(input: createBrandInput): createBrandPayload
@@ -324,10 +324,10 @@ type Product {
   updatedAt: DateTime!
   name: String!
   price: Float!
-  image: UploadFile
   description: String
   brand: Brand
   category: Category
+  images(sort: String, limit: Int, start: Int, where: JSON): [UploadFile]
 }
 
 type ProductAggregator {
@@ -371,11 +371,6 @@ type ProductConnectionId {
   connection: ProductConnection
 }
 
-type ProductConnectionImage {
-  key: ID
-  connection: ProductConnection
-}
-
 type ProductConnectionName {
   key: String
   connection: ProductConnection
@@ -398,7 +393,6 @@ type ProductGroupBy {
   updatedAt: [ProductConnectionUpdatedAt]
   name: [ProductConnectionName]
   price: [ProductConnectionPrice]
-  image: [ProductConnectionImage]
   description: [ProductConnectionDescription]
   brand: [ProductConnectionBrand]
   category: [ProductConnectionCategory]
@@ -407,7 +401,7 @@ type ProductGroupBy {
 input ProductInput {
   name: String!
   price: Float!
-  image: ID
+  images: [ID]
   description: String
   brand: ID
   category: ID

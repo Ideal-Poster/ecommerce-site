@@ -19,8 +19,8 @@
       "type": "decimal",
       "required": true
     },
-    "image": {
-      "model": "file",
+    "images": {
+      "collection": "file",
       "via": "related",
       "plugin": "upload",
       "required": true

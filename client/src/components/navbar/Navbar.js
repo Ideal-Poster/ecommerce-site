@@ -152,8 +152,8 @@ class Navbar extends React.Component {
           to={`${link}`}
           // style={{ background: 'orange'}}
           key={`link-${i}`}
-          onMouseEnter={ () => { this.displayDropdown(i) } }
-          onMouseLeave={ () => { this.hideDropdown(i); }}
+          onMouseEnter={ () => this.displayDropdown(i) }
+          onMouseLeave={ () => this.hideDropdown(i) }
           onClick={ this.sectionHoverLeave }>
           <NavLink
           key={`navbar-link-${i}`}>{`${link}`}</NavLink>
@@ -162,9 +162,9 @@ class Navbar extends React.Component {
         <a>
           <NavLink
             key={`navbar-link-${i}`}
-            onMouseEnter={ () => { this.displayDropdown(i) } }
-            onMouseLeave={ () => { this.hideDropdown(i); }}
-            >{`${link}`}
+            onMouseEnter={ () =>this.displayDropdown(i) }
+            onMouseLeave={ () => this.hideDropdown(i) } >
+            {`${link}`}
           </NavLink>
         </a>
       );
@@ -188,8 +188,7 @@ class Navbar extends React.Component {
         <Sections
           className="sections"
           onMouseEnter={ () => { this.sectionHoverEnter(this.activeHover) } }
-          onMouseLeave={ () => { this.sectionHoverLeave(this.activeHover) } }
-          >
+          onMouseLeave={ () => { this.sectionHoverLeave(this.activeHover) } } >
 
           {this.state.brandsOpen &&
             <BrandsDropdown/>

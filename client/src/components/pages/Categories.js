@@ -1,12 +1,7 @@
 import React from 'react';
 import Strapi from 'strapi-sdk-javascript';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
 import { Container, Row, Col } from 'react-awesome-styled-grid';
-
-import { selectProduct } from '../../actions';
-
-
 
 const apiUrl = 'http://localhost:1337';
 const strapi = new Strapi(apiUrl);
@@ -54,9 +49,10 @@ class Categories extends React.Component {
             category(id: "${this.category._id}") {
               name
               products {
+                id
                 name
                 description
-                image {
+                images {
                   url
                 }
               }
@@ -97,18 +93,18 @@ class Categories extends React.Component {
   }
 
   render() {
-    console.log(this.props.productId);
-    
     return (
       <Container>
         <Row>
           {
             this.state.products.map((product) => (
               <Col debug xs={2} sm={2}>
-                <Link>
+                <Link to={`/product/${product.id}`}>
                   <div>
-                    <img style={{width: '100%'}} src={`${apiUrl}${product.image.url}`} alt={`${product.name}`}/>
-                    <h4>{product.name}</h4>
+                    <div style={{height: '100%', background: 'yellow'}}>
+                      <img style={{width: '100%'}} src={`${apiUrl}${product.images[0].url}`} alt={`${product.name}`}/>
+                    </div>
+                    <h4 style={{ bottom: '0', position: 'relative', verticalAlign: 'center' }}>{product.name}</h4>
                   </div>
                 </Link>
               </Col>
@@ -120,10 +116,5 @@ class Categories extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    productId: state.productId
-  }
-};
 
-export default connect(mapStateToProps,{ selectProduct })(Categories);
+export default Categories;

@@ -1,6 +1,7 @@
 import React from 'react';
 import Strapi from 'strapi-sdk-javascript';
 import { Container, Row, Col } from 'react-awesome-styled-grid';
+import { Link } from 'react-router-dom';
 
 
 const apiUrl = 'http://localhost:1337';
@@ -37,6 +38,8 @@ class Brands extends React.Component {
         }
       });
       this.brands = response.data.brands;
+      console.log('jello',this.brands);
+
     } catch (error) {
       console.log(error);
     }
@@ -52,9 +55,10 @@ class Brands extends React.Component {
             brand(id: "${this.brand._id}") {
               name
               products {
+                id
                 name
                 description
-                image {
+                images {
                   url
                 }
               }
@@ -71,15 +75,14 @@ class Brands extends React.Component {
       // console.log(this.state.products);
 
     } catch (error) {
-      console.log(error);
+      console.log('hello', error);
       this.setState({ products: [] });
     }
   }
 
   setBrandState() {
     const brand = this.brands.find((brd) => {
-      return brd.name.toLowerCase() ===
-             this.state.brandName.toLowerCase()
+      return brd.name.toLowerCase() === this.state.brandName.toLowerCase()
     });
 
     this.brand = brand;
@@ -102,11 +105,13 @@ class Brands extends React.Component {
         {
           this.state.products.map((product) => (
             <Col debug xs={2} sm={2}>
-              <div>
-                <img style={{ width: '100%' }} src={`${apiUrl}${product.image.url}`} alt={`${product.name}`}/>
-                <h4>{product.name}</h4>
-              </div>
-            </Col>
+                <Link to={`/product/${product.id}`}>
+                  <div>
+                    <img style={{ width: '100%' }} src={`${apiUrl}${product.images[0].url}`} alt={`${product.name}`}/>
+                    <h4>{product.name}</h4>
+                  </div>
+                </Link>
+              </Col>
           ))
         }
         </Row>
