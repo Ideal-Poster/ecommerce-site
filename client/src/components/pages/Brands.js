@@ -1,6 +1,8 @@
 import React from 'react';
 import Strapi from 'strapi-sdk-javascript';
-import { Container, Row, Col } from 'react-awesome-styled-grid';
+import { Container, Row, Col } from 'styled-bootstrap-grid';
+
+
 import { Link } from 'react-router-dom';
 
 

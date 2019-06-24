@@ -1,6 +1,8 @@
 import React from 'react';
 import Strapi from 'strapi-sdk-javascript';
-import { Container, Row, Col } from 'react-awesome-styled-grid';
+
+import { Container, Row, Col } from 'styled-bootstrap-grid';
+
 
 const apiUrl = 'http://localhost:1337';
 const strapi = new Strapi(apiUrl);
@@ -53,7 +55,7 @@ class Product extends React.Component {
 
 
     return(
-      <Container>
+      <Container fluid={true}>
         <Row>
           <Col xs={4} sm={4} style={{background:'yellow'}}>
             {

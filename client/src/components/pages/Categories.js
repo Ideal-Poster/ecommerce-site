@@ -1,7 +1,8 @@
 import React from 'react';
 import Strapi from 'strapi-sdk-javascript';
 import { Link } from 'react-router-dom';
-import { Container, Row, Col } from 'react-awesome-styled-grid';
+import { Container, Row, Col } from 'styled-bootstrap-grid';
+
 
 const apiUrl = 'http://localhost:1337';
 const strapi = new Strapi(apiUrl);
