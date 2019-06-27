@@ -95,17 +95,15 @@ class Categories extends React.Component {
 
   render() {
     return (
-      <Container>
+      <Container fluid={true}>
         <Row>
           {
             this.state.products.map((product) => (
-              <Col debug xs={2} sm={2}>
+              <Col xs={6} sm={6} lg={3}>
                 <Link to={`/product/${product.id}`}>
                   <div>
-                    <div style={{height: '100%', background: 'yellow'}}>
-                      <img style={{width: '100%'}} src={`${apiUrl}${product.images[0].url}`} alt={`${product.name}`}/>
-                    </div>
-                    <h4 style={{ bottom: '0', position: 'relative', verticalAlign: 'center' }}>{product.name}</h4>
+                    <img style={{width: '100%'}} src={`${apiUrl}${product.images[0].url}`} alt={`${product.name}`}/>
+                    <h4 >{product.name}</h4>
                   </div>
                 </Link>
               </Col>
