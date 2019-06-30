@@ -61,11 +61,9 @@ class Categories extends React.Component {
           }`
         }
       });
-
       this.setState({
         products: response.data.category.products
       });
-      // console.log('products',response);
     } catch (error) {
       console.log(error);
       this.setState({ products: [] });
@@ -77,7 +75,6 @@ class Categories extends React.Component {
       const category = this.categories.find((cat) => {
         return cat.name.toLowerCase() === this.state.categoryName.toLowerCase()
       });
-
       this.category = category;
     }
   }
@@ -90,7 +87,6 @@ class Categories extends React.Component {
   async componentDidMount() {
     await this.requestCategoryIds();
     this.getProducts();
-    // console.log(this.category);
   }
 
   render() {
