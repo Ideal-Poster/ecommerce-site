@@ -4,8 +4,7 @@ import { Container, Row, Col } from 'styled-bootstrap-grid';
 
 import { ProductContainer, ProductMargin, ProductView, ImageSelect } from './styled/Product';
 
-const apiUrl = 'http://localhost:1337';
-const strapi = new Strapi(apiUrl);
+const strapi = new Strapi('');
 
 class Product extends React.Component {
   state = {
@@ -60,7 +59,7 @@ class Product extends React.Component {
       <Col sm={4}>
         <ImageSelect
           onClick={ () => this.selectImage(i) }
-          src={`${apiUrl}${this.state.images[i].url}`} alt="" />
+          src={`${this.state.images[i].url}`} alt="" />
       </Col>
     );
   }
@@ -73,7 +72,7 @@ class Product extends React.Component {
         <ProductContainer>
           { images[0] &&
             <ProductMargin>
-              <ProductView image={`url(${apiUrl}${this.state.images[this.state.imageSelect].url})`}/>
+              <ProductView image={`url(${this.state.images[this.state.imageSelect].url})`}/>
               <Row>
                 { images.map((url, i) => ( images && this.renderImageSelection(i))) }
               </Row>

@@ -12,15 +12,15 @@ export const ProductMargin = styled.div`
 export const ProductView = styled.div`
   height: 0;
   width: 100%;
-  padding-bottom: 90%;
+  padding-bottom: 85%;
   background-image: ${ props => props.image };
   background-repeat: no-repeat;
-  background-position: center;
+  background-position: center center;
   background-size: 90%;
+  /* border: 1px solid black; */
 `;
 
 export const ImageSelect = styled.img`
   width: 100%;
-  margin-left: ${ props => props.marginLeft || 0 };
   cursor: pointer;
 `;

@@ -3,9 +3,7 @@ import Strapi from 'strapi-sdk-javascript';
 import { Link } from 'react-router-dom';
 import { Container, Row, Col } from 'styled-bootstrap-grid';
 
-
-const apiUrl = 'http://localhost:1337';
-const strapi = new Strapi(apiUrl);
+const strapi = new Strapi('');
 
 class Categories extends React.Component {
   state = {
@@ -98,7 +96,7 @@ class Categories extends React.Component {
               <Col xs={6} sm={6} lg={3}>
                 <Link to={`/product/${product.id}`}>
                   <div>
-                    <img style={{width: '100%'}} src={`${apiUrl}${product.images[0].url}`} alt={`${product.name}`}/>
+                    <img style={{width: '100%'}} src={`${product.images[0].url}`} alt={`${product.name}`}/>
                     <h4 >{product.name}</h4>
                   </div>
                 </Link>

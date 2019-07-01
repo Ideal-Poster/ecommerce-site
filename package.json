@@ -1,2 +1,12 @@
 {
+  "name": "ecommerce-site",
+  "version": "1.0.0",
+  "scripts": {
+    "client": "cd client && yarn start",
+    "server": "cd server && strapi start",
+    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\""
+  },
+  "dependencies": {
+    "concurrently": "^4.1.1"
+  }
 }

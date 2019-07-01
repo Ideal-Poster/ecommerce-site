@@ -2,13 +2,9 @@ import React from 'react';
 import Strapi from 'strapi-sdk-javascript';
 import { Container, Row, Col } from 'styled-bootstrap-grid';
 
-
 import { Link } from 'react-router-dom';
 
-
-const apiUrl = 'http://localhost:1337';
-const strapi = new Strapi(apiUrl);
-
+const strapi = new Strapi('');
 
 class Brands extends React.Component {
   state = {
@@ -102,18 +98,18 @@ class Brands extends React.Component {
 
   render() {
     return(
-      <Container>
+      <Container fluid={true}>
         <Row>
         {
           this.state.products.map((product) => (
             <Col xs={6} sm={6} md={4} xl={3}>
-                <Link to={`/product/${product.id}`}>
-                  <div>
-                    <img style={{ width: '100%' }} src={`${apiUrl}${product.images[0].url}`} alt={`${product.name}`}/>
-                    <h4>{product.name}</h4>
-                  </div>
-                </Link>
-              </Col>
+              <Link to={`/product/${product.id}`}>
+                <div>
+                  <img style={{ width: '100%' }} src={`${product.images[0].url}`} alt={`${product.name}`}/>
+                  <h4>{product.name}</h4>
+                </div>
+              </Link>
+            </Col>
           ))
         }
         </Row>
