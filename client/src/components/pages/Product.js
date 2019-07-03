@@ -37,9 +37,10 @@ class Product extends React.Component {
       });
 
       // console.log(response);
-      const { name, price, images, description } = response.data.product;
+      const { _id, name, price, images, description } = response.data.product;
       this.setState({
         product: {
+          _id,
           name,
           price,
           images,
@@ -69,7 +70,12 @@ class Product extends React.Component {
     }
   }
 
-
+  deleteItemFromCart = itemToDeleteId => {
+    const filteredItems = this.state.cartItems.filter(
+      item => item._id !== itemToDeleteId
+    );
+    this.setState({ cortItems: filteredItems });
+  }
 
   selectImage = i => {
     this.setState({ imageSelect: i });
