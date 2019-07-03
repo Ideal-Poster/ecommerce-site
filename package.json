@@ -1,6 +1,7 @@
 {
   "name": "ecommerce-site",
   "version": "1.0.0",
+  "license": "MIT",
   "scripts": {
     "client": "cd client && yarn start",
     "server": "cd server && strapi start",

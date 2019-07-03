@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "proxy": "http://localhost:1337/",
+  "license": "MIT",
   "dependencies": {
     "animejs": "^3.0.1",
     "grommet-icons": "^4.2.0",

@@ -8,11 +8,14 @@ const strapi = new Strapi('');
 
 class Product extends React.Component {
   state = {
-    name: '',
-    price: 0,
-    images: [],
-    description: '',
-    imageSelect: 0
+    product: {
+      name: '',
+      price: 0,
+      images: [],
+      description: ''
+    },
+    imageSelect: 0,
+    cartItems: []
   };
 
   async requestProduct() {
@@ -21,6 +24,7 @@ class Product extends React.Component {
         data: {
           query: `{
             product(id: "${this.props.match.params.productId}") {
+              _id
               name
               price
               images {
@@ -35,16 +39,37 @@ class Product extends React.Component {
       // console.log(response);
       const { name, price, images, description } = response.data.product;
       this.setState({
-        name:  name,
-        price:  price,
-        images:  images,
-        description:  description
+        product: {
+          name,
+          price,
+          images,
+          description
+        }
       });
       // console.log('product', this.state.images[0].url);
     } catch (error) {
       console.log('hello',error);
     }
   }
+
+  addToCart = product => {
+    const alreadyInCart = this.state.cartItems.findIndex(
+      item => item._id === product._id
+    );
+    if (alreadyInCart === -1) {
+      const updatedItems = this.state.cartItems.concat({
+        ...product,
+        quantity: 1
+      });
+      this.setState({ cartItems: updatedItems });
+    } else {
+      const updatedItems = [...this.state.cartItems];
+      updatedItems[alreadyInCart].quantity += 1;
+      this.setState({ cartItems: updatedItems});
+    }
+  }
+
+
 
   selectImage = i => {
     this.setState({ imageSelect: i });
@@ -59,23 +84,24 @@ class Product extends React.Component {
       <Col sm={4}>
         <ImageSelect
           onClick={ () => this.selectImage(i) }
-          src={`${this.state.images[i].url}`} alt="" />
+          src={`${this.state.product.images[i].url}`} alt="" />
       </Col>
     );
   }
 
   render() {
-    const { name, price, images, description } = this.state;
+    const { name, price, images, description } = this.state.product;
+    // console.log(images[this.state.imageSelect]);
 
     return(
       <Container fluid={true}>
         <ProductContainer>
-          { images[0] &&
+          { images.length > 0 &&
             <ProductMargin>
-              <ProductView image={`url(${this.state.images[this.state.imageSelect].url})`}/>
-              <Row>
-                { images.map((url, i) => ( images && this.renderImageSelection(i))) }
-              </Row>
+              <ProductView image={`url(${images[this.state.imageSelect].url})`}/>
+                <Row>
+                  { images.map((url, i) => ( images && this.renderImageSelection(i))) }
+                </Row>
             </ProductMargin>
           }
         </ProductContainer>
@@ -97,7 +123,7 @@ class Product extends React.Component {
               paddingLeft: '20px',
               paddingRight: '20px'
             }}>
-              <h2>{ this.state.name }</h2>
+              <h2>{ name }</h2>
             </div>
 
             <div style={{
@@ -106,7 +132,7 @@ class Product extends React.Component {
               paddingLeft: '20px',
               paddingRight: '20px'
             }}>
-              <h5>{ this.state.price }</h5>
+              <h5>{ price }</h5>
             </div>
 
             <div style={{
@@ -116,8 +142,10 @@ class Product extends React.Component {
               paddingRight: '20px'
               }}>
               <h5>Description</h5>
-              <h5>{ this.state.description }</h5>
+              <h5>{ description }</h5>
             </div>
+
+            <button onClick={ () => this.addToCart(this.state.product) }>Add To Cart</button>
 
         </div>
       </Container>
