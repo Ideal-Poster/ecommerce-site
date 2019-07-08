@@ -1,6 +1,6 @@
 import React from 'react';
 import Strapi from 'strapi-sdk-javascript';
-import { Container, Row, Col } from 'styled-bootstrap-grid';
+import { Container, Row, Col } from '@bootstrap-styled/v4';
 
 import { ProductContainer, ProductMargin, ProductView, ImageSelect } from './styled/Product';
 

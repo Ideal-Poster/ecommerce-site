@@ -1,7 +1,7 @@
 import React from 'react';
 import Strapi from 'strapi-sdk-javascript';
 import { Link } from 'react-router-dom';
-import { Container, Row, Col } from 'styled-bootstrap-grid';
+import { Container, Row, Col } from '@bootstrap-styled/v4';
 
 const strapi = new Strapi('');
 

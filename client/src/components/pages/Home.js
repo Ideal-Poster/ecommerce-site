@@ -1,6 +1,6 @@
 import React from 'react';
 import anime from 'animejs';
-import { Previous, Next } from 'grommet-icons';
+// import { Previous, Next } from 'grommet-icons';
 
 import { Carousel, Slide, Arrows, SlideIndicators, SlideIndicator, ActiveSlideIndicator } from '../carousel/Carousel';
 
@@ -127,7 +127,7 @@ class Home extends React.Component {
     return (
       <div>
         <Carousel>
-          <Arrows>
+          {/* <Arrows>
             <Previous
               className="previous"
               size='large'
@@ -136,7 +136,7 @@ class Home extends React.Component {
               className="next"
               size='large'
               onClick={this.carouselRight} />
-          </Arrows>
+          </Arrows> */}
           {slides}
           <SlideIndicators>
             {
