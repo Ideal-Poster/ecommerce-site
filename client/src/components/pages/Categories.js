@@ -1,9 +1,6 @@
 import React from 'react';
-import Strapi from 'strapi-sdk-javascript';
 import { Link } from 'react-router-dom';
 import { Container, Row, Col } from '@bootstrap-styled/v4';
-
-const strapi = new Strapi('');
 
 class Categories extends React.Component {
   state = {
@@ -24,16 +21,16 @@ class Categories extends React.Component {
   async requestCategoryIds() {
     let response;
     try {
-      response = await strapi.request('POST', '/graphql', {
-        data: {
-          query: `{
-            categories {
-              _id
-              name
-            }
-          }`
-        }
-      });
+      // response = await strapi.request('POST', '/graphql', {
+      //   data: {
+      //     query: `{
+      //       categories {
+      //         _id
+      //         name
+      //       }
+      //     }`
+      //   }
+      // });
       this.categories = response.data.categories;
     } catch (error) {
       console.log(error);
@@ -42,26 +39,26 @@ class Categories extends React.Component {
 
   async requestCategoryProducts() {
     try {
-      const response = await strapi.request('POST', '/graphql', {
-        data: {
-          query: `{
-            category(id: "${this.category._id}") {
-              name
-              products {
-                id
-                name
-                description
-                images {
-                  url
-                }
-              }
-            }
-          }`
-        }
-      });
-      this.setState({
-        products: response.data.category.products
-      });
+      // const response = await strapi.request('POST', '/graphql', {
+      //   data: {
+      //     query: `{
+      //       category(id: "${this.category._id}") {
+      //         name
+      //         products {
+      //           id
+      //           name
+      //           description
+      //           images {
+      //             url
+      //           }
+      //         }
+      //       }
+      //     }`
+      //   }
+      // });
+      // this.setState({
+      //   products: response.data.category.products
+      // });
     } catch (error) {
       console.log(error);
       this.setState({ products: [] });

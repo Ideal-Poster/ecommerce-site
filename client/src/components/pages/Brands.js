@@ -1,10 +1,8 @@
 import React from 'react';
-import Strapi from 'strapi-sdk-javascript';
 import { Container, Row, Col } from '@bootstrap-styled/v4';
 
 import { Link } from 'react-router-dom';
 
-const strapi = new Strapi('');
 
 class Brands extends React.Component {
   state = {
@@ -25,16 +23,16 @@ class Brands extends React.Component {
   async requestBrandIds() {
     let response;
     try {
-      response = await strapi.request('POST', '/graphql', {
-        data: {
-          query: `{
-            brands {
-              _id
-              name
-            }
-          }`
-        }
-      });
+      // response = await strapi.request('POST', '/graphql', {
+      //   data: {
+      //     query: `{
+      //       brands {
+      //         _id
+      //         name
+      //       }
+      //     }`
+      //   }
+      // });
       this.brands = response.data.brands;
       console.log('jello',this.brands);
 
@@ -47,28 +45,28 @@ class Brands extends React.Component {
 
   async requestBrandProducts() {
     try {
-      const response = await strapi.request('POST', '/graphql', {
-        data: {
-          query: `{
-            brand(id: "${this.brand._id}") {
-              name
-              products {
-                id
-                name
-                description
-                images {
-                  url
-                }
-              }
-            }
-          }`
-        }
-      });
+      // const response = await strapi.request('POST', '/graphql', {
+      //   data: {
+      //     query: `{
+      //       brand(id: "${this.brand._id}") {
+      //         name
+      //         products {
+      //           id
+      //           name
+      //           description
+      //           images {
+      //             url
+      //           }
+      //         }
+      //       }
+      //     }`
+      //   }
+      // });
 
 
-      this.setState({
-        products: response.data.brand.products
-      });
+      // this.setState({
+      //   products: response.data.brand.products
+      // });
 
       // console.log(this.state.products);
 

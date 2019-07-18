@@ -1,10 +1,8 @@
 import React from 'react';
-import Strapi from 'strapi-sdk-javascript';
 import { Container, Row, Col } from '@bootstrap-styled/v4';
 
 import { ProductContainer, ProductMargin, ProductView, ImageSelect } from './styled/Product';
 
-const strapi = new Strapi('');
 
 class Product extends React.Component {
   state = {
@@ -20,33 +18,33 @@ class Product extends React.Component {
 
   async requestProduct() {
     try {
-      const response = await strapi.request('POST', '/graphql', {
-        data: {
-          query: `{
-            product(id: "${this.props.match.params.productId}") {
-              _id
-              name
-              price
-              images {
-                url
-              }
-              description
-            }
-          }`
-        }
-      });
+      // const response = await strapi.request('POST', '/graphql', {
+      //   data: {
+      //     query: `{
+      //       product(id: "${this.props.match.params.productId}") {
+      //         _id
+      //         name
+      //         price
+      //         images {
+      //           url
+      //         }
+      //         description
+      //       }
+      //     }`
+      //   }
+      // });
 
-      // console.log(response);
-      const { _id, name, price, images, description } = response.data.product;
-      this.setState({
-        product: {
-          _id,
-          name,
-          price,
-          images,
-          description
-        }
-      });
+      // // console.log(response);
+      // const { _id, name, price, images, description } = response.data.product;
+      // this.setState({
+      //   product: {
+      //     _id,
+      //     name,
+      //     price,
+      //     images,
+      //     description
+      //   }
+      // });
       // console.log('product', this.state.images[0].url);
     } catch (error) {
       console.log('hello',error);
