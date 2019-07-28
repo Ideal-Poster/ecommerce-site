@@ -15,7 +15,6 @@ const pg_1 = require("pg");
 const app = express_1.default();
 // Connect to Prostgres
 const connectionString = process.env.DB_CONNECTION_STRING;
-// 'postgresql://postgres:scrub_B8@localhost:5432/ecommerce';
 const client = new pg_1.Client({
     connectionString
 });

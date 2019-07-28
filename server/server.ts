@@ -12,9 +12,7 @@ import { Client } from 'pg';
 
 const app : express.Express = express();
 // Connect to Prostgres
-const connectionString =
-process.env.DB_CONNECTION_STRING;
-// 'postgresql://postgres:scrub_B8@localhost:5432/ecommerce';
+const connectionString = process.env.DB_CONNECTION_STRING;
 const client : Client = new Client({
   connectionString
 });
