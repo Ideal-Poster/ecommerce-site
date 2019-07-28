@@ -1,3 +1,11 @@
 type Query {
-  greeting: String
+  products: [Product]
+}
+
+type Product {
+  id: ID!
+  name: String
+  description: String
+  category: String
+  price: Int
 }
