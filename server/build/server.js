@@ -11,18 +11,8 @@ const cors_1 = __importDefault(require("cors"));
 const fs_1 = __importDefault(require("fs"));
 const apollo_server_express_1 = require("apollo-server-express");
 const resolvers_1 = __importDefault(require("./resolvers"));
-const pg_1 = require("pg");
+;
 const app = express_1.default();
-// Connect to Prostgres
-const connectionString = process.env.DB_CONNECTION_STRING;
-const client = new pg_1.Client({
-    connectionString
-});
-client.connect();
-client.query('SELECT * from public.products', (err, res) => {
-    console.log(err, res.rows);
-    client.end();
-});
 // Configure Apollo server
 const typeDefs = fs_1.default.readFileSync('./schema.graphql', { encoding: 'utf-8' });
 const graphqlServer = new apollo_server_express_1.ApolloServer({
@@ -34,5 +24,4 @@ app.use(cors_1.default(), body_parser_1.default.json());
 app.get('/', (req, res) => {
     res.send('Hello World');
 });
-// app.post('/login', (req,res) => {})
 app.listen(process.env.PORT || 8091, () => console.log('Listening on port 8091'));
