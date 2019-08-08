@@ -8,12 +8,17 @@ import slideImg1 from '../../static/photo-1513531926349-466f15ec8cc7.jpeg';
 import slideImg2 from '../../static/warren-wong-248636-unsplash.jpg';
 import slideImg3 from '../../static/photo-1527905804285-2f67b86e3bf6.jpeg';
 
+
+interface Position {
+  left: string | number,
+  right: string | number
+}
 class Home extends React.Component {
   state = {
     activeSlide: 1
   }
-  isAnimating = false;
-  position = [
+  isAnimating : boolean = false;
+  position : Array<Position> = [
     // 0 left out of view
     { left: '-100vw', right: '100vw' },
     // 1 center in view
@@ -21,7 +26,9 @@ class Home extends React.Component {
     // 2 right out of view,
     { left: '100vw', right: '-100vw' }
   ];
-  currentSlide = 1;
+  currentSlide : number = 1;
+  galleryImages : NodeList;
+
 
   async componentDidMount() {
     this.galleryImages = document.querySelectorAll('.slide');
@@ -30,12 +37,12 @@ class Home extends React.Component {
 
   carouselRight = () => {
     if (!this.isAnimating) {
-      const currentSlide = this.galleryImages[this.currentSlide];
-      const nextSlide =
+      const currentSlide : Node = this.galleryImages[this.currentSlide];
+      const nextSlide : Node =
         this.currentSlide === (this.galleryImages.length - 1) ?
         this.galleryImages[0] :
         this.galleryImages[this.currentSlide +1];
-      const prevSlide =
+      const prevSlide : Node =
         this.currentSlide === 0 ?
         this.galleryImages[this.galleryImages.length - 1] :
         this.galleryImages[this.currentSlide - 1]
@@ -53,12 +60,12 @@ class Home extends React.Component {
 
   carouselLeft = () => {
     if (!this.isAnimating) {
-      const currentSlide = this.galleryImages[this.currentSlide];
-      const nextSlide =
+      const currentSlide : Node = this.galleryImages[this.currentSlide];
+      const nextSlide : Node =
         this.currentSlide === 0 ?
         this.galleryImages[this.galleryImages.length - 1] :
         this.galleryImages[this.currentSlide - 1];
-      const prevSlide =
+      const prevSlide : Node =
         this.currentSlide === this.galleryImages.length - 1 ?
         this.galleryImages[0] :
         this.galleryImages[this.currentSlide + 1]
@@ -74,14 +81,14 @@ class Home extends React.Component {
     }
   }
 
-  setSlideTo(slide, pos) {
+  setSlideTo(slide: Node, pos: number) {
     anime.set(slide ,{
       left: this.position[pos].left,
       right: this.position[pos].right
     });
   }
 
-  moveSlideTo(slide, pos) {
+  moveSlideTo(slide: Node, pos: number) {
     this.isAnimating = true;
     anime({
       targets: slide,
@@ -96,14 +103,14 @@ class Home extends React.Component {
     });
   }
 
-  setSlideToRight(slide) {
+  setSlideToRight(slide: Node) {
     anime.set(slide, {
       left: this.position[2].left,
       right: this.position[2].right
     });
   }
 
-  setSlideToLeft(slide) {
+  setSlideToLeft(slide: Node) {
     anime.set(slide, {
       left: this.position[0].left,
       right: this.position[0].right

@@ -2,13 +2,15 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Row, Col } from '@bootstrap-styled/v4';
 
+
+
 class Categories extends React.Component {
   state = {
     products: [],
     categoryName: this.props.match.params.cat
   };
-  category = {};
-  categories = [];
+  category : string;
+  categories : Array<string>;
 
   async componentDidUpdate() {
     const pathCategory = this.props.match.params.cat;

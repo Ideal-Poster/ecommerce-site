@@ -7,8 +7,8 @@ class Brands extends React.Component {
     products: [],
     brandName: this.props.match.params.brand
   }
-  brand = {};
-  brands = [];
+  brand : string;
+  brands : Array<string>;
 
   async componentDidUpdate() {
     const pathBrand = this.props.match.params.brand;
@@ -32,8 +32,6 @@ class Brands extends React.Component {
       //   }
       // });
       this.brands = response.data.brands;
-      console.log('jello',this.brands);
-
     } catch (error) {
       console.log(error);
     }
