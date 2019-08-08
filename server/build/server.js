@@ -24,4 +24,4 @@ app.use(cors_1.default(), body_parser_1.default.json());
 app.get('/', (req, res) => {
     res.send('Hello World');
 });
-app.listen(process.env.PORT || 8091, () => console.log('Listening on port 8091'));
+app.listen(process.env.PORT || 8091, () => console.log('Listening on port 8091.\n'));

@@ -1,11 +1,22 @@
 type Query {
   products: [Product]
+  categories: [Category]
+  categoryFilter(id: ID!): [Product]
+  brandFilter: [Product]
 }
 
 type Product {
   id: ID!
+  brand: String
   name: String
-  description: String
   category: String
-  price: Int
+  color: String
+  description: String
+  price: Float
+  stock: Int
+}
+
+type Category {
+  id: ID!
+  name: String
 }

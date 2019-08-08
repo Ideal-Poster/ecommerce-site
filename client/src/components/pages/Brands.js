@@ -1,15 +1,13 @@
 import React from 'react';
 import { Container, Row, Col } from '@bootstrap-styled/v4';
-
 import { Link } from 'react-router-dom';
-
 
 class Brands extends React.Component {
   state = {
     products: [],
     brandName: this.props.match.params.brand
   }
-  brand: {};
+  brand = {};
   brands = [];
 
   async componentDidUpdate() {

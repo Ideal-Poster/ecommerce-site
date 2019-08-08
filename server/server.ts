@@ -8,7 +8,6 @@ import { ApolloServer } from 'apollo-server-express';
 
 import resolvers from './resolvers';;
 
-
 const app : express.Express = express();
 
 // Configure Apollo server
@@ -24,4 +23,4 @@ app.get('/', (req, res) : any => {
   res.send('Hello World');
 });
 
-app.listen(process.env.PORT || 8091, () : void => console.log('Listening on port 8091'));
+app.listen(process.env.PORT || 8091, () : void => console.log('Listening on port 8091.\n'));

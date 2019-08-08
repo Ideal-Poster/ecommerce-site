@@ -7,7 +7,7 @@ class Categories extends React.Component {
     products: [],
     categoryName: this.props.match.params.cat
   };
-  category: {};
+  category = {};
   categories = [];
 
   async componentDidUpdate() {
