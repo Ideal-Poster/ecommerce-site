@@ -1,111 +1,56 @@
 import React from 'react';
 import { Container, Row, Col } from '@bootstrap-styled/v4';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
+import { ApolloClient, HttpLink, InMemoryCache } from 'apollo-boost';
+import gql from 'graphql-tag';
+
+const client = new ApolloClient({
+  link: new HttpLink({uri: 'http://localhost:8091/graphql'}),
+  cache: new InMemoryCache()
+});
 
 class Brands extends React.Component {
   state = {
     products: [],
-    brandName: this.props.match.params.brand
+    brand: this.props.match.params.brand
   }
-  brand : string;
-  brands : Array<string>;
 
   async componentDidUpdate() {
+    const brand = this.state.brand;
     const pathBrand = this.props.match.params.brand;
-    if (this.state.brandName !== pathBrand) {
-      await this.setState({ brandName: pathBrand });
-      this.getProducts();
+    if (brand !== pathBrand) {
+      await this.setState({ brand: pathBrand });
     }
   }
 
-  async requestBrandIds() {
-    let response;
+  requestBrandProducts = async (name:string) => {
+    name = name.charAt(0).toUpperCase() + name.slice(1);
     try {
-      // response = await strapi.request('POST', '/graphql', {
-      //   data: {
-      //     query: `{
-      //       brands {
-      //         _id
-      //         name
-      //       }
-      //     }`
-      //   }
-      // });
-      this.brands = response.data.brands;
+      const query = gql`{
+        brandFilter(name: "${name}") {
+          id
+          name
+          description
+        }
+      }`;
+      const {data: {brandFilter}} = await client.query({query});
+      this.setState({products: brandFilter});
+      console.log(brandFilter);
     } catch (error) {
       console.log(error);
     }
-    // console.log(this.brands);
-
-  }
-
-  async requestBrandProducts() {
-    try {
-      // const response = await strapi.request('POST', '/graphql', {
-      //   data: {
-      //     query: `{
-      //       brand(id: "${this.brand._id}") {
-      //         name
-      //         products {
-      //           id
-      //           name
-      //           description
-      //           images {
-      //             url
-      //           }
-      //         }
-      //       }
-      //     }`
-      //   }
-      // });
-
-
-      // this.setState({
-      //   products: response.data.brand.products
-      // });
-
-      // console.log(this.state.products);
-
-    } catch (error) {
-      console.log('hello', error);
-      this.setState({ products: [] });
-    }
-  }
-
-  setBrandState() {
-    const brand = this.brands.find((brd) => {
-      return brd.name.toLowerCase() === this.state.brandName.toLowerCase()
-    });
-
-    this.brand = brand;
-  }
-
-  async getProducts() {
-    await this.setBrandState();
-    await this.requestBrandProducts();
-  }
-
-  async componentDidMount() {
-    await this.requestBrandIds();
-    this.getProducts();
   }
 
   render() {
     return(
       <Container fluid={true}>
+        <button onClick={() => this.requestBrandProducts(this.state.brand)}>hello</button>
         <Row>
-        {
-          this.state.products.map((product) => (
-            <Col xs={6} sm={6} md={4} xl={3}>
-              <Link to={`/product/${product.id}`}>
-                <div>
-                  <img style={{ width: '100%' }} src={`${product.images[0].url}`} alt={`${product.name}`}/>
-                  <h4>{product.name}</h4>
-                </div>
-              </Link>
+          {this.state.products.map(() => (
+            <Col sm={6} md={4} xl={3}>
+              <p>hello</p>
             </Col>
-          ))
-        }
+          ))}
         </Row>
       </Container>
     );
