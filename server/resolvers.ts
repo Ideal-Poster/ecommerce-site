@@ -74,7 +74,7 @@ const Query = {
     };
   },
 
-  brandFilter: async (root: any, { id }: any) => {
+  brandFilter: async (root: any, { name }: any) => {
     const client : PoolClient = await pool.connect();
     try {
       const res : QueryResult = await client.query(
@@ -83,7 +83,6 @@ const Query = {
           brand.name AS brand,
           product.name,
           category.name AS category,
-          color.name AS color,
           product.description,
           product.price
         FROM
@@ -91,7 +90,8 @@ const Query = {
         JOIN brand ON product.brand_id = brand.id
         JOIN category ON product.category_id = category.id
         JOIN color ON product.color_id = color.id
-        WHERE product.brand_id = ${id}`
+        WHERE brand.name = '${name}';`
+        // WHERE product.brand_id = ${id}
       );
       console.log('loop' + res.rows);
       return res.rows;

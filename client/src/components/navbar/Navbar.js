@@ -19,9 +19,9 @@ class Navbar extends React.Component {
     categoriesOpen: false,
     releasesOpen: false
   }
-  navIsAnimating = false;
-  isAnimating = false;
-  navDisplayed = true;
+  navIsAnimating : boolean = false;
+  isAnimating : boolean = false;
+  navDisplayed : boolean = true;
   options = ['brands', 'categories', 'releases'];
   activeHover;
 
@@ -128,7 +128,7 @@ class Navbar extends React.Component {
       duration,
       complete: () => {
         this.setState({ [this.options[i]+ 'Open']: false });
-        this.activeHover = null;
+        this.activeHover = false;
       }
     });
     this.hideAnimation.play();

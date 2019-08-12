@@ -7,7 +7,6 @@ import {
 } from './styled/Brands';
 import { Link } from 'react-router-dom';
 
-
 class BrandsDropdown extends React.Component {
 
   render() {
@@ -24,15 +23,13 @@ class BrandsDropdown extends React.Component {
           </ul>
         </BrandsSections>
 
-        <BrandsSections>
-        </BrandsSections>
+        <BrandsSections/>
 
         <BrandsSections>
           <FeaturedBrand src={require("../../static/shalom-mwenesi-701767-unsplash.jpg")}/>
         </BrandsSections>
 
-        <BrandsSections>
-        </BrandsSections>
+        <BrandsSections/>
       </Brands>
     );
   }
