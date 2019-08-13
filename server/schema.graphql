@@ -1,7 +1,7 @@
 type Query {
   products: [Product]
   categories: [Category]
-  categoryFilter(id: ID!): [Product]
+  categoryFilter(name: String!): [Product]
   brandFilter(name: String!): [Product]
 }
 

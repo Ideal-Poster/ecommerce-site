@@ -8,13 +8,13 @@ class Brands extends React.Component {
     brand: this.props.match.params.brand
   }
 
-  async componentDidUpdate() {
+  componentDidUpdate() {
     const brand = this.state.brand;
     const pathBrand = this.props.match.params.brand;
     if (brand !== pathBrand) this.setProductState();
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     this.setProductState();
   }
 

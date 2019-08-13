@@ -19,8 +19,27 @@ export const requestBrandProducts = async ({brand}) => {
       }
     }`;
     const {data: {brandFilter}} = await client.query({query});
-    // console.log(brandFilter);
+    console.log(brandFilter);
     return brandFilter;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const requestCategoryProducts = async ({category}) => {
+  category = category.slice(0,-1);
+  console.log(category);
+  try {
+    const query = gql`{
+      categoryFilter(name: "${category}") {
+        id
+        name
+        description
+      }
+    }`;
+    const {data: {categoryFilter}} = await client.query({query});
+    console.log(categoryFilter);
+    return categoryFilter;
   } catch (error) {
     console.log(error);
   }
