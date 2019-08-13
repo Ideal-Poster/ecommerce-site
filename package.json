@@ -8,6 +8,7 @@
     "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\""
   },
   "dependencies": {
+    "@types/node": "^12.7.1",
     "concurrently": "^4.1.1"
   }
 }
