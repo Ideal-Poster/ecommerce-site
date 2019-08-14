@@ -1,36 +1,32 @@
 import React from 'react';
-import {
-  Brands,
-  BrandsSections,
-  Brand,
-  FeaturedBrand
-} from './styled/Brands';
+import { QuadSection, QuadDropdown } from './styled/Brands';
 import { Link } from 'react-router-dom';
+import { DropdownText, DropdownImage } from './styled/Navbar';
 
 class BrandsDropdown extends React.Component {
 
   render() {
     const brandNames = ['Nike', 'Puma', 'Converse', 'Adidas', 'North Face'].map((brand, i) => (
       <Link to={`/brands/${brand.toLowerCase()}/`}>
-        <Brand key={`brand-${i}`}>{ brand }</Brand>
+        <DropdownText key={`brand-${i}`}>{ brand }</DropdownText>
       </Link>
     ));
     return(
-      <Brands className="brandsComp">
-        <BrandsSections>
+      <QuadDropdown className="brandsComp">
+        <QuadSection>
           <ul>
             {brandNames}
           </ul>
-        </BrandsSections>
+        </QuadSection>
 
-        <BrandsSections/>
+        <QuadSection/>
 
-        <BrandsSections>
-          <FeaturedBrand src={require("../../static/shalom-mwenesi-701767-unsplash.jpg")}/>
-        </BrandsSections>
+        <QuadSection>
+          <DropdownImage src={require("../../static/shalom-mwenesi-701767-unsplash.jpg")}/>
+        </QuadSection>
 
-        <BrandsSections/>
-      </Brands>
+        <QuadSection/>
+      </QuadDropdown>
     );
   }
 }

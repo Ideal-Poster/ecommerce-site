@@ -9,7 +9,6 @@ class Categories extends React.Component {
     products: []
   }
 
-
   componentDidUpdate() {
     const category = this.state.category;
     const pathCategory = this.props.match.params.category;
@@ -31,7 +30,6 @@ class Categories extends React.Component {
     return (
       <Container fluid={true}>
         <Row>
-          <button onClick={() => requestCategoryProducts(this.state)}>hello</button>
           {this.state.products.map(() => (
             <Col sm={6} md={4} xl={3}>
               <p>hello</p>

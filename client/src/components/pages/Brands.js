@@ -28,7 +28,6 @@ class Brands extends React.Component {
   render() {
     return(
       <Container fluid={true}>
-        <button onClick={() => requestBrandProducts(this.state.brand)}>hello</button>
         <Row>
           {this.state.products.map(() => (
             <Col sm={6} md={4} xl={3}>

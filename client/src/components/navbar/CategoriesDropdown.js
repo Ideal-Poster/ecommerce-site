@@ -1,29 +1,26 @@
 import React from 'react';
-import { Categories, CategoriesSections, CategoryItem } from './styled/Categories'
+import { TriDropdown, TriSection } from './styled/Categories'
 import { Link } from 'react-router-dom';
+import { DropdownText } from './styled/Navbar';
 
 class CategoriesDropdown extends React.Component {
   render() {
     const categories = ['Shoes', 'Hats', 'Tops', 'Bottoms'].map((category, i) => (
       <Link to={`/categories/${category.toLowerCase()}/`}>
-        <CategoryItem key={`category-${i}`}>{ category }</CategoryItem>
+        <DropdownText key={`category-${i}`}>{ category }</DropdownText>
       </Link>
     ));
 
     return(
-      <Categories className="categoriesComp">
-        <CategoriesSections>
+      <TriDropdown className="categoriesComp">
+        <TriSection>
           <ul>
             { categories }
           </ul>
-        </CategoriesSections>
-
-        <CategoriesSections>
-        </CategoriesSections>
-
-        <CategoriesSections>
-        </CategoriesSections>
-      </Categories>
+        </TriSection>
+        <TriSection/>
+        <TriSection/>
+      </TriDropdown>
     );
   }
 }

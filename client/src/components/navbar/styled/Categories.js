@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Categories = styled.div`
+export const TriDropdown = styled.div`
   height: 250px;
   position: fixed;
   display: flex;
@@ -8,7 +8,7 @@ export const Categories = styled.div`
   background: orange;
 `;
 
- export const CategoriesSections = styled.div`
+ export const TriSection = styled.div`
   position: relative;
   border-right: 1px solid #565656;
   height: 100%;
@@ -16,8 +16,4 @@ export const Categories = styled.div`
   background: orange;
   overflow: hidden;
   z-index: 10000;
-`;
-
-export const CategoryItem = styled.li`
-  list-style: none;
 `;

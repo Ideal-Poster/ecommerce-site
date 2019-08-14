@@ -49,3 +49,11 @@ export const Sections = styled.div`
   border-right: 1px solid peru;
   z-index: 10000;
 `;
+
+export const DropdownText = styled.li`
+  list-style: none;
+`;
+
+export const DropdownImage = styled.img`
+  width: 100%;
+`;
