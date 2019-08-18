@@ -26,7 +26,7 @@ export const requestBrandProducts = async ({brand}) => {
   }
 }
 
-export const requestCategoryProducts = async ({category}) => {
+export const requestProductsByCategory = async ({category}) => {
   category = category.slice(0,-1);
   console.log(category);
   try {
@@ -40,6 +40,25 @@ export const requestCategoryProducts = async ({category}) => {
     const {data: {categoryFilter}} = await client.query({query});
     console.log(categoryFilter);
     return categoryFilter;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const requestProduct = async ({product: {id}}) => {
+  try {
+    const query = gql`{
+      product(id: "${id}") {
+        id
+        name
+        price
+        description
+        images
+      }
+    }`;
+    const {data: {product}} = await client.query({query});
+    console.log(product);
+    return product;
   } catch (error) {
     console.log(error);
   }

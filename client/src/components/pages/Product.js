@@ -2,11 +2,12 @@ import React from 'react';
 import { Container, Row, Col } from '@bootstrap-styled/v4';
 
 import { ProductContainer, ProductMargin, ProductView, ImageSelect } from './styled/Product';
-
+import { requestProduct } from '../requests';
 
 class Product extends React.Component {
   state = {
     product: {
+      id: this.props.match.params.productId,
       name: '',
       price: 0,
       images: [],
@@ -15,41 +16,6 @@ class Product extends React.Component {
     imageSelect: 0,
     cartItems: []
   };
-
-  async requestProduct() {
-    try {
-      // const response = await strapi.request('POST', '/graphql', {
-      //   data: {
-      //     query: `{
-      //       product(id: "${this.props.match.params.productId}") {
-      //         _id
-      //         name
-      //         price
-      //         images {
-      //           url
-      //         }
-      //         description
-      //       }
-      //     }`
-      //   }
-      // });
-
-      // // console.log(response);
-      // const { _id, name, price, images, description } = response.data.product;
-      // this.setState({
-      //   product: {
-      //     _id,
-      //     name,
-      //     price,
-      //     images,
-      //     description
-      //   }
-      // });
-      // console.log('product', this.state.images[0].url);
-    } catch (error) {
-      console.log('hello',error);
-    }
-  }
 
   addToCart = product => {
     const alreadyInCart = this.state.cartItems.findIndex(
@@ -79,8 +45,9 @@ class Product extends React.Component {
     this.setState({ imageSelect: i });
   }
 
-  componentDidMount() {
-    this.requestProduct();
+  async componentDidMount() {
+    const product = await requestProduct(this.state);
+    this.setState({ product });
   }
 
   renderImageSelection(i) {
@@ -88,24 +55,26 @@ class Product extends React.Component {
       <Col sm={4}>
         <ImageSelect
           onClick={ () => this.selectImage(i) }
-          src={`${this.state.product.images[i].url}`} alt="" />
+          src={`${this.state.product.images[i]}`} alt="" />
       </Col>
     );
+
   }
 
   render() {
     const { name, price, images, description } = this.state.product;
-    // console.log(images[this.state.imageSelect]);
+    const { imageSelect } = this.state;
 
     return(
       <Container fluid={true}>
         <ProductContainer>
-          { images.length > 0 &&
+          {
+            images.length > 0 &&
             <ProductMargin>
-              <ProductView image={`url(${images[this.state.imageSelect].url})`}/>
-                <Row>
-                  { images.map((url, i) => ( images && this.renderImageSelection(i))) }
-                </Row>
+              <ProductView image={`url(${images[imageSelect]})`}/>
+              <Row>
+                { images.map((url, i) => ( images && this.renderImageSelection(i))) }
+              </Row>
             </ProductMargin>
           }
         </ProductContainer>
@@ -150,7 +119,6 @@ class Product extends React.Component {
             </div>
 
             <button onClick={ () => this.addToCart(this.state.product) }>Add To Cart</button>
-
         </div>
       </Container>
     );

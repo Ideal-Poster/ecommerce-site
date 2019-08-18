@@ -1,4 +1,5 @@
 type Query {
+  product(id: ID!): Product
   products: [Product]
   categories: [Category]
   categoryFilter(name: String!): [Product]
@@ -14,6 +15,7 @@ type Product {
   description: String
   price: Float
   stock: Int
+  images: [String]
 }
 
 type Category {

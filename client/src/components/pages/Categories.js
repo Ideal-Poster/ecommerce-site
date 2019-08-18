@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Row, Col } from '@bootstrap-styled/v4';
-import { requestCategoryProducts } from '../requests';
+import { requestProductsByCategory } from '../requests';
 
 class Categories extends React.Component {
   state = {
@@ -15,14 +15,17 @@ class Categories extends React.Component {
     if (category !== pathCategory) this.setProductState();
   }
 
-  componentDidMount() {
-    this.setProductState();
-  }
+  // componentDidMount() {
+  //   setTimeout(() => {
+
+  //     this.setProductState();
+  //   }, 500);
+  // }
 
   async setProductState() {
     const pathBrand = this.props.match.params.category;
     await this.setState({ category: pathBrand });
-    const products = await requestCategoryProducts(this.state);
+    const products = await requestProductsByCategory(this.state);
     this.setState({ products });
   }
 

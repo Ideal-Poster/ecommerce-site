@@ -1,6 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Container, Row, Col } from '@bootstrap-styled/v4';
+
 import { requestBrandProducts } from '../requests';
+import Product from './Product';
 
 class Brands extends React.Component {
   state = {
@@ -29,10 +32,20 @@ class Brands extends React.Component {
     return(
       <Container fluid={true}>
         <Row>
-          {this.state.products.map(() => (
+          {this.state.products.map((product) => (
             <Col sm={6} md={4} xl={3}>
-              <p>hello</p>
-            </Col>
+              <Link to={`/product/${product.id}`}>
+                <div>
+                  <img
+                  style={{
+                    width: '100%'
+                  }}
+                  src={require("../../static/photo-1513531926349-466f15ec8cc7.jpeg")}
+                  alt=""/>
+
+                </div>
+                </Link>
+              </Col>
           ))}
         </Row>
       </Container>
