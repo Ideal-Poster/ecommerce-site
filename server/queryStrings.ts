@@ -5,7 +5,8 @@ export const productJoin: string = `
     product.name,
     category.name AS category,
     product.description,
-    product.price
+    product.price,
+    product.images
   FROM
     product
   JOIN brand ON product.brand_id = brand.id

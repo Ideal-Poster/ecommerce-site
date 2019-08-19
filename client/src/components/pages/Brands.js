@@ -17,8 +17,12 @@ class Brands extends React.Component {
     if (brand !== pathBrand) this.setProductState();
   }
 
-  componentDidMount() {
-    this.setProductState();
+  async componentDidMount() {
+    await this.setProductState();
+    console.log(
+      this.state.products
+    );
+
   }
 
   async setProductState() {
@@ -29,23 +33,23 @@ class Brands extends React.Component {
   }
 
   render() {
+    const { products } = this.state
     return(
       <Container fluid={true}>
         <Row>
-          {this.state.products.map((product) => (
+          {products.map((product) => (
+            product &&
             <Col sm={6} md={4} xl={3}>
               <Link to={`/product/${product.id}`}>
                 <div>
                   <img
-                  style={{
-                    width: '100%'
-                  }}
-                  src={require("../../static/photo-1513531926349-466f15ec8cc7.jpeg")}
+                  style={{ width: '100%' }}
+                  src={`${product.images[0]}`}
                   alt=""/>
 
                 </div>
-                </Link>
-              </Col>
+              </Link>
+            </Col>
           ))}
         </Row>
       </Container>

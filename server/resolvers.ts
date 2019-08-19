@@ -86,7 +86,8 @@ const Query = {
           category.name AS category,
           color.name AS color,
           product.description,
-          product.price
+          product.price,
+          product.images
         FROM
           product
         JOIN brand ON product.brand_id = brand.id
@@ -112,7 +113,8 @@ const Query = {
           product.name,
           category.name AS category,
           product.description,
-          product.price
+          product.price,
+          product.images
         FROM
           product
         JOIN brand ON product.brand_id = brand.id
@@ -120,7 +122,7 @@ const Query = {
         JOIN color ON product.color_id = color.id
         WHERE brand.name = '${name}';`
       );
-      console.log('loop' + res.rows);
+      // console.log( res.rows);
       return res.rows;
     } catch (err) {
       console.log(err);

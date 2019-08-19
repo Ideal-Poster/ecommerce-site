@@ -16,6 +16,7 @@ export const requestBrandProducts = async ({brand}) => {
         id
         name
         description
+        images
       }
     }`;
     const {data: {brandFilter}} = await client.query({query});

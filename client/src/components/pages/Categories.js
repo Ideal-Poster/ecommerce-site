@@ -15,13 +15,6 @@ class Categories extends React.Component {
     if (category !== pathCategory) this.setProductState();
   }
 
-  // componentDidMount() {
-  //   setTimeout(() => {
-
-  //     this.setProductState();
-  //   }, 500);
-  // }
-
   async setProductState() {
     const pathBrand = this.props.match.params.category;
     await this.setState({ category: pathBrand });
