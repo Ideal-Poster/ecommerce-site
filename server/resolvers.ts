@@ -75,6 +75,21 @@ const Query = {
     }
   },
 
+  brands: async () => {
+    const client : PoolClient = await pool.connect();
+    try {
+      const res : QueryResult = await client.query(
+        `SELECT * FROM brand`
+      );
+      return res.rows;
+    }
+    catch(err) {
+      console.log(err);
+    } finally {
+      client.release();
+    }
+  },
+
   categoryFilter: async (root: any, {name}: any) => {
     const client : PoolClient = await pool.connect();
     try {
@@ -105,6 +120,8 @@ const Query = {
 
   brandFilter: async (root: any, {name}: any) => {
     const client : PoolClient = await pool.connect();
+    // console.log(name.slit(""));
+
     try {
       const res : QueryResult = await client.query(
         `SELECT

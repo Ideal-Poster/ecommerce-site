@@ -58,9 +58,40 @@ export const requestProduct = async ({product: {id}}) => {
       }
     }`;
     const {data: {product}} = await client.query({query});
-    console.log(product);
+    // console.log('hello' + product);
     return product;
   } catch (error) {
+    console.log(error);
+  }
+}
+
+
+export const requestBrands = async () => {
+  try {
+    const query = gql`{
+      brands {
+        name
+      }
+    }`
+    const {data: {brands}} = await client.query({query});
+    // console.log(brands);
+    return brands;
+  } catch (error){
+    console.log(error);
+  }
+}
+
+export const requestCategories = async () => {
+  try {
+    const query = gql`{
+      categories {
+        name
+      }
+    }`
+    const {data: {categories}} = await client.query({query});
+    console.log(categories);
+    return categories;
+  } catch (error){
     console.log(error);
   }
 }

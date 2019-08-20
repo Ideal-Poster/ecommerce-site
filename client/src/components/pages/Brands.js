@@ -19,9 +19,7 @@ class Brands extends React.Component {
 
   async componentDidMount() {
     await this.setProductState();
-    console.log(
-      this.state.products
-    );
+    console.log(this.state.brand);
 
   }
 
@@ -29,16 +27,16 @@ class Brands extends React.Component {
     const pathBrand = this.props.match.params.brand;
     await this.setState({ brand: pathBrand });
     const products = await requestBrandProducts(this.state);
-    this.setState({ products });
+    await this.setState({ products });
   }
 
   render() {
-    const { products } = this.state
+    const { products } = this.state;
     return(
       <Container fluid={true}>
         <Row>
-          {products.map((product) => (
-            product &&
+          { products.length > 0 &&
+            products.map((product) => (
             <Col sm={6} md={4} xl={3}>
               <Link to={`/product/${product.id}`}>
                 <div>

@@ -24,6 +24,7 @@ class Navbar extends React.Component {
   navDisplayed : boolean = true;
   options = ['brands', 'categories', 'releases'];
   activeHover;
+  offset : number;
 
   componentDidMount() {
     this.offset = window.pageYOffset;

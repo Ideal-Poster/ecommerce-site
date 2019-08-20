@@ -3,10 +3,21 @@ import { QuadSection, QuadDropdown } from './styled/Brands';
 import { Link } from 'react-router-dom';
 import { DropdownText, DropdownImage } from './styled/Navbar';
 
+import { requestBrands } from '../requests';
+
 class BrandsDropdown extends React.Component {
+  state = {
+    brands: []
+  }
+  async componentDidMount() {
+    const brandsRequest = await requestBrands();
+    let brands = [];
+    brandsRequest.forEach((brand) => brands.push(brand.name));
+    this.setState({ brands });
+  }
 
   render() {
-    const brandNames = ['Nike', 'Puma', 'Converse', 'Adidas', 'North Face'].map((brand, i) => (
+    const brandNames = this.state.brands.map((brand, i) => (
       <Link to={`/brands/${brand.toLowerCase()}/`}>
         <DropdownText key={`brand-${i}`}>{ brand }</DropdownText>
       </Link>
