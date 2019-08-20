@@ -19,7 +19,7 @@ class Brands extends React.Component {
 
   async componentDidMount() {
     await this.setProductState();
-    console.log(this.state.brand);
+    // console.log(this.state.brand);
 
   }
 

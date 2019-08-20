@@ -120,8 +120,6 @@ const Query = {
 
   brandFilter: async (root: any, {name}: any) => {
     const client : PoolClient = await pool.connect();
-    // console.log(name.slit(""));
-
     try {
       const res : QueryResult = await client.query(
         `SELECT
