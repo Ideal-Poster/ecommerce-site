@@ -8,7 +8,7 @@ const client = new ApolloClient({
   cache: new InMemoryCache()
 });
 
-export const requestBrandProducts = async ({brand}) => {
+export const requestProductsByBrand = async ({brand}) => {
   try {
     const query = gql`{
       brandFilter(name: "${brand}") {
@@ -27,18 +27,17 @@ export const requestBrandProducts = async ({brand}) => {
 }
 
 export const requestProductsByCategory = async ({category}) => {
-  category = category.slice(0,-1);
-  // console.log(category);
   try {
     const query = gql`{
       categoryFilter(name: "${category}") {
         id
         name
         description
+        images
       }
     }`;
     const {data: {categoryFilter}} = await client.query({query});
-    // console.log(categoryFilter);
+    console.log(category);
     return categoryFilter;
   } catch (error) {
     console.log(error);

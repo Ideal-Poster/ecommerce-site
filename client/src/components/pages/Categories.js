@@ -15,21 +15,35 @@ class Categories extends React.Component {
     if (category !== pathCategory) this.setProductState();
   }
 
+  async componentDidMount() {
+    await this.setProductState();
+    // console.log(this.state.products);
+
+  }
+
   async setProductState() {
     const pathBrand = this.props.match.params.category;
     await this.setState({ category: pathBrand });
     const products = await requestProductsByCategory(this.state);
-    this.setState({ products });
+    await this.setState({ products });
+    // console.log(products);
   }
 
   render() {
     return (
       <Container fluid={true}>
         <Row>
-          {this.state.products.map(() => (
-            <Col sm={6} md={4} xl={3}>
-              <p>hello</p>
-            </Col>
+          {this.state.products.map((product) => (
+                 <Col sm={6} md={4} xl={3}>
+                 <Link to={`/product/${product.id}`}>
+                   <div>
+                     <img
+                       style={{ width: '100%' }}
+                       src={`${product.images[0]}`}
+                       alt=""/>
+                   </div>
+                 </Link>
+               </Col>
           ))}
         </Row>
       </Container>

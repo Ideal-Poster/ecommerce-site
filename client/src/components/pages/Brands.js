@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Row, Col } from '@bootstrap-styled/v4';
 
-import { requestBrandProducts } from '../requests';
+import { requestProductsByBrand } from '../requests';
 import Product from './Product';
 
 class Brands extends React.Component {
@@ -18,7 +18,7 @@ class Brands extends React.Component {
   }
 
   async componentDidMount() {
-    await this.setProductState();
+    this.setProductState();
     // console.log(this.state.brand);
 
   }
@@ -26,7 +26,7 @@ class Brands extends React.Component {
   async setProductState() {
     const pathBrand = this.props.match.params.brand;
     await this.setState({ brand: pathBrand });
-    const products = await requestBrandProducts(this.state);
+    const products = await requestProductsByBrand(this.state);
     await this.setState({ products });
   }
 
@@ -35,16 +35,14 @@ class Brands extends React.Component {
     return(
       <Container fluid={true}>
         <Row>
-          { products.length > 0 &&
-            products.map((product) => (
+          { products.map((product) => (
             <Col sm={6} md={4} xl={3}>
               <Link to={`/product/${product.id}`}>
                 <div>
                   <img
-                  style={{ width: '100%' }}
-                  src={`${product.images[0]}`}
-                  alt=""/>
-
+                    style={{ width: '100%' }}
+                    src={`${product.images[0]}`}
+                    alt=""/>
                 </div>
               </Link>
             </Col>
