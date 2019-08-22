@@ -31,8 +31,7 @@ class App extends React.Component {
           </Switch>
         </Router>
         </BootstrapProvider>
-
-      </div>
+              </div>
     );
   }
 }

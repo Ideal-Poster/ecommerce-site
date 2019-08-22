@@ -1,9 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Container, Row, Col } from '@bootstrap-styled/v4';
+import { Container, Row } from '@bootstrap-styled/v4';
 
 import { requestProductsByBrand } from '../requests';
-import Product from './Product';
+import TitleText from '../TitleText';
+import GridUnit from '../GridUnit';
+
 
 class Brands extends React.Component {
   state = {
@@ -19,8 +20,6 @@ class Brands extends React.Component {
 
   async componentDidMount() {
     this.setProductState();
-    // console.log(this.state.brand);
-
   }
 
   async setProductState() {
@@ -34,18 +33,10 @@ class Brands extends React.Component {
     const { products } = this.state;
     return(
       <Container fluid={true}>
+        <TitleText title={this.state.brand}/>
         <Row>
-          { products.map((product) => (
-            <Col sm={6} md={4} xl={3}>
-              <Link to={`/product/${product.id}`}>
-                <div>
-                  <img
-                    style={{ width: '100%' }}
-                    src={`${product.images[0]}`}
-                    alt=""/>
-                </div>
-              </Link>
-            </Col>
+          {products.map((product) => (
+            <GridUnit product={product}/>
           ))}
         </Row>
       </Container>

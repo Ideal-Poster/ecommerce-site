@@ -10,7 +10,8 @@ class BrandsDropdown extends React.Component {
     brands: []
   }
   async componentDidMount() {
-    const brandsRequest = await requestBrands();
+    let brandsRequest = [];
+    brandsRequest = await requestBrands();
     let brands = [];
     brandsRequest.forEach((brand) => brands.push(brand.name));
     this.setState({ brands });

@@ -1,7 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { Container, Row, Col } from '@bootstrap-styled/v4';
 import { requestProductsByCategory } from '../requests';
+import GridUnit from '../GridUnit';
+import TitleText from '../TitleText';
 
 class Categories extends React.Component {
   state = {
@@ -30,20 +31,13 @@ class Categories extends React.Component {
   }
 
   render() {
+
     return (
       <Container fluid={true}>
+        <TitleText title={this.state.category}/>
         <Row>
           {this.state.products.map((product) => (
-                 <Col sm={6} md={4} xl={3}>
-                 <Link to={`/product/${product.id}`}>
-                   <div>
-                     <img
-                       style={{ width: '100%' }}
-                       src={`${product.images[0]}`}
-                       alt=""/>
-                   </div>
-                 </Link>
-               </Col>
+            <GridUnit product={product}/>
           ))}
         </Row>
       </Container>

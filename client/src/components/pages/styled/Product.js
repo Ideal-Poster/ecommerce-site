@@ -24,3 +24,7 @@ export const ImageSelect = styled.img`
   width: 100%;
   cursor: pointer;
 `;
+
+// export const TitleText = styled.h1`
+
+// `;

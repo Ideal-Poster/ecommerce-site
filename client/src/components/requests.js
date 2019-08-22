@@ -16,6 +16,8 @@ export const requestProductsByBrand = async ({brand}) => {
         name
         description
         images
+        brand
+        price
       }
     }`;
     const {data: {brandFilter}} = await client.query({query});
@@ -34,10 +36,12 @@ export const requestProductsByCategory = async ({category}) => {
         name
         description
         images
+        brand
+        price
       }
     }`;
     const {data: {categoryFilter}} = await client.query({query});
-    console.log(category);
+    // console.log(category);
     return categoryFilter;
   } catch (error) {
     console.log(error);
@@ -72,7 +76,7 @@ export const requestBrands = async () => {
       }
     }`
     const {data: {brands}} = await client.query({query});
-    // console.log(brands);
+    console.log(brands);
     return brands;
   } catch (error){
     console.log(error);
