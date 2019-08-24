@@ -25,6 +25,9 @@ class Navbar extends React.Component {
   options = ['brands', 'categories', 'releases'];
   activeHover;
   offset : number;
+  hideAnimation: any;
+  displayAnimation: any;
+
 
   componentDidMount() {
     this.offset = window.pageYOffset;
@@ -40,7 +43,7 @@ class Navbar extends React.Component {
 
   isNavHidden = () => {
     return this.offset < window.pageYOffset &&
-    window.pageYOffset > 400 &&
+    window.pageYOffset > 150 &&
     !this.navIsAnimating &&
     this.navDisplayed
   }
@@ -135,31 +138,14 @@ class Navbar extends React.Component {
     this.hideAnimation.play();
   }
 
-  sectionHoverEnter = (i) => {
-    this.hideAnimation.reset();
-  }
-
-  sectionHoverLeave = () => {
-    this.hideAnimation.play();
-  }
+  sectionHoverEnter = () => this.hideAnimation.reset();
 
 
-  render() {
-    const activeLink = 'releases';
-    const optionLinks = this.options.map((link, i) => {
-      return(
-        link === activeLink ?
-        <Link
-          to={`${link}`}
-          // style={{ background: 'orange'}}
-          key={`link-${i}`}
-          onMouseEnter={ () => this.displayDropdown(i) }
-          onMouseLeave={ () => this.hideDropdown(i) }
-          onClick={ this.sectionHoverLeave }>
-          <NavLink
-          key={`navbar-link-${i}`}>{`${link}`}</NavLink>
-        </Link> :
+  sectionHoverLeave = () => this.hideAnimation.play();
 
+  renderLinks() {
+    return this.options.map((link, i) => (
+        i !== 2 ?
         <a>
           <NavLink
             key={`navbar-link-${i}`}
@@ -167,10 +153,21 @@ class Navbar extends React.Component {
             onMouseLeave={ () => this.hideDropdown(i) } >
             {`${link}`}
           </NavLink>
-        </a>
-      );
-    })
+        </a>:
+        <Link
+          to={`/${link}`}
+          key={`link-${i}`}
+          onMouseEnter={ () => this.displayDropdown(i) }
+          onMouseLeave={ () => this.hideDropdown(i) }
+          onClick={ this.sectionHoverLeave }>
+          <NavLink
+          key={`navbar-link-${i}`}>{`${link}`}</NavLink>
+        </Link>
+    ));
+  }
 
+  render() {
+    const {brandsOpen, categoriesOpen} = this.state;
     return (
       <div>
         <Navigation className="navMenu">
@@ -182,20 +179,20 @@ class Navbar extends React.Component {
             </Link>
           </IconContainer>
           <Selections>
-            {optionLinks}
+            {this.renderLinks()}
           </Selections>
         </Navigation>
 
         <Sections
           className="sections"
-          onMouseEnter={ () => { this.sectionHoverEnter(this.activeHover) } }
-          onMouseLeave={ () => { this.sectionHoverLeave(this.activeHover) } } >
+          onMouseEnter={ () => { this.sectionHoverEnter() } }
+          onMouseLeave={ () => { this.sectionHoverLeave() } } >
 
-          {this.state.brandsOpen &&
+          {brandsOpen &&
             <BrandsDropdown/>
           }
 
-          {this.state.categoriesOpen &&
+          {categoriesOpen &&
             <CategoriesDropdown/>
           }
         </Sections>
