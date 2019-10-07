@@ -26,7 +26,7 @@ class Brands extends React.Component {
     const pathBrand = this.props.match.params.brand;
     await this.setState({ brand: pathBrand });
     const products = await requestProductsByBrand(this.state);
-    await this.setState({ products });
+    if(products) await this.setState({ products });
   }
 
   render() {
