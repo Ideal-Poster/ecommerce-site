@@ -23,7 +23,8 @@ class Product extends React.Component {
       description: ''
     },
     imageSelect: 0,
-    cartItems: []
+    cartItems: [],
+    dropdown: true
   };
 
   addToCart = product => {
@@ -67,7 +68,6 @@ class Product extends React.Component {
           src={`${this.state.product.images[i]}`} alt="" />
       </Col>
     );
-
   }
 
   render() {
@@ -100,9 +100,13 @@ class Product extends React.Component {
             <h5>Description</h5>
             <h5>{ description }</h5>
           </SubContainer>
-          <Dropdown/>
-          <br/>
-          <button onClick={ () => this.addToCart(this.state.product) }>Add To Cart</button>
+
+          <SubContainer>
+            <Dropdown dropdown={this.state.dropdown}/>
+            <br/>
+            <button onClick={ () => this.addToCart(this.state.product) }>Add To Cart</button>
+          </SubContainer>
+
         </ProductSidebarContainer>
       </Container>
     );

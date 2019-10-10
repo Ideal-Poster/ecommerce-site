@@ -28,6 +28,7 @@ export const requestProductsByBrand = async ({brand}) => {
   }
 }
 
+
 export const requestProductsByCategory = async ({category}) => {
   try {
     const query = gql`{
@@ -66,7 +67,6 @@ export const requestProduct = async ({product: {id}}) => {
     console.log(error);
   }
 }
-
 
 export const requestBrands = async () => {
   try {

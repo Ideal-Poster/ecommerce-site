@@ -6,17 +6,16 @@ import {
   DropdownItem,
 } from '@bootstrap-styled/v4';
 
-const Dropdown = () => (
-    <ButtonDropdown isOpen={false} >
-        <DropdownToggle color="link" caret>
-        Dropdown
+const Dropdown = (props) => (
+    <ButtonDropdown isOpen={props.dropdown} >
+        <DropdownToggle caret>
+          Dropdown
         </DropdownToggle>
         <DropdownMenu>
-        <DropdownItem header>Header</DropdownItem>
-        <DropdownItem disabled>Action</DropdownItem>
-        <DropdownItem>Another Action</DropdownItem>
-        <DropdownItem divider />
-        <DropdownItem>Another Action</DropdownItem>
+          {/* <DropdownItem header>Header</DropdownItem> */}
+          <DropdownItem disabled>Action</DropdownItem>
+          <DropdownItem>Another Action</DropdownItem>
+          <DropdownItem>Another Action</DropdownItem>
         </DropdownMenu>
     </ButtonDropdown>
 );
