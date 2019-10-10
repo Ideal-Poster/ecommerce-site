@@ -25,6 +25,22 @@ export const ImageSelect = styled.img`
   cursor: pointer;
 `;
 
-// export const TitleText = styled.h1`
+export const ProductSidebarContainer = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 380px;
+  min-height: 850px;
+  border: 1px solid black;
+  padding-top: 85px;
+  background: yellow;
+`;
 
-// `;
+export const SubContainer = styled.div`
+  border-bottom: 1px solid black;
+  padding-bottom: 30px;
+  padding-left: 20px;
+  padding-right: 20px;
+`;
+
+

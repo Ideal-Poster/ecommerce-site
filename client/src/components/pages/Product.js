@@ -1,15 +1,17 @@
 import React from 'react';
 import { Container, Row, Col } from '@bootstrap-styled/v4';
 
-import { ProductContainer, ProductMargin, ProductView, ImageSelect } from './styled/Product';
-import { requestProduct } from '../requests';
+import { 
+  ProductContainer, 
+  ProductMargin, 
+  ProductView, 
+  ImageSelect,
+  ProductSidebarContainer,
+  SubContainer
+} from './styled/Product';
 
-import {
-  ButtonDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-} from '@bootstrap-styled/v4';
+import { requestProduct } from '../requests';
+import Dropdown from '../Dropdown';
 
 class Product extends React.Component {
   state = {
@@ -84,66 +86,27 @@ class Product extends React.Component {
               </Row>
             </ProductMargin>
           }
-        </ProductContainer>
+      </ProductContainer>
+        <ProductSidebarContainer>
+          <SubContainer>
+            <h2>{ name }</h2>
+          </SubContainer>
 
-        <div
-          style={{
-            position: 'absolute',
-            top: '0',
-            right:'0',
-            height: '20px',
-            width: '380px',
-            minHeight: '850px',
-            border: '1px solid black',
-            paddingTop: '85px',
-          }}>
-            <div style={{
-              borderBottom: '1px solid black',
-              paddingBottom: '30px',
-              paddingLeft: '20px',
-              paddingRight: '20px'
-            }}>
-              <h2>{ name }</h2>
-            </div>
+          <SubContainer>
+            <h5>{ price }</h5>
+          </SubContainer>
 
-            <div style={{
-              borderBottom: '1px solid black',
-              paddingBottom: '30px',
-              paddingLeft: '20px',
-              paddingRight: '20px'
-            }}>
-              <h5>{ price }</h5>
-            </div>
-
-            <div style={{
-              borderBottom: '1px solid black',
-              paddingBottom: '30px',
-              paddingLeft: '20px',
-              paddingRight: '20px'
-              }}>
-              <h5>Description</h5>
-              <h5>{ description }</h5>
-            </div>
-            <ButtonDropdown isOpen={false} >
-              <DropdownToggle color="link" caret>
-                Dropdown
-              </DropdownToggle>
-              <DropdownMenu>
-                <DropdownItem header>Header</DropdownItem>
-                <DropdownItem disabled>Action</DropdownItem>
-                <DropdownItem>Another Action</DropdownItem>
-                <DropdownItem divider />
-                <DropdownItem>Another Action</DropdownItem>
-              </DropdownMenu>
-            </ButtonDropdown>
-
-            <br/>
-            <button onClick={ () => this.addToCart(this.state.product) }>Add To Cart</button>
-        </div>
+          <SubContainer>
+            <h5>Description</h5>
+            <h5>{ description }</h5>
+          </SubContainer>
+          <Dropdown/>
+          <br/>
+          <button onClick={ () => this.addToCart(this.state.product) }>Add To Cart</button>
+        </ProductSidebarContainer>
       </Container>
     );
   }
-
 }
 
 export default Product;
