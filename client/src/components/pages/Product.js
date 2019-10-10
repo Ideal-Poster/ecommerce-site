@@ -138,7 +138,6 @@ class Product extends React.Component {
             </ButtonDropdown>
 
             <br/>
-
             <button onClick={ () => this.addToCart(this.state.product) }>Add To Cart</button>
         </div>
       </Container>
