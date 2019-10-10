@@ -4,6 +4,13 @@ import { Container, Row, Col } from '@bootstrap-styled/v4';
 import { ProductContainer, ProductMargin, ProductView, ImageSelect } from './styled/Product';
 import { requestProduct } from '../requests';
 
+import {
+  ButtonDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+} from '@bootstrap-styled/v4';
+
 class Product extends React.Component {
   state = {
     product: {
@@ -117,6 +124,20 @@ class Product extends React.Component {
               <h5>Description</h5>
               <h5>{ description }</h5>
             </div>
+            <ButtonDropdown isOpen={false} >
+              <DropdownToggle color="link" caret>
+                Dropdown
+              </DropdownToggle>
+              <DropdownMenu>
+                <DropdownItem header>Header</DropdownItem>
+                <DropdownItem disabled>Action</DropdownItem>
+                <DropdownItem>Another Action</DropdownItem>
+                <DropdownItem divider />
+                <DropdownItem>Another Action</DropdownItem>
+              </DropdownMenu>
+            </ButtonDropdown>
+
+            <br/>
 
             <button onClick={ () => this.addToCart(this.state.product) }>Add To Cart</button>
         </div>

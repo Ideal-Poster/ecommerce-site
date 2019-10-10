@@ -8,7 +8,6 @@ import slideImg1 from '../../static/photo-1513531926349-466f15ec8cc7.jpeg';
 import slideImg2 from '../../static/warren-wong-248636-unsplash.jpg';
 import slideImg3 from '../../static/photo-1527905804285-2f67b86e3bf6.jpeg';
 
-
 interface Position {
   left: string | number,
   right: string | number
@@ -28,8 +27,7 @@ class Home extends React.Component {
   ];
   currentSlide : number = 1;
   galleryImages : NodeList;
-
-
+  
   async componentDidMount() {
     this.galleryImages = document.querySelectorAll('.slide');
     this.setSlideshowImages();
@@ -171,6 +169,7 @@ class Home extends React.Component {
         <br/>
         <br/>
         <p>hello</p>
+
       </div>
     );
   }
