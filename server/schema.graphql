@@ -5,6 +5,7 @@ type Query {
   categories: [Category]
   categoryFilter(name: String!): [Product]
   brandFilter(name: String!): [Product]
+  productSizeStockApparel(id: ID!): ApparelSizeStock
 }
 
 type Product {
@@ -15,8 +16,13 @@ type Product {
   color: String
   description: String
   price: Float
-  stock: Int
   images: [String]
+}
+
+type ApparelSizeStock {
+  small: Int
+  medium: Int
+  large: Int
 }
 
 type Category {
