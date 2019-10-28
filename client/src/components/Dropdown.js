@@ -5,20 +5,47 @@ import {
   DropdownMenu,
   DropdownItem,
 } from '@bootstrap-styled/v4';
+import { requestProductSizes } from './requests';
 
-const Dropdown = (props) => (
-    <ButtonDropdown isOpen={props.dropdown} >
+class Dropdown extends React.Component { 
+  constructor(props) {
+    super(props);
+    this.props = props;
+  }
+
+  async componentDidMount() {
+    let sizes = await requestProductSizes(this.props.state);
+    await this.props.setSizeState(sizes);
+  }
+
+  renderSizes() {
+    Object.entries(this.state.sizes).forEach((size) => { 
+      return (
+        <DropdownItem>Hello</DropdownItem>
+      )
+    })
+  }
+
+  render() {
+    return(
+      <ButtonDropdown isOpen={this.props.state.dropdown}>
         <DropdownToggle caret>
           Dropdown
         </DropdownToggle>
         <DropdownMenu>
-          {/* <DropdownItem header>Header</DropdownItem> */}
-          <DropdownItem disabled>Action</DropdownItem>
-          <DropdownItem>Another Action</DropdownItem>
-          <DropdownItem>Another Action</DropdownItem>
+          {
+            this.props.state.sizes &&
+            Object.entries(this.props.state.sizes).map((entry) => { 
+              return (
+                <DropdownItem>{entry[0]}</DropdownItem>
+              )
+            })
+          }
         </DropdownMenu>
-    </ButtonDropdown>
-);
+      </ButtonDropdown>
+    )
+  }
+};
 
 export default Dropdown;
 

@@ -66,7 +66,7 @@ const Query = {
       const res : QueryResult = await client.query(
         `SELECT *
         FROM apparel_stock
-        WHERE id = 1`
+        WHERE id = ${id}`
       );
       return res.rows[0];
       console.log(res.rows[0]);

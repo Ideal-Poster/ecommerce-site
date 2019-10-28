@@ -86,14 +86,30 @@ export const requestBrands = async () => {
 export const requestCategories = async () => {
   try {
     const query = gql`{
-      categories {
-        name
-      }
+        categories {
+          name
+        }
     }`
     const {data: {categories}} = await client.query({query});
     // console.log(categories);
     return categories;
   } catch (error){
+    console.log(error);
+  }
+}
+
+export const requestProductSizes = async ({product: {id}}) => {
+  try {
+    const query =  gql`{
+      productSizeStockApparel(id: "${id}") {
+        small
+        medium
+        large
+      }
+    }`
+    const {data: {productSizeStockApparel}} = await client.query({query});
+    return productSizeStockApparel;
+  } catch(error) {
     console.log(error);
   }
 }

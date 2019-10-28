@@ -10,7 +10,7 @@ import {
   SubContainer
 } from './styled/Product';
 
-import { requestProduct } from '../requests';
+import { requestProduct, requestProductSizes } from '../requests';
 import Dropdown from '../Dropdown';
 
 class Product extends React.Component {
@@ -24,8 +24,20 @@ class Product extends React.Component {
     },
     imageSelect: 0,
     cartItems: [],
-    dropdown: true
+    dropdown: true,
+    sizes: {}
   };
+
+  async setSizeState(sizes) {
+    // console.log(sizes);
+    
+    await this.setState({ sizes });
+
+    setTimeout(() => {
+      console.log(this.state);
+      
+    }, 1000);
+  }
 
   addToCart = product => {
     const alreadyInCart = this.state.cartItems.findIndex(
@@ -58,6 +70,8 @@ class Product extends React.Component {
   async componentDidMount() {
     const product = await requestProduct(this.state);
     this.setState({ product });
+    const sizes = await requestProductSizes(this.state);
+    this.setState({ sizes });
   }
 
   renderImageSelection(i) {
@@ -86,7 +100,7 @@ class Product extends React.Component {
               </Row>
             </ProductMargin>
           }
-      </ProductContainer>
+        </ProductContainer>
         <ProductSidebarContainer>
           <SubContainer>
             <h2>{ name }</h2>
@@ -102,7 +116,7 @@ class Product extends React.Component {
           </SubContainer>
 
           <SubContainer>
-            <Dropdown dropdown={this.state.dropdown}/>
+            <Dropdown state={this.state} setSizeState={() => this.setSizeState()}/>
             <br/>
             <button onClick={ () => this.addToCart(this.state.product) }>Add To Cart</button>
           </SubContainer>
