@@ -25,18 +25,38 @@ class Product extends React.Component {
     imageSelect: 0,
     cartItems: [],
     dropdown: true,
-    sizes: {}
+    sizes: {},
+    selectedSize: null
   };
 
-  async setSizeState(sizes) {
-    // console.log(sizes);
-    
+  async componentDidMount() {
+    const product = await requestProduct(this.state);
+    this.setState({ product });
+    const sizes = await requestProductSizes(this.state);
     await this.setState({ sizes });
 
-    setTimeout(() => {
-      console.log(this.state);
-      
-    }, 1000);
+    const sizeNodeElements = document.getElementsByClassName('size');
+    this.sizeElements = Array.apply(null, sizeNodeElements);
+
+    this.sizeElements.forEach((sizeButton) => {
+      const sizeButtonText = sizeButton.innerHTML.toLowerCase();
+      sizeButton.addEventListener('click', () => this.selectSize(sizeButtonText));
+    })
+  }
+
+  selectSize(size) {
+    this.setState({ selectedSize: size });
+    // this.sizeElements.forEach((button) => {
+    //   button.classList
+    // });
+  }
+  
+  async setSizeState(sizes) {
+    await this.setState({ sizes });
+  }
+
+  dropdownToggle() {
+    this.setState({ dropdown: !this.state.dropdown });
   }
 
   addToCart = product => {
@@ -65,13 +85,6 @@ class Product extends React.Component {
 
   selectImage = i => {
     this.setState({ imageSelect: i });
-  }
-
-  async componentDidMount() {
-    const product = await requestProduct(this.state);
-    this.setState({ product });
-    const sizes = await requestProductSizes(this.state);
-    this.setState({ sizes });
   }
 
   renderImageSelection(i) {
@@ -116,7 +129,11 @@ class Product extends React.Component {
           </SubContainer>
 
           <SubContainer>
-            <Dropdown state={this.state} setSizeState={() => this.setSizeState()}/>
+            <Dropdown
+              state={this.state}
+              setSizeState={ () => this.setSizeState() }
+              selectSize={ (size) => this.selectSize(size) }
+              />
             <br/>
             <button onClick={ () => this.addToCart(this.state.product) }>Add To Cart</button>
           </SubContainer>

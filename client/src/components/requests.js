@@ -76,7 +76,7 @@ export const requestBrands = async () => {
       }
     }`
     const {data: {brands}} = await client.query({query});
-    console.log(brands);
+    // console.log(brands);
     return brands;
   } catch (error){
     console.log(error);
