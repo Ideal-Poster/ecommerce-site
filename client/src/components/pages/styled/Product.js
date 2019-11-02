@@ -43,4 +43,21 @@ export const SubContainer = styled.div`
   padding-right: 20px;
 `;
 
+export const SizeButton = styled.div`
+  position: relative;
+  border: 1px solid black;
+  width: 33.333%;
+  height: 35px;
+  background: ${props => props.primary ? "palevioletred" : "white"};
+  color: ${props => props.primary ? "white" : "palevioletred"};
+`;
+
+export const SizeButtonText = styled.p`
+  position: relative;
+  font-size: 13px;
+  height: 100%;
+  text-align: center;
+  margin: 7px 0px 0px 0px;
+`;
+
 
