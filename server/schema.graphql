@@ -6,6 +6,7 @@ type Query {
   categoryFilter(name: String!): [Product]
   brandFilter(name: String!): [Product]
   productSizeStockApparel(id: ID!): ApparelSizeStock
+  productSizeStockFootwear(id: ID!): FootwearSizeStock
 }
 
 type Product {
@@ -23,6 +24,14 @@ type ApparelSizeStock {
   small: Int
   medium: Int
   large: Int
+}
+
+type FootwearSizeStock {
+  id: ID!
+  ten: Int
+  eleven: Int
+  twelve: Int
+  thirteen: Int
 }
 
 type Category {

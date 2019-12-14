@@ -1,6 +1,5 @@
 import React from 'react';
 import { Container, Row, Col } from '@bootstrap-styled/v4';
-
 import { 
   ProductContainer, 
   ProductMargin, 
@@ -10,8 +9,12 @@ import {
   SubContainer
 } from './styled/Product';
 
-import { requestProduct, requestProductSizes } from '../requests';
-import Dropdown from '../SizeSelection';
+import {
+  requestProduct,
+  requestProductApparelSizes,
+  productSizeStockFootwear
+} from '../requests';
+import SizeSelection from '../SizeSelection';
 
 class Product extends React.Component {
   state = {
@@ -20,7 +23,8 @@ class Product extends React.Component {
       name: '',
       price: 0,
       images: [],
-      description: ''
+      description: '',
+      size: ''
     },
     imageSelect: 0,
     cartItems: [],
@@ -30,29 +34,30 @@ class Product extends React.Component {
   };
 
   async componentDidMount() {
+    const apparelSizeCategories = ['Tops', 'Bottoms', 'Jackets'];
     const product = await requestProduct(this.state);
-    const sizes = await requestProductSizes(this.state);
-    this.setState({ product });
-    this.setState({ sizes });
-
+    // console.log(product.category);
+    let sizes;
+    if(product.category === "Footwear") {
+      sizes = await productSizeStockFootwear(this.state);
+    }
+    if(apparelSizeCategories.includes(product.category)) {
+      sizes = await requestProductApparelSizes(this.state);
+    }    
+    if (sizes) delete sizes.__typename;
+    this.setState({ product, sizes });
     // Add click event listeners to size options
     const sizeNodeElements = document.getElementsByClassName('size');
     this.sizeElements = Array.apply(null, sizeNodeElements);
     this.sizeElements.forEach((sizeButton) => {
       const sizeButtonText = sizeButton.children[0].innerHTML.toLowerCase();
       sizeButton.addEventListener('click', () => this.selectSize(sizeButtonText));
-    })
-  }
-
-  // Methods to pass to child (size select) *---
-  setSizesState(sizes) {
-    this.setState({ sizes });
+    });
   }
 
   selectSize(size) {
-    this.setState({ selectedSize: size });
+    this.setState({ selectedSize: size });    
   }
-// ---------------------------------------------*
 
   dropdownToggle() {
     this.setState({ dropdown: !this.state.dropdown });
@@ -98,7 +103,7 @@ class Product extends React.Component {
 
   render() {
     const { name, price, images, description } = this.state.product;
-    const { imageSelect, product } = this.state;
+    const { imageSelect } = this.state;
 
     return(
       <Container fluid={true}>
@@ -128,13 +133,11 @@ class Product extends React.Component {
           </SubContainer>
 
           <SubContainer>
-            <Dropdown
+            <SizeSelection
               state={this.state}
-              setSizesState={ () => this.setSizesState() }
-              selectSize={ (size) => this.selectSize(size) }
-              />
+              addToCart={() => this.addToCart()}/>
             <br/>
-            <button onClick={ () => this.addToCart(product) }>Add To Cart</button>
+            {/* <button onClick={ () => {this.addToCart(product)}}>Add To Cart</button> */}
           </SubContainer>
 
         </ProductSidebarContainer>

@@ -31,7 +31,6 @@ class Categories extends React.Component {
   }
 
   render() {
-
     return (
       <Container fluid={true}>
         <TitleText title={this.state.category}/>

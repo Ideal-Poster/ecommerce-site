@@ -21,13 +21,12 @@ export const requestProductsByBrand = async ({brand}) => {
       }
     }`;
     const {data: {brandFilter}} = await client.query({query});
-    // console.log(brandFilter);
+    console.log(brandFilter);
     return brandFilter;
   } catch (error) {
     console.log(error);
   }
 }
-
 
 export const requestProductsByCategory = async ({category}) => {
   try {
@@ -58,6 +57,7 @@ export const requestProduct = async ({product: {id}}) => {
         price
         description
         images
+        category
       }
     }`;
     const {data: {product}} = await client.query({query});
@@ -98,7 +98,7 @@ export const requestCategories = async () => {
   }
 }
 
-export const requestProductSizes = async ({product: {id}}) => {
+export const requestProductApparelSizes = async ({product: {id}}) => {
   try {
     const query =  gql`{
       productSizeStockApparel(id: "${id}") {
@@ -109,6 +109,23 @@ export const requestProductSizes = async ({product: {id}}) => {
     }`
     const {data: {productSizeStockApparel}} = await client.query({query});
     return productSizeStockApparel;
+  } catch(error) {
+    console.log(error);
+  }
+}
+
+export const productSizeStockFootwear = async ({product: {id}}) => {
+  try {
+    const query =  gql`{
+      productSizeStockFootwear(id: "${id}") {
+        ten
+        eleven
+        twelve
+        thirteen 
+      }
+    }`
+    const {data: {productSizeStockFootwear}} = await client.query({query});
+    return productSizeStockFootwear;
   } catch(error) {
     console.log(error);
   }

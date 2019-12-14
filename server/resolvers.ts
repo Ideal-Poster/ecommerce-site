@@ -60,6 +60,24 @@ const Query = {
     };
   },
 
+  productSizeStockFootwear: async (root: any, {id}: any) => {
+    const client : PoolClient = await pool.connect();
+    try {
+      const res : QueryResult = await client.query(
+        `SELECT *
+        FROM footwear_stock
+        WHERE id = ${id}`
+      );
+      return res.rows[0];
+      console.log(res.rows[0]);
+
+    } catch (err) {
+      console.log(err);
+    } finally {
+      client.release();
+    };
+  },
+
   productSizeStockApparel: async (root: any, {id}: any) =>  {
     const client : PoolClient = await pool.connect();
     try {

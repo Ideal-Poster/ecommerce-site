@@ -1,60 +1,66 @@
 import React from 'react';
-import {
-  DropdownItem,
-  Row
-} from '@bootstrap-styled/v4';
-import { requestProductSizes } from './requests';
+import { Row } from '@bootstrap-styled/v4';
+// import { requestProductApparelSizes } from './requests';
 import { SizeButton, SizeButtonText } from './pages/styled/Product';
 
-class Dropdown extends React.Component { 
+class SizeSelection extends React.Component { 
   constructor(props) {
     super(props);
     this.props = props;
   }
 
-  async componentDidMount() {
-    let sizes = await requestProductSizes(this.props.state);
-    await this.props.setSizesState(sizes);
-    this.props.selectSize('small');
+  soldOut(sizes) {
+    let array = [];
+    Object.entries(sizes).forEach((entry) => {
+      entry[1] > 0 ? array.push(false) : array.push(true)
+    }); 
+    return !array.includes(false)
   }
 
   render() {
-    const { sizes, selectedSize } = this.props.state;
+    const { sizes, selectedSize, product } = this.props.state;
     return(
       <div>
-        <Row style={{
-          paddingTop: '20px'
-        }}>
+        <Row style={{ paddingTop: '20px' }}>
+          { 
+            this.soldOut(sizes) &&
+            <p style={{ paddingLeft: '20px' }}>sold out</p>
+          }
           {
             sizes &&
             Object.entries(sizes).map((entry, i) => {
               if (selectedSize === entry[0]) {
-                return(
-                  <SizeButton
-                    primary
-                    className="size"
-                    id={`sizeOption-${i}`}>
-                      <SizeButtonText>{ entry[0].toUpperCase() }</SizeButtonText>
-                  </SizeButton>
-                )
+                if (entry[1] > 0) {
+                  return(
+                    <SizeButton
+                      primary
+                      className="size"
+                      id={`sizeOption-${i}`}>
+                        <SizeButtonText>{ entry[0].toUpperCase() }</SizeButtonText>
+                    </SizeButton>
+                  )
+                }
               } else {
-                return(
-                  <SizeButton
-                    className="size"
-                    id={`sizeOption-${i}`}>
-                      <SizeButtonText>{ entry[0].toUpperCase() }</SizeButtonText>
-                  </SizeButton>
-                )
+                if (entry[1] > 0) {
+                  return(
+                    <SizeButton
+                      className="size"
+                      id={`sizeOption-${i}`}>
+                        <SizeButtonText>{ entry[0].toUpperCase() }</SizeButtonText>
+                    </SizeButton>
+                  )
+                }
               }
-
             })
           }
         </Row>
+        <button onClick={ () => {this.props.addToCart(product)}}>Add To Cart</button>
+
       </div>
     )
   }
 };
 
-export default Dropdown;
+export default SizeSelection;
 
 
