@@ -102,7 +102,8 @@ class Product extends React.Component {
   }
 
   render() {
-    const { name, price, images, description } = this.state.product;
+    const product = this.state.product
+    const { name, price, images, description } = product;
     const { imageSelect } = this.state;
 
     return(
@@ -135,7 +136,7 @@ class Product extends React.Component {
           <SubContainer>
             <SizeSelection
               state={this.state}
-              addToCart={() => this.addToCart()}/>
+              addToCart={() => this.addToCart(product)}/>
             <br/>
             {/* <button onClick={ () => {this.addToCart(product)}}>Add To Cart</button> */}
           </SubContainer>

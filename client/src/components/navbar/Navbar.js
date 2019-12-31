@@ -17,7 +17,8 @@ class Navbar extends React.Component {
   state = {
     brandsOpen: false,
     categoriesOpen: false,
-    releasesOpen: false
+    releasesOpen: false,
+    cartOpen: false
   }
   navIsAnimating : boolean = false;
   isAnimating : boolean = false;
@@ -183,6 +184,16 @@ class Navbar extends React.Component {
           </IconContainer>
           <Selections>
             {optionLinks}
+
+            <i 
+              style={{
+                fontSize: '16px',
+                position: 'fixed',
+                right: '0',
+                top: '20px',
+                paddingRight: '25px'
+              }}
+              class="fas fa-shopping-cart"></i>
           </Selections>
         </Navigation>
 
@@ -191,13 +202,31 @@ class Navbar extends React.Component {
           onMouseEnter={ () => { this.sectionHoverEnter(this.activeHover) } }
           onMouseLeave={ () => { this.sectionHoverLeave(this.activeHover) } } >
 
-          {this.state.brandsOpen &&
+          {
+            this.state.brandsOpen &&
             <BrandsDropdown/>
           }
 
-          {this.state.categoriesOpen &&
+          {
+            this.state.categoriesOpen &&
             <CategoriesDropdown/>
           }
+
+          {
+            !this.state.cartOpen &&
+            <div
+              style={{
+                position: 'fixed',
+                height: '100px',
+                width: '350px',
+                background: 'purple',
+                right: '0'
+              }}>
+
+                
+              </div>
+          }
+
         </Sections>
       </div>
     )
