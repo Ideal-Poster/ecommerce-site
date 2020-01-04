@@ -16,6 +16,10 @@ import {
 } from '../requests';
 import SizeSelection from '../SizeSelection';
 
+import { connect } from 'react-redux';
+import { addToCart } from '../../actions/index';
+
+
 class Product extends React.Component {
   state = {
     product: {
@@ -63,22 +67,22 @@ class Product extends React.Component {
     this.setState({ dropdown: !this.state.dropdown });
   }
 
-  addToCart = product => {
-    const alreadyInCart = this.state.cartItems.findIndex(
-      item => item._id === product._id
-    );
-    if (alreadyInCart === -1) {
-      const updatedItems = this.state.cartItems.concat({
-        ...product,
-        quantity: 1
-      });
-      this.setState({ cartItems: updatedItems });
-    } else {
-      const updatedItems = [...this.state.cartItems];
-      updatedItems[alreadyInCart].quantity += 1;
-      this.setState({ cartItems: updatedItems});
-    }
-  }
+  // addToCart = product => {
+  //   const alreadyInCart = this.state.cartItems.findIndex(
+  //     item => item._id === product._id
+  //   );
+  //   if (alreadyInCart === -1) {
+  //     const updatedItems = this.state.cartItems.concat({
+  //       ...product,
+  //       quantity: 1
+  //     });
+  //     this.setState({ cartItems: updatedItems });
+  //   } else {
+  //     const updatedItems = [...this.state.cartItems];
+  //     updatedItems[alreadyInCart].quantity += 1;
+  //     this.setState({ cartItems: updatedItems});
+  //   }
+  // }
 
   deleteItemFromCart = itemToDeleteId => {
     const filteredItems = this.state.cartItems.filter(
@@ -138,13 +142,19 @@ class Product extends React.Component {
               state={this.state}
               addToCart={() => this.addToCart(product)}/>
             <br/>
-            {/* <button onClick={ () => {this.addToCart(product)}}>Add To Cart</button> */}
           </SubContainer>
-
+          <button onClick={ () => this.props.addToCart(product) }>poop</button>
+          <button onClick={ () => console.log(this.props.cart)}>log cart</button>
         </ProductSidebarContainer>
       </Container>
     );
   }
 }
 
-export default Product;
+const mapStateToProps = (state) => {
+  return {
+    cart: state.cart
+  }
+}
+
+export default connect(mapStateToProps, { addToCart })(Product);

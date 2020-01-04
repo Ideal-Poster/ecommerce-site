@@ -54,7 +54,7 @@ class SizeSelection extends React.Component {
             })
           }
         </Row>
-        <button onClick={ () => {this.props.addToCart(product)}}>Add To Cart</button>
+        {/* <button onClick={ () => {this.props.addToCart(product)}}>Add To Cart</button> */}
 
       </div>
     )

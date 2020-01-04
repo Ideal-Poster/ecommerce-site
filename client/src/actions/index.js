@@ -1,8 +1,8 @@
-export const selectProduct = id => {
+export const addToCart = item => {
   return{
-    type: 'SELECT_PRODUCT',
+    type: 'ADD_TO_CART',
     payload: {
-      id: id
+      item: item
     }
   }
 }

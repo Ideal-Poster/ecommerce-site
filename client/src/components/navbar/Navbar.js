@@ -13,6 +13,8 @@ import {
   Sections
  } from './styled/Navbar';
 
+ import { connect } from 'react-redux';
+
 class Navbar extends React.Component {
   state = {
     brandsOpen: false,
@@ -222,15 +224,18 @@ class Navbar extends React.Component {
                 background: 'purple',
                 right: '0'
               }}>
-
-                
-              </div>
+            </div>
           }
-
         </Sections>
       </div>
     )
   }
 }
 
-export default Navbar;
+const mapStateToProps = state => {
+  return {
+    cart: state.cart
+  }
+}
+
+export default connect(mapStateToProps)(Navbar);
