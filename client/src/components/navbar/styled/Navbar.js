@@ -57,3 +57,21 @@ export const DropdownText = styled.li`
 export const DropdownImage = styled.img`
   width: 100%;
 `;
+
+export const CartIcon = styled.i`
+  fontSize: 16px;
+  position: absolute;
+  right: 0;
+  top: 21px;
+  paddingRight: 25px;
+`
+
+export const CartImage = styled.img`
+  height: 70px;
+  display: inline-block;
+`
+
+export const CartInfo = styled.p`
+  display: inline-block;
+  padding-left: 20px;
+`

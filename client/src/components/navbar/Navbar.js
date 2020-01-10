@@ -10,10 +10,15 @@ import {
   IconContainer,
   Icon,
   Selections,
-  Sections
+  Sections,
+  CartImage,
+  CartInfo,
+  CartIcon
  } from './styled/Navbar';
 
- import { connect } from 'react-redux';
+import { connect } from 'react-redux';
+import { calculatePrice } from '../../utilities/index';
+
 
 class Navbar extends React.Component {
   state = {
@@ -146,6 +151,10 @@ class Navbar extends React.Component {
     this.hideAnimation.play();
   }
 
+  toggleCart = () => {
+    this.setState({ cartOpen: !this.state.cartOpen})
+  }
+
 
   render() {
     const activeLink = 'releases';
@@ -154,7 +163,6 @@ class Navbar extends React.Component {
         link === activeLink ?
         <Link
           to={`${link}`}
-          // style={{ background: 'orange'}}
           key={`link-${i}`}
           onMouseEnter={ () => this.displayDropdown(i) }
           onMouseLeave={ () => this.hideDropdown(i) }
@@ -188,14 +196,16 @@ class Navbar extends React.Component {
             {optionLinks}
 
             <i 
+              onClick={this.toggleCart}
               style={{
                 fontSize: '16px',
-                position: 'fixed',
+                position: 'absolute',
                 right: '0',
-                top: '20px',
+                top: '21px',
                 paddingRight: '25px'
               }}
-              class="fas fa-shopping-cart"></i>
+              class="fas fa-shopping-cart"/>
+              {/* <CartIcon class="fas fa-shopping-cart"/> */}
           </Selections>
         </Navigation>
 
@@ -215,15 +225,38 @@ class Navbar extends React.Component {
           }
 
           {
-            !this.state.cartOpen &&
+            this.state.cartOpen &&
             <div
               style={{
                 position: 'fixed',
-                height: '100px',
-                width: '350px',
+                width: '400px',
                 background: 'purple',
                 right: '0'
               }}>
+                
+              <div style={{display: 'inline-block'}}>
+                {this.props.cart.map((item) => (
+                    <div>
+                      <CartImage src={item.images[0]} alt="cart item"/>
+                      <div style={{display: 'inline-block'}}>
+                        <p style={{paddingLeft: '20px'}}>{item.name}</p> 
+                        <CartInfo>$ {item.price}</CartInfo>
+                        <CartInfo>size: {item.size}</CartInfo>
+                        <CartInfo>quantity: {item.quantity}</CartInfo>
+                      </div>
+                    </div>
+                ))}
+              </div>
+              <div style={{
+                // height: '100%',
+                width: '100px',
+                display: 'flex',
+                // float: 'right',
+                background: 'green',
+                verticalAlign: 'center'
+              }}>
+                <p>total: {calculatePrice(this.props.cart) }</p>
+              </div>
             </div>
           }
         </Sections>

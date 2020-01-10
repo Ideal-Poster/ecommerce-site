@@ -7,7 +7,6 @@ const addToCartReducer = (state = [], action) => {
       const alreadyInCart = state.findIndex(
         item => item.id === product.id
       )
-
       if (alreadyInCart === -1) {
         const updatedItems = state.concat({
           ...product,
@@ -19,7 +18,8 @@ const addToCartReducer = (state = [], action) => {
         updatedItems[alreadyInCart].quantity += 1;
         return updatedItems
       }
-
+    case 'SET_CART':
+      return action.payload.cart
     default:
       return []
   }

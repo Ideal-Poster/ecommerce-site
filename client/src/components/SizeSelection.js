@@ -1,7 +1,7 @@
 import React from 'react';
 import { Row } from '@bootstrap-styled/v4';
 // import { requestProductApparelSizes } from './requests';
-import { SizeButton, SizeButtonText } from './pages/styled/Product';
+import { SizeButton, SizeButtonText, SizeButtonGreyedOut } from './pages/styled/Product';
 
 class SizeSelection extends React.Component { 
   constructor(props) {
@@ -18,7 +18,8 @@ class SizeSelection extends React.Component {
   }
 
   render() {
-    const { sizes, selectedSize, product } = this.props.state;
+    const { sizes, selectedSize } = this.props.state;
+    
     return(
       <div>
         <Row style={{ paddingTop: '20px' }}>
@@ -26,29 +27,34 @@ class SizeSelection extends React.Component {
             this.soldOut(sizes) &&
             <p style={{ paddingLeft: '20px' }}>sold out</p>
           }
+          
           {
             sizes &&
             Object.entries(sizes).map((entry, i) => {
               if (selectedSize === entry[0]) {
                 if (entry[1] > 0) {
-                  return(
-                    <SizeButton
-                      primary
-                      className="size"
-                      id={`sizeOption-${i}`}>
-                        <SizeButtonText>{ entry[0].toUpperCase() }</SizeButtonText>
-                    </SizeButton>
-                  )
+                  return  <SizeButton
+                            primary
+                            className="size"
+                            id={`sizeOption-${i}`}>
+                            <SizeButtonText>{ entry[0].toUpperCase() }</SizeButtonText>
+                          </SizeButton>
                 }
               } else {
-                if (entry[1] > 0) {
-                  return(
-                    <SizeButton
-                      className="size"
-                      id={`sizeOption-${i}`}>
-                        <SizeButtonText>{ entry[0].toUpperCase() }</SizeButtonText>
-                    </SizeButton>
-                  )
+                if (!this.soldOut(sizes)) {
+                  if (entry[1] > 0) {
+                    return  <SizeButton
+                              className="size"
+                              id={`sizeOption-${i}`}
+                              onClick={() => this.props.selectSize(entry[0])}>
+                              <SizeButtonText>{ entry[0].toUpperCase() }</SizeButtonText>
+                            </SizeButton>
+                    
+                  } else {
+                    return  <SizeButtonGreyedOut>
+                              <SizeButtonText>{ entry[0].toUpperCase() }</SizeButtonText>
+                            </SizeButtonGreyedOut>
+                  }
                 }
               }
             })

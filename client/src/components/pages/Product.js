@@ -17,7 +17,8 @@ import {
 import SizeSelection from '../SizeSelection';
 
 import { connect } from 'react-redux';
-import { addToCart } from '../../actions/index';
+import { addToCart, setCartFromStorage } from '../../actions/index';
+import { setCart, getCart } from '../../utilities';
 
 
 class Product extends React.Component {
@@ -27,20 +28,32 @@ class Product extends React.Component {
       name: '',
       price: 0,
       images: [],
-      description: '',
-      size: ''
+      description: ''
     },
     imageSelect: 0,
     cartItems: [],
     dropdown: true,
     sizes: {},
-    selectedSize: null
+    selectedSize: undefined,
+    notice: false
   };
 
-  async componentDidMount() {
+  componentDidMount() {
+    // Add click event listeners to size options
+    this.getProductSizes();
+    // const sizeNodeElements = document.getElementsByClassName('size');
+    // this.sizeElements = Array.apply(null, sizeNodeElements);
+    // this.sizeElements.forEach((sizeButton) => {
+    //   const sizeButtonText = sizeButton.children[0].innerHTML.toLowerCase();
+    //   sizeButton.addEventListener('click', () => this.selectSize(sizeButtonText));
+    // });
+    // Check localStorage for cart items
+    this.props.setCartFromStorage(getCart());
+  }
+
+  async getProductSizes() {
     const apparelSizeCategories = ['Tops', 'Bottoms', 'Jackets'];
     const product = await requestProduct(this.state);
-    // console.log(product.category);
     let sizes;
     if(product.category === "Footwear") {
       sizes = await productSizeStockFootwear(this.state);
@@ -50,13 +63,6 @@ class Product extends React.Component {
     }    
     if (sizes) delete sizes.__typename;
     this.setState({ product, sizes });
-    // Add click event listeners to size options
-    const sizeNodeElements = document.getElementsByClassName('size');
-    this.sizeElements = Array.apply(null, sizeNodeElements);
-    this.sizeElements.forEach((sizeButton) => {
-      const sizeButtonText = sizeButton.children[0].innerHTML.toLowerCase();
-      sizeButton.addEventListener('click', () => this.selectSize(sizeButtonText));
-    });
   }
 
   selectSize(size) {
@@ -67,22 +73,15 @@ class Product extends React.Component {
     this.setState({ dropdown: !this.state.dropdown });
   }
 
-  // addToCart = product => {
-  //   const alreadyInCart = this.state.cartItems.findIndex(
-  //     item => item._id === product._id
-  //   );
-  //   if (alreadyInCart === -1) {
-  //     const updatedItems = this.state.cartItems.concat({
-  //       ...product,
-  //       quantity: 1
-  //     });
-  //     this.setState({ cartItems: updatedItems });
-  //   } else {
-  //     const updatedItems = [...this.state.cartItems];
-  //     updatedItems[alreadyInCart].quantity += 1;
-  //     this.setState({ cartItems: updatedItems});
-  //   }
-  // }
+  addToCart = async product => {
+    if(this.state.selectedSize) {
+      await this.props.addToCart(product);
+      setCart(this.props.cart);
+      this.setState({notice: false});
+    } else {
+      this.setState({notice: true});
+    }
+  }
 
   deleteItemFromCart = itemToDeleteId => {
     const filteredItems = this.state.cartItems.filter(
@@ -140,11 +139,18 @@ class Product extends React.Component {
           <SubContainer>
             <SizeSelection
               state={this.state}
-              addToCart={() => this.addToCart(product)}/>
+              addToCart={() => this.addToCart(product)}
+              selectSize={(size) => this.selectSize(size)}/>
             <br/>
           </SubContainer>
-          <button onClick={ () => this.props.addToCart(product) }>poop</button>
-          <button onClick={ () => console.log(this.props.cart)}>log cart</button>
+
+          {
+          this.state.notice &&
+            <p>Please Select a size</p>
+          }
+          <button onClick={ () => this.addToCart(product) }>poop</button>
+          <button onClick={ () => localStorage.clear() }>Clear localStorage</button>
+
         </ProductSidebarContainer>
       </Container>
     );
@@ -157,4 +163,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { addToCart })(Product);
+export default connect(mapStateToProps, { addToCart , setCartFromStorage })(Product);

@@ -18,8 +18,6 @@ class Categories extends React.Component {
 
   async componentDidMount() {
     await this.setProductState();
-    // console.log(this.state.products);
-
   }
 
   async setProductState() {
@@ -27,7 +25,6 @@ class Categories extends React.Component {
     await this.setState({ category: pathBrand });
     const products = await requestProductsByCategory(this.state);
     await this.setState({ products });
-    // console.log(products);
   }
 
   render() {

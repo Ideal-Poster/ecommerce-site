@@ -52,12 +52,22 @@ export const SizeButton = styled.div`
   color: ${props => props.primary ? "white" : "palevioletred"};
 `;
 
+export const SizeButtonGreyedOut = styled.div`
+  position: relative;
+  border: 1px solid grey;
+  width: 33.333%;
+  height: 35px;
+  background: lightgrey;
+  color: white;
+`;
+
 export const SizeButtonText = styled.p`
   position: relative;
   font-size: 13px;
   height: 100%;
   text-align: center;
   margin: 7px 0px 0px 0px;
+  cursor: default;
 `;
 
 
