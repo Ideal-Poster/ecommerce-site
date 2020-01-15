@@ -1,6 +1,5 @@
 import React from 'react';
 import { Row } from '@bootstrap-styled/v4';
-// import { requestProductApparelSizes } from './requests';
 import { SizeButton, SizeButtonText, SizeButtonGreyedOut } from './pages/styled/Product';
 
 class SizeSelection extends React.Component { 
@@ -17,8 +16,14 @@ class SizeSelection extends React.Component {
     return !array.includes(false)
   }
 
+  selectSize = (size) => {
+    this.props.selectSize(size)
+  }
+
   render() {
-    const { sizes, selectedSize } = this.props.state;
+    const { sizes } = this.props.state;
+    const { size } = this.props.state.product;
+
     
     return(
       <div>
@@ -31,7 +36,7 @@ class SizeSelection extends React.Component {
           {
             sizes &&
             Object.entries(sizes).map((entry, i) => {
-              if (selectedSize === entry[0]) {
+              if (size === entry[0]) {
                 if (entry[1] > 0) {
                   return  <SizeButton
                             primary

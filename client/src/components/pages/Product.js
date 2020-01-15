@@ -20,7 +20,6 @@ import { connect } from 'react-redux';
 import { addToCart, setCartFromStorage } from '../../actions/index';
 import { setCart, getCart } from '../../utilities';
 
-
 class Product extends React.Component {
   state = {
     product: {
@@ -28,26 +27,18 @@ class Product extends React.Component {
       name: '',
       price: 0,
       images: [],
-      description: ''
+      description: '',
+      size: null
     },
     imageSelect: 0,
     cartItems: [],
     dropdown: true,
     sizes: {},
-    selectedSize: undefined,
     notice: false
   };
 
   componentDidMount() {
-    // Add click event listeners to size options
     this.getProductSizes();
-    // const sizeNodeElements = document.getElementsByClassName('size');
-    // this.sizeElements = Array.apply(null, sizeNodeElements);
-    // this.sizeElements.forEach((sizeButton) => {
-    //   const sizeButtonText = sizeButton.children[0].innerHTML.toLowerCase();
-    //   sizeButton.addEventListener('click', () => this.selectSize(sizeButtonText));
-    // });
-    // Check localStorage for cart items
     this.props.setCartFromStorage(getCart());
   }
 
@@ -66,7 +57,9 @@ class Product extends React.Component {
   }
 
   selectSize(size) {
-    this.setState({ selectedSize: size });    
+    let product = this.state.product;
+    product = { ...product, size };
+    this.setState({ product }); 
   }
 
   dropdownToggle() {
@@ -74,7 +67,7 @@ class Product extends React.Component {
   }
 
   addToCart = async product => {
-    if(this.state.selectedSize) {
+    if(this.state.product.size) {
       await this.props.addToCart(product);
       setCart(this.props.cart);
       this.setState({notice: false});
