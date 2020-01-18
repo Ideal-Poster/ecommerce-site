@@ -248,15 +248,25 @@ class Navbar extends React.Component {
                 ))}
               </div>
               <div style={{
-                // height: '100%',
                 width: '100px',
-                display: 'flex',
-                // float: 'right',
+                display: 'inline-block',
                 background: 'green',
                 verticalAlign: 'center'
               }}>
-                <p>total: {calculatePrice(this.props.cart) }</p>
+                <p>total: { calculatePrice(this.props.cart) }</p>
               </div>
+
+              <Link to={`/cart`}>
+                <div 
+                style={{
+                  width: '100px',
+                  display: 'inline-block',
+                  background: 'green',
+                  verticalAlign: 'center'
+                }}>
+                  <p>checkout</p>
+                </div>
+              </Link>
             </div>
           }
         </Sections>

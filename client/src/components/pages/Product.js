@@ -18,7 +18,7 @@ import SizeSelection from '../SizeSelection';
 
 import { connect } from 'react-redux';
 import { addToCart, setCartFromStorage } from '../../actions/index';
-import { setCart, getCart } from '../../utilities';
+import { setCart } from '../../utilities';
 
 class Product extends React.Component {
   state = {
@@ -39,7 +39,9 @@ class Product extends React.Component {
 
   componentDidMount() {
     this.getProductSizes();
-    this.props.setCartFromStorage(getCart());
+    // this.props.setCartFromStorage(getCart());
+    // console.log(this.state.product);
+    
   }
 
   async getProductSizes() {
