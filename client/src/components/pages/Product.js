@@ -39,9 +39,6 @@ class Product extends React.Component {
 
   componentDidMount() {
     this.getProductSizes();
-    // this.props.setCartFromStorage(getCart());
-    // console.log(this.state.product);
-    
   }
 
   async getProductSizes() {
@@ -76,13 +73,6 @@ class Product extends React.Component {
     } else {
       this.setState({notice: true});
     }
-  }
-
-  deleteItemFromCart = itemToDeleteId => {
-    const filteredItems = this.state.cartItems.filter(
-      item => item._id !== itemToDeleteId
-    );
-    this.setState({ cortItems: filteredItems });
   }
 
   selectImage = i => {
@@ -135,7 +125,7 @@ class Product extends React.Component {
             <SizeSelection
               state={this.state}
               addToCart={() => this.addToCart(product)}
-              selectSize={(size) => this.selectSize(size)}/>
+              selectSize={size => this.selectSize(size)}/>
             <br/>
           </SubContainer>
 
@@ -152,7 +142,7 @@ class Product extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     cart: state.cart
   }

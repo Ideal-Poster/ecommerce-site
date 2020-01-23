@@ -193,7 +193,7 @@ class Navbar extends React.Component {
             </Link>
           </IconContainer>
           <Selections>
-            {optionLinks}
+            { optionLinks }
 
             <i 
               onClick={this.toggleCart}

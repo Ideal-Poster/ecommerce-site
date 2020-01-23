@@ -16,8 +16,6 @@ import { connect } from 'react-redux';
 
 import { setCartFromStorage } from '../actions/index';
 
-
-
 class App extends React.Component {
   componentDidMount() {
     // this.getProductSizes();

@@ -2,7 +2,7 @@ export const addToCart = item => {
   return {
     type: 'ADD_TO_CART',
     payload: {
-      item: item
+      item
     }
   }
 }
@@ -11,7 +11,16 @@ export const setCartFromStorage = cart => {
   return { 
     type: 'SET_CART',
     payload: { 
-      cart: cart
+      cart
+    }
+  }
+}
+
+export const deleteFromCart = item => {
+  return {
+    type: 'DELETE_FROM_CART',
+    payload: {
+      item
     }
   }
 }

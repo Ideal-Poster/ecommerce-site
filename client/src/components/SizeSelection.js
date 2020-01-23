@@ -23,26 +23,20 @@ class SizeSelection extends React.Component {
     return false
   }
 
-  selectSize = (size) => {
+  selectSize = size => {
     this.props.selectSize(size)
   }
 
   renderButton = (sizes, size) => {
-    // console.log('sizes:',sizes, 'size:', size);
-    
     return  sizes &&
             Object.entries(sizes).map((entry, i) => {
-              console.log(entry);
-              
               if (size === entry[0]) {
-                // if (entry[1] > 0) {
-                  return <SizeButton
-                            primary
-                            className="size"
-                            id={`sizeOption-${i}`}>
-                            <SizeButtonText>{ entry[0].toUpperCase() }</SizeButtonText>
-                          </SizeButton> 
-                // }
+                return <SizeButton
+                          primary
+                          className="size"
+                          id={`sizeOption-${i}`}>
+                          <SizeButtonText>{ entry[0].toUpperCase() }</SizeButtonText>
+                        </SizeButton> 
               } else {
                 if (!this.soldOut()) {
                   if (entry[1] > 0) {

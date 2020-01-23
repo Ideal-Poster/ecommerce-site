@@ -1,12 +1,17 @@
 import React from 'react';
 import { Container, Row, Col } from '@bootstrap-styled/v4';
 import { connect } from 'react-redux';
-import { calculatePrice } from '../../utilities/index';
+import { calculatePrice, setCart } from '../../utilities/index';
+import { deleteFromCart } from '../../actions/index';
 
 class Cart extends React.Component {
 
+	async deleteItemFromCart(item) {
+	 	await this.props.deleteFromCart(item);
+		setCart(this.props.cart);
+	}
+
 	render() {
-		console.log(this.props);
 		return  <div>
 							<h1>Cart</h1>
 								<Container>
@@ -37,10 +42,13 @@ class Cart extends React.Component {
 												<p>{ item.size }</p>
 											</Col>
 											<Col sm={1}>
-												<p>{ item.price }</p>
+												<p>{ item.quantity }</p>
 											</Col>
 											<Col sm={1}>
 												<p>{item.price}</p>
+											</Col>
+											<Col>
+												<p onClick={() => console.log(this.deleteItemFromCart(item))}>X</p>
 											</Col>
 										</Row>
 										))
@@ -64,4 +72,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(Cart);
+export default connect(mapStateToProps, { deleteFromCart })(Cart);
