@@ -32,6 +32,7 @@ class SizeSelection extends React.Component {
               if (size === entry[0]) {
                 return <SizeButton
                           primary
+                          key={ entry + '-button' }
                           className="size"
                           id={`sizeOption-${i}`}>
                           <SizeButtonText>{ entry[0].toUpperCase() }</SizeButtonText>
@@ -42,13 +43,15 @@ class SizeSelection extends React.Component {
                     if (this.state.oneSize) this.props.selectSize(entry[0]);
                     return  <SizeButton
                               className="size"
+                              key={ entry + '-button' }
                               id={`sizeOption-${i}`}
                               onClick={() => this.props.selectSize(entry[0])}>
                               <SizeButtonText>{ entry[0].toUpperCase() }</SizeButtonText>
                             </SizeButton>
                     
                   } else {
-                    return  <SizeButtonGreyedOut>
+                    return  <SizeButtonGreyedOut
+                              key={ entry + '-button' }>
                               <SizeButtonText>{ entry[0].toUpperCase() }</SizeButtonText>
                             </SizeButtonGreyedOut>
                   }

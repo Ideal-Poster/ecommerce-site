@@ -81,7 +81,9 @@ class Product extends React.Component {
 
   renderImageSelection(i) {
     return(
-      <Col sm={4}>
+      <Col
+        sm={4}
+        key={ `${this.state.product.name}image-${i}` }>
         <ImageSelect
           onClick={ () => this.selectImage(i) }
           src={`${this.state.product.images[i]}`} alt="" />
