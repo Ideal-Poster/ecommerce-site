@@ -32,8 +32,8 @@ class Categories extends React.Component {
       <Container fluid={true}>
         <TitleText title={this.state.category}/>
         <Row>
-          {this.state.products.map(product => (
-            <GridUnit product={product}/>
+          {this.state.products.map((product, i) => (
+            <GridUnit key={ 'grid-unit-' + i } product={product}/>
           ))}
         </Row>
       </Container>

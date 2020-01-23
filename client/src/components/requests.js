@@ -21,7 +21,6 @@ export const requestProductsByBrand = async ({brand}) => {
       }
     }`;
     const {data: {brandFilter}} = await client.query({query});
-    console.log(brandFilter);
     return brandFilter;
   } catch (error) {
     console.log(error);

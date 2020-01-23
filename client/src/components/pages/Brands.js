@@ -35,8 +35,8 @@ class Brands extends React.Component {
         <TitleText title={this.state.brand}/>
         <Row>
           { 
-            products.map(product => (
-              <GridUnit product={product}/>
+            products.map((product, i) => (
+              <GridUnit key={'grid-unit-' + i} product={product}/>
             ))
           }
         </Row>
