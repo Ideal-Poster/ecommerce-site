@@ -19,8 +19,8 @@ class BrandsDropdown extends React.Component {
 
   render() {
     const brandNames = this.state.brands.map((brand, i) => (
-      <Link to={`/brands/${brand}/`}>
-        <DropdownText key={`brand-${i}`}>{ brand }</DropdownText>
+      <Link key={`brand-${i}`} to={`/brands/${brand}/`}>
+        <DropdownText >{ brand }</DropdownText>
       </Link>
     ));
     return(

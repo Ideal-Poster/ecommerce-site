@@ -3,7 +3,7 @@ import { Row } from '@bootstrap-styled/v4';
 import { SizeButton, SizeButtonText, SizeButtonGreyedOut } from './pages/styled/Product';
 
 class SizeSelection extends React.Component { 
-  state = { oneSize: false }
+  state = { oneSize: false };
   constructor(props) {
     super(props);
     this.props = props;
@@ -18,7 +18,6 @@ class SizeSelection extends React.Component {
       });
       return !array.includes(false)
     }
-
     if (this.state.oneSize === false) this.setState({oneSize: true})
     return false
   }

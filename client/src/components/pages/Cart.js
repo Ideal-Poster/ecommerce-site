@@ -33,7 +33,7 @@ class Cart extends React.Component {
 
 									{
 										this.props.cart.map(item => (
-										<Row>
+										<Row key={'item-row-' + item.name}>
 											<Col sm={8}>
 												<img style={{display: 'inline-block',height: '70px'}} src={item.images[0]} alt="product"/>
 												<p style={{display: 'inline-block', verticalAlign: 'top'}}>{ item.name }</p>
@@ -61,7 +61,6 @@ class Cart extends React.Component {
 									</Row>
 							
 								</Container>
-							<p></p>    
 					</div>
 	}
 }

@@ -18,8 +18,8 @@ import { setCartFromStorage } from '../actions/index';
 
 class App extends React.Component {
   componentDidMount() {
-    // this.getProductSizes();
-    this.props.setCartFromStorage(getCart());
+    const cartLength = Object.keys(getCart()).length;
+    if(cartLength > 0) this.props.setCartFromStorage(getCart());
   }
 
   render() {

@@ -12,8 +12,7 @@ import {
   Selections,
   Sections,
   CartImage,
-  CartInfo,
-  CartIcon
+  CartInfo
  } from './styled/Navbar';
 
 import { connect } from 'react-redux';
@@ -167,18 +166,16 @@ class Navbar extends React.Component {
           onMouseEnter={ () => this.displayDropdown(i) }
           onMouseLeave={ () => this.hideDropdown(i) }
           onClick={ this.sectionHoverLeave }>
-          <NavLink
-          key={`navbar-link-${i}`}>{`${link}`}</NavLink>
+          <NavLink>{`${link}`}</NavLink>
         </Link> :
 
-        <a>
+        <div key={`navbar-link-${i}`}>
           <NavLink
-            key={`navbar-link-${i}`}
             onMouseEnter={ () =>this.displayDropdown(i) }
             onMouseLeave={ () => this.hideDropdown(i) } >
             {`${link}`}
           </NavLink>
-        </a>
+        </div>
       );
     })
 
@@ -204,15 +201,14 @@ class Navbar extends React.Component {
                 top: '21px',
                 paddingRight: '25px'
               }}
-              class="fas fa-shopping-cart"/>
-              {/* <CartIcon class="fas fa-shopping-cart"/> */}
+              className="fas fa-shopping-cart"/>
           </Selections>
         </Navigation>
 
         <Sections
           className="sections"
-          onMouseEnter={ () => { this.sectionHoverEnter(this.activeHover) } }
-          onMouseLeave={ () => { this.sectionHoverLeave(this.activeHover) } } >
+          onMouseEnter={ () => this.sectionHoverEnter(this.activeHover) }
+          onMouseLeave={ () => this.sectionHoverLeave(this.activeHover) } >
 
           {
             this.state.brandsOpen &&
@@ -235,8 +231,8 @@ class Navbar extends React.Component {
               }}>
                 
               <div style={{display: 'inline-block'}}>
-                {this.props.cart.map((item) => (
-                    <div>
+                {this.props.cart.map(item => (
+                    <div key={'navbar-cart-' + item.name}>
                       <CartImage src={item.images[0]} alt="cart item"/>
                       <div style={{display: 'inline-block'}}>
                         <p style={{paddingLeft: '20px'}}>{item.name}</p> 

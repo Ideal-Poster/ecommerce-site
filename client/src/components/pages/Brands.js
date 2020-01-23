@@ -5,7 +5,6 @@ import { requestProductsByBrand } from '../requests';
 import TitleText from '../TitleText';
 import GridUnit from '../GridUnit';
 
-
 class Brands extends React.Component {
   state = {
     products: [],
@@ -36,7 +35,7 @@ class Brands extends React.Component {
         <TitleText title={this.state.brand}/>
         <Row>
           { 
-            products.map((product) => (
+            products.map(product => (
               <GridUnit product={product}/>
             ))
           }

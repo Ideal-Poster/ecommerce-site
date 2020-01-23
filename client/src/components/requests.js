@@ -41,7 +41,6 @@ export const requestProductsByCategory = async ({category}) => {
       }
     }`;
     const {data: {categoryFilter}} = await client.query({query});
-    // console.log(category);
     return categoryFilter;
   } catch (error) {
     console.log(error);
@@ -61,7 +60,6 @@ export const requestProduct = async ({product: {id}}) => {
       }
     }`;
     const {data: {product}} = await client.query({query});
-    // console.log('hello' + product);
     return product;
   } catch (error) {
     console.log(error);
@@ -76,7 +74,6 @@ export const requestBrands = async () => {
       }
     }`
     const {data: {brands}} = await client.query({query});
-    // console.log(brands);
     return brands;
   } catch (error){
     console.log(error);
@@ -91,7 +88,6 @@ export const requestCategories = async () => {
         }
     }`
     const {data: {categories}} = await client.query({query});
-    // console.log(categories);
     return categories;
   } catch (error){
     console.log(error);

@@ -1,5 +1,6 @@
 import React from 'react';
-import { Col } from 'styled-bootstrap-grid';
+import { Col } from '@bootstrap-styled/v4';
+
 import { Link } from 'react-router-dom';
 
 import { GridUnitContainer, GridUnitImgContainer, GridUnitImg, GridUnitText } from "./pages/styled/GridUnit";

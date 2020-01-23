@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Row, Col } from '@bootstrap-styled/v4';
+import { Container, Row } from '@bootstrap-styled/v4';
 import { requestProductsByCategory } from '../requests';
 import GridUnit from '../GridUnit';
 import TitleText from '../TitleText';
@@ -32,7 +32,7 @@ class Categories extends React.Component {
       <Container fluid={true}>
         <TitleText title={this.state.category}/>
         <Row>
-          {this.state.products.map((product) => (
+          {this.state.products.map(product => (
             <GridUnit product={product}/>
           ))}
         </Row>

@@ -1,8 +1,13 @@
 import React from 'react';
 import anime from 'animejs';
-// import { Previous, Next } from 'grommet-icons';
 
-import { Carousel, Slide, Arrows, SlideIndicators, SlideIndicator, ActiveSlideIndicator } from '../carousel/Carousel';
+import { 
+  Carousel,
+  Slide,
+  SlideIndicators,
+  SlideIndicator,
+  ActiveSlideIndicator
+} from '../carousel/Carousel';
 
 import slideImg1 from '../../static/photo-1513531926349-466f15ec8cc7.jpeg';
 import slideImg2 from '../../static/warren-wong-248636-unsplash.jpg';
