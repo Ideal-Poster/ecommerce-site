@@ -15,6 +15,7 @@ import { getCart } from '../utilities';
 import { connect } from 'react-redux';
 
 import { setCartFromStorage } from '../actions/index';
+import UserPage from './pages/User';
 
 class App extends React.Component {
   componentDidMount() {
@@ -37,6 +38,8 @@ class App extends React.Component {
                 <Route path="/product/:productId" component={Product}/>
                 <Route path="/LogIn" component={LogIn}/>
                 <Route path="/cart" component={Cart}/>
+                <Route path="/user" component={UserPage}/>
+
               </div>
             </Switch>
           </Router>

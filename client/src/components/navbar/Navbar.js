@@ -192,6 +192,18 @@ class Navbar extends React.Component {
           <Selections>
             { optionLinks }
 
+            <Link to={`/user`}>
+              <i 
+                onClick={this.toggleCart}
+                style={{
+                  fontSize: '19px',
+                  position: 'absolute',
+                  right: '40px',
+                  top: '20px',
+                  paddingRight: '25px'
+                }}
+                className="fa fa-user-circle"/>
+            </Link>
             <i 
               onClick={this.toggleCart}
               style={{
@@ -202,6 +214,7 @@ class Navbar extends React.Component {
                 paddingRight: '25px'
               }}
               className="fas fa-shopping-cart"/>
+
           </Selections>
         </Navigation>
 
