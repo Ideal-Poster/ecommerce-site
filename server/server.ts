@@ -6,10 +6,11 @@ import cors from 'cors';
 import fs from 'fs';
 import { ApolloServer } from 'apollo-server-express';
 
-import resolvers from './resolvers';;
+import resolvers from './resolvers';
+import signupRouter from './routes/signup';
+
 
 const app : express.Express = express();
-
 // Configure Apollo server
 const typeDefs : string = fs.readFileSync('./schema.graphql', {encoding: 'utf-8'});
 const graphqlServer : ApolloServer = new ApolloServer({
@@ -19,8 +20,8 @@ const graphqlServer : ApolloServer = new ApolloServer({
 graphqlServer.applyMiddleware({app});
 
 app.use(cors(), bodyParser.json());
-app.get('/', (req, res) : any => {
-  res.send('Hello World');
-});
+
+// Routes
+app.use('/login', signupRouter);
 
 app.listen(process.env.PORT || 8091, () : void => console.log('Listening on port 8091.\n'));
