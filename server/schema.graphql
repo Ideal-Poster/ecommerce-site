@@ -7,6 +7,7 @@ type Query {
   brandFilter(name: String!): [Product]
   productSizeStockApparel(id: ID!): ApparelSizeStock
   productSizeStockFootwear(id: ID!): FootwearSizeStock
+  createUser(username: String!, email: String!, password: String!) : User
 }
 
 type Product {
@@ -42,4 +43,11 @@ type Category {
 type Brand {
   id: ID!
   name: String
+}
+
+type User {
+  id: ID!
+  username: String
+  email: String
+  password: String
 }

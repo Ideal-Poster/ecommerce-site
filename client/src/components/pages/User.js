@@ -10,7 +10,6 @@ class UserPage extends React.Component {
 		this.setState({ [target.name]: target.value });	
 	}
 
-
 	render() { 
 		return(
 			<div>
@@ -28,12 +27,12 @@ class UserPage extends React.Component {
 
 						<p>
 							<input
-									id="email"
-									type="text"
-									name="email"
-									placeholder="Email"
-									onChange={this.handleChange}
-								/>
+								id="email"
+								type="text"
+								name="email"
+								placeholder="Email"
+								onChange={this.handleChange}
+							/>
 						</p>
 						<p>
 							<input

@@ -144,7 +144,7 @@ const Query = {
         JOIN brand ON product.brand_id = brand.id
         JOIN category ON product.category_id = category.id
         JOIN color ON product.color_id = color.id
-        WHERE category.name = '${name}'`
+        WHERE category.name = '${name}';`
       );
       return res.rows;
     } catch (err) {
@@ -158,7 +158,8 @@ const Query = {
     const client : PoolClient = await pool.connect();
     try {
       const res : QueryResult = await client.query(
-        `SELECT
+        `
+        SELECT
           product.id,
           brand.name AS brand,
           product.name,
@@ -171,15 +172,42 @@ const Query = {
         JOIN brand ON product.brand_id = brand.id
         JOIN category ON product.category_id = category.id
         JOIN color ON product.color_id = color.id
-        WHERE brand.name = '${name}';`
+        WHERE brand.name = '${name}';
+        `
       );
-      // console.log( res.rows);
       return res.rows;
     } catch (err) {
       console.log(err);
     } finally {
       client.release();
     };
+  },
+
+  createUser: async (root: any, {email, username, password}: any ) => {
+    const client : PoolClient = await pool.connect();
+    try {
+      await client.query(
+        `
+        INSERT INTO users
+          (username, email, password)
+        VALUES
+          ('${username}', '${email}', '${password}');
+        `
+      );
+      const res : QueryResult = await client.query(
+        `
+          SELECT id, username, email
+          FROM users
+          WHERE email = '${email}';
+        `
+      );
+      // console.log(res.rows[0]);
+      return res.rows[0];
+    } catch (error) {
+      console.log(error);
+    } finally {
+      client.release();
+    }
   }
 };
 

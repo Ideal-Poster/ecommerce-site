@@ -194,7 +194,6 @@ class Navbar extends React.Component {
 
             <Link to={`/user`}>
               <i 
-                onClick={this.toggleCart}
                 style={{
                   fontSize: '19px',
                   position: 'absolute',

@@ -125,3 +125,14 @@ export const productSizeStockFootwear = async ({product: {id}}) => {
     console.log(error);
   }
 }
+
+export const createUser = async () => {
+  try {
+    const query = gql`{
+      
+    }`
+  } catch (error) {
+    console.log(error);
+  }
+}
+
