@@ -1,13 +1,21 @@
 import React from 'react';
+import { createUser } from '../../components/requests';
 
 class UserPage extends React.Component { 
 	state = {
-		username: ""
+		username: "",
+		email: "",
+		passowrd: ""
 	}
 	
 	handleChange = ({nativeEvent: {target}}) => {
-		console.log(target.name)
 		this.setState({ [target.name]: target.value });	
+	}
+
+	onFormSubmit = event => {
+		event.preventDefault();
+		const { username, email, passowrd } = this.state;
+		createUser(username, email, passowrd)
 	}
 
 	render() { 
@@ -43,6 +51,9 @@ class UserPage extends React.Component {
 								onChange={this.handleChange}
 							/>
 						</p>
+						<button
+							onClick={this.onFormSubmit}
+						>hello</button>
 					</form>
 			</div>
 		)

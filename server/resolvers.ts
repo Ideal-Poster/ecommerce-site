@@ -1,6 +1,8 @@
 import { IResolvers } from 'apollo-server-express';
 import { Pool, PoolClient, QueryResult } from 'pg';
 
+import { hashPassword } from './utilities';
+
 const pool : Pool = new Pool({
   connectionString: process.env.DB_CONNECTION_STRING
 });
@@ -158,8 +160,7 @@ const Query = {
     const client : PoolClient = await pool.connect();
     try {
       const res : QueryResult = await client.query(
-        `
-        SELECT
+        `SELECT
           product.id,
           brand.name AS brand,
           product.name,
@@ -172,8 +173,7 @@ const Query = {
         JOIN brand ON product.brand_id = brand.id
         JOIN category ON product.category_id = category.id
         JOIN color ON product.color_id = color.id
-        WHERE brand.name = '${name}';
-        `
+        WHERE brand.name = '${name}';`
       );
       return res.rows;
     } catch (err) {
@@ -184,25 +184,26 @@ const Query = {
   },
 
   createUser: async (root: any, {email, username, password}: any ) => {
+    const hash = await hashPassword(password);
     const client : PoolClient = await pool.connect();
     try {
-      await client.query(
-        `
-        INSERT INTO users
-          (username, email, password)
-        VALUES
-          ('${username}', '${email}', '${password}');
-        `
+      const user : QueryResult = await client.query(
+        `SELECT username, email
+        FROM users
+        WHERE email = '${email}';`
       );
-      const res : QueryResult = await client.query(
-        `
-          SELECT id, username, email
+      if(user.rowCount > 0 ? false : true) {
+        await client.query(
+          `INSERT INTO users (username, email, password)
+          VALUES ('${username}', '${email}', '${hash}');`
+        );
+        const res : QueryResult = await client.query(
+          `SELECT id, username, email
           FROM users
-          WHERE email = '${email}';
-        `
-      );
-      // console.log(res.rows[0]);
-      return res.rows[0];
+          WHERE email = '${email}';`
+        );
+        return res.rows[0];
+      }
     } catch (error) {
       console.log(error);
     } finally {

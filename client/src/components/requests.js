@@ -126,13 +126,19 @@ export const productSizeStockFootwear = async ({product: {id}}) => {
   }
 }
 
-export const createUser = async () => {
+export const createUser = async (username, email, password) => {
   try {
     const query = gql`{
-      
+        createUser(username: "${username}", email: "${email}", password: "${password}") {
+        username
+        email
+     }
     }`
+    const {data: {createUser}} = await client.query({query});
+    return createUser;
   } catch (error) {
     console.log(error);
   }
 }
+
 
