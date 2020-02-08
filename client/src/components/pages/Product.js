@@ -12,7 +12,7 @@ import {
 import {
   requestProduct,
   requestProductApparelSizes,
-  productSizeStockFootwear
+  footwearStock
 } from '../requests';
 import SizeSelection from '../SizeSelection';
 
@@ -46,7 +46,7 @@ class Product extends React.Component {
     const product = await requestProduct(this.state);
     let sizes;
     if(product.category === "Footwear") {
-      sizes = await productSizeStockFootwear(this.state);
+      sizes = await footwearStock(this.state);
     }
     if(apparelSizeCategories.includes(product.category)) {
       sizes = await requestProductApparelSizes(this.state);

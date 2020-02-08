@@ -12,12 +12,16 @@ const fs_1 = __importDefault(require("fs"));
 const apollo_server_express_1 = require("apollo-server-express");
 const resolvers_1 = __importDefault(require("./resolvers"));
 const signup_1 = __importDefault(require("./routes/signup"));
+const models_1 = require("./models");
 const app = express_1.default();
 // Configure Apollo server
 const typeDefs = fs_1.default.readFileSync('./schema.graphql', { encoding: 'utf-8' });
 const graphqlServer = new apollo_server_express_1.ApolloServer({
     typeDefs,
-    resolvers: resolvers_1.default
+    resolvers: resolvers_1.default,
+    context: async () => {
+        return { models: { user: models_1.User, product: models_1.Product } };
+    }
 });
 graphqlServer.applyMiddleware({ app });
 app.use(cors_1.default(), body_parser_1.default.json());

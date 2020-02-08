@@ -1,12 +1,12 @@
 type Query {
-  product(id: ID!): Product
-  products: [Product]
-  brands: [Brand]
+  getProductById(id: ID!): Product
+  getAllProducts: [Product]
+  footwearStock(id: ID!): FootwearStock
+  apparelStock(id: ID!): ApparelStock
   categories: [Category]
-  categoryFilter(name: String!): [Product]
-  brandFilter(name: String!): [Product]
-  productSizeStockApparel(id: ID!): ApparelSizeStock
-  productSizeStockFootwear(id: ID!): FootwearSizeStock
+  brands: [Brand]
+  filterByCategory(name: String!): [Product]
+  filterByBrand(name: String!): [Product]
   createUser(username: String!, email: String!, password: String!) : User
   userExist(email: String!): User
 }
@@ -22,13 +22,13 @@ type Product {
   images: [String]
 }
 
-type ApparelSizeStock {
+type ApparelStock {
   small: Int
   medium: Int
   large: Int
 }
 
-type FootwearSizeStock {
+type FootwearStock {
   id: ID!
   ten: Int
   eleven: Int

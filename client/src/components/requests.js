@@ -11,7 +11,7 @@ const client = new ApolloClient({
 export const requestProductsByBrand = async ({brand}) => {
   try {
     const query = gql`{
-      brandFilter(name: "${brand}") {
+      filterByBrand(name: "${brand}") {
         id
         name
         description
@@ -20,8 +20,8 @@ export const requestProductsByBrand = async ({brand}) => {
         price
       }
     }`;
-    const {data: {brandFilter}} = await client.query({query});
-    return brandFilter;
+    const {data: {filterByBrand}} = await client.query({query});
+    return filterByBrand;
   } catch (error) {
     console.log(error);
   }
@@ -30,7 +30,7 @@ export const requestProductsByBrand = async ({brand}) => {
 export const requestProductsByCategory = async ({category}) => {
   try {
     const query = gql`{
-      categoryFilter(name: "${category}") {
+      filterByCategory(name: "${category}") {
         id
         name
         description
@@ -39,8 +39,8 @@ export const requestProductsByCategory = async ({category}) => {
         price
       }
     }`;
-    const {data: {categoryFilter}} = await client.query({query});
-    return categoryFilter;
+    const {data: {filterByCategory}} = await client.query({query});
+    return filterByCategory;
   } catch (error) {
     console.log(error);
   }
@@ -49,7 +49,7 @@ export const requestProductsByCategory = async ({category}) => {
 export const requestProduct = async ({product: {id}}) => {
   try {
     const query = gql`{
-      product(id: "${id}") {
+      getProductById(id: "${id}") {
         id
         name
         price
@@ -58,8 +58,8 @@ export const requestProduct = async ({product: {id}}) => {
         category
       }
     }`;
-    const {data: {product}} = await client.query({query});
-    return product;
+    const {data: {getProductById}} = await client.query({query});
+    return getProductById;
   } catch (error) {
     console.log(error);
   }
@@ -82,9 +82,9 @@ export const requestBrands = async () => {
 export const requestCategories = async () => {
   try {
     const query = gql`{
-        categories {
-          name
-        }
+      categories {
+        name
+      }
     }`
     const {data: {categories}} = await client.query({query});
     return categories;
@@ -96,31 +96,31 @@ export const requestCategories = async () => {
 export const requestProductApparelSizes = async ({product: {id}}) => {
   try {
     const query =  gql`{
-      productSizeStockApparel(id: "${id}") {
+      apparelStock(id: "${id}") {
         small
         medium
         large
       }
     }`
-    const {data: {productSizeStockApparel}} = await client.query({query});
-    return productSizeStockApparel;
+    const {data: {apparelStock}} = await client.query({query});
+    return apparelStock;
   } catch(error) {
     console.log(error);
   }
 }
 
-export const productSizeStockFootwear = async ({product: {id}}) => {
+export const footwearStock = async ({product: {id}}) => {
   try {
     const query =  gql`{
-      productSizeStockFootwear(id: "${id}") {
+      footwearStock(id: "${id}") {
         ten
         eleven
         twelve
         thirteen 
       }
     }`
-    const {data: {productSizeStockFootwear}} = await client.query({query});
-    return productSizeStockFootwear;
+    const {data: {footwearStock}} = await client.query({query});
+    return footwearStock;
   } catch(error) {
     console.log(error);
   }

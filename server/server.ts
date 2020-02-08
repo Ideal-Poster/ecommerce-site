@@ -8,14 +8,17 @@ import { ApolloServer } from 'apollo-server-express';
 
 import resolvers from './resolvers';
 import signupRouter from './routes/signup';
-
+import { User, Product } from './models';
 
 const app : express.Express = express();
 // Configure Apollo server
 const typeDefs : string = fs.readFileSync('./schema.graphql', {encoding: 'utf-8'});
 const graphqlServer : ApolloServer = new ApolloServer({
   typeDefs,
-  resolvers
+  resolvers,
+  context: async () => {
+    return { models: {user: User, product: Product} };
+  }
 });
 graphqlServer.applyMiddleware({app});
 
