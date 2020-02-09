@@ -8,7 +8,7 @@ const Query = {
   getProductById: async (root: any, {id}: any, {models}: any) =>  {
     return await models.product.getById(id);
   },
-  getAllProducts: async (root: any, args: any, {models}: any) =>  {
+  getAllProducts: async (root: any, args: undefined, {models}: any) =>  {
     return await models.product.getAll();
   },
   footwearStock: async (root: any, {id}: any, {models}: any) => {
@@ -17,10 +17,10 @@ const Query = {
   apparelStock: async (root: any, {id}: any, {models}: any) =>  {
     return models.product.apparelStock(id);
   },
-  categories: async (root: any, args: any, {models}: any) => {
+  categories: async (root: any, args: undefined, {models}: any) => {
     return await models.product.categories();
   },
-  brands: async (root: any, args: any, {models}: any) => {
+  brands: async (root: any, args: undefined, {models}: any) => {
     return await models.product.brands();
   },
   filterByCategory: async (root: any, {name}: any, {models}: any) => {
