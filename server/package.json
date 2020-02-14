@@ -5,7 +5,10 @@
   "main": "server.ts",
   "scripts": {
     "start-server": "tsc && node build/server.js",
-    "start": "nodemon -e ts -w ./ -x npm run start-server"
+    "start-auth-server": "tsc && node build/authServer.js",
+    "start-auth-dev": "nodemon -e ts -w ./ -x npm run start-auth-server",
+    "start-servers": "tsc && node build/server.js && node build/authServer.js",
+    "start": "nodemon -e ts -w ./ -x npm run start-servers"
   },
   "license": "MIT",
   "dependencies": {

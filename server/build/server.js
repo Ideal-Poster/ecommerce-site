@@ -11,7 +11,6 @@ const cors_1 = __importDefault(require("cors"));
 const fs_1 = __importDefault(require("fs"));
 const apollo_server_express_1 = require("apollo-server-express");
 const resolvers_1 = __importDefault(require("./resolvers"));
-const signup_1 = __importDefault(require("./routes/signup"));
 const models_1 = require("./models");
 const app = express_1.default();
 // Configure Apollo server
@@ -24,7 +23,7 @@ const graphqlServer = new apollo_server_express_1.ApolloServer({
     }
 });
 graphqlServer.applyMiddleware({ app });
-app.use(cors_1.default(), body_parser_1.default.json());
-// Routes
-app.use('/login', signup_1.default);
+app.use(cors_1.default(), body_parser_1.default.urlencoded({
+    extended: true
+}));
 app.listen(process.env.PORT || 8091, () => console.log('Listening on port 8091.\n'));

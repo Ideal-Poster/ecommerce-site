@@ -5,9 +5,7 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import fs from 'fs';
 import { ApolloServer } from 'apollo-server-express';
-
 import resolvers from './resolvers';
-import signupRouter from './routes/signup';
 import { User, Product } from './models';
 
 const app : express.Express = express();
@@ -22,9 +20,9 @@ const graphqlServer : ApolloServer = new ApolloServer({
 });
 graphqlServer.applyMiddleware({app});
 
-app.use(cors(), bodyParser.json());
+app.use(cors(), bodyParser.urlencoded({
+  extended: true
+}));
 
-// Routes
-app.use('/login', signupRouter);
 
 app.listen(process.env.PORT || 8091, () : void => console.log('Listening on port 8091.\n'));
