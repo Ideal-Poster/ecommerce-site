@@ -1,21 +1,36 @@
 import React from 'react';
 import { createUser } from '../../components/requests';
+import { logIn, logging, logout } from '../Auth';
 
 class UserPage extends React.Component { 
 	state = {
 		username: "",
 		email: "",
-		passowrd: ""
+		password: ""
 	}
-	
+
 	handleChange = ({nativeEvent: {target}}) => {
 		this.setState({ [target.name]: target.value });	
 	}
 
 	onFormSubmit = event => {
 		event.preventDefault();
-		const { username, email, passowrd } = this.state;
-		createUser(username, email, passowrd)
+		const { username, email, password } = this.state;
+		createUser(username, email, password)
+	}
+
+	logIn = async (event) => {
+		event.preventDefault();
+		// Make the login API call
+		const { email, password } = this.state;
+		const response = await fetch('http://localhost:8091/login', {
+			method: 'POST',
+			body: JSON.stringify({ email, password })
+		});
+
+		const jwt_token = await response.json();
+		// console.log({jwt_token});
+		logIn(jwt_token);
 	}
 
 	render() { 
@@ -51,9 +66,10 @@ class UserPage extends React.Component {
 								onChange={this.handleChange}
 							/>
 						</p>
-						<button
-							onClick={this.onFormSubmit}
-						>hello</button>
+						<button onClick={this.onFormSubmit}>sign Up</button>
+						<button onClick={this.logIn}>Log in</button>
+						<button onClick={logout}>Log out</button>
+						<button onClick={logging}>log</button>
 					</form>
 			</div>
 		)

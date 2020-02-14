@@ -1,10 +1,31 @@
-import { ApolloClient, HttpLink, InMemoryCache } from 'apollo-boost';
+import { ApolloClient, HttpLink, InMemoryCache, ApolloLink, concat } from 'apollo-boost';
 import gql from 'graphql-tag';
+import { returnInMemoryToken } from './Auth';
+import { onError } from 'apollo-link-error';
+import { logout } from './Auth';
+
 
 const apiUrl = process.env.API_URL || 'http://localhost:8091/graphql';
+const httpLink = new HttpLink({uri: apiUrl});
+
+const logoutLink = onError(({ networkError }) => {
+  if (networkError.statusCode === 401) logout();
+ })
+
+let appJWTToken = returnInMemoryToken();
+const authMiddleware = new ApolloLink((operation, forward)=> {
+  if (appJWTToken) {
+    operation.setContext({
+      headers: {
+        Authorization: `Bearer ${appJWTToken}`
+      }
+    });
+  } 
+  return forward(operation);
+ });
 
 const client = new ApolloClient({
-  link: new HttpLink({uri: apiUrl}),
+  link: logoutLink.concat(concat(authMiddleware, httpLink)),
   cache: new InMemoryCache()
 });
 

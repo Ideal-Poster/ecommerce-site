@@ -1,4 +1,6 @@
 import express from 'express';
+var jwt = require('jsonwebtoken');
+
 const { check , validationResult } = require("express-validator");
 const router = express.Router();
 
@@ -12,9 +14,22 @@ const validationRules = [
     check('username').isAlphanumeric()
 ]; 
 
-router.post('/', validationRules, (req: any, res: any, next: any) => {
-    console.log(req.body);
-    console.log((validationResult(req).array()));
+router.post('/', validationRules, async (req: any, res: any, next: any) => {
+    // console.log(req.body);
+    // console.log((validationResult(req).array()));
+
+    const authorization = await jwt.sign(
+			{ email: req.body.email, password:req.body.password },
+			'secretKey'
+			// ,
+			// {
+			// 	algorithm: "HS256",
+			// 	expiresIn: "15m"
+			// }
+		);
+		// console.log(`token ${token}`);
+		
+		res.json({accessToken: authorization})
 });
 
 export default router;

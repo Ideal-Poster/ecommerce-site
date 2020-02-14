@@ -16,8 +16,14 @@ import { connect } from 'react-redux';
 
 import { setCartFromStorage } from '../actions/index';
 import UserPage from './pages/User';
+import { syncLogout } from './Auth';
+
+
+window.addEventListener('storage', (event) => syncLogout(event));
+
 
 class App extends React.Component {
+
   componentDidMount() {
     const cartLength = Object.keys(getCart()).length;
     if(cartLength > 0) this.props.setCartFromStorage(getCart());
@@ -39,7 +45,6 @@ class App extends React.Component {
                 <Route path="/LogIn" component={LogIn}/>
                 <Route path="/cart" component={Cart}/>
                 <Route path="/user" component={UserPage}/>
-
               </div>
             </Switch>
           </Router>
