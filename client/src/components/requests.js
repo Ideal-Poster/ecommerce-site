@@ -25,7 +25,7 @@ const authMiddleware = new ApolloLink((operation, forward)=> {
  });
 
 const client = new ApolloClient({
-  link: logoutLink.concat(concat(authMiddleware, httpLink)),
+  link: logoutLink.concat(concat(authMiddleware, httpLink)) ,
   cache: new InMemoryCache()
 });
 
