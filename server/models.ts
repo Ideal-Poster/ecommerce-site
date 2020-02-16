@@ -88,8 +88,7 @@ export const Product = {
 	},
 	categories: async () => {
     const client : PoolClient = await pool.connect();
-    console.log(client);
-    
+
     try {
       const res : QueryResult = await client.query(
         `SELECT * FROM category`
@@ -191,12 +190,11 @@ export const User = {
 					FROM users
 					WHERE email = '${email}';`
 				);
-				console.log('it happened');
 				return res.rows[0];
 			}
 			return null;
-		} catch (error) {
-			console.log(error);
+		} catch (err) {
+			console.log(err);
 		} finally {
 			client.release();
 		}

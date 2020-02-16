@@ -1,9 +1,9 @@
 import React from 'react';
 import { Container, Row } from '@bootstrap-styled/v4';
 
-import { requestProductsByBrand } from '../requests';
-import TitleText from '../TitleText';
-import GridUnit from '../GridUnit';
+import { requestProductsByBrand } from '../components/requests';
+import TitleText from '../components/TitleText';
+import GridUnit from '../components/GridUnit';
 
 class Brands extends React.Component {
   state = {

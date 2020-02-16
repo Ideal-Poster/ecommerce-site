@@ -1,6 +1,6 @@
 import React from 'react';
 import { Row } from '@bootstrap-styled/v4';
-import { SizeButton, SizeButtonText, SizeButtonGreyedOut } from './pages/styled/Product';
+import { SizeButton, SizeButtonText, SizeButtonGreyedOut } from '../pages/styled/Product';
 
 class SizeSelection extends React.Component { 
   state = { oneSize: false };

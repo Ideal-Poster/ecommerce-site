@@ -13,12 +13,12 @@ import {
   requestProduct,
   requestProductApparelSizes,
   footwearStock
-} from '../requests';
-import SizeSelection from '../SizeSelection';
+} from '../components/requests';
+import SizeSelection from '../components/SizeSelection';
 
 import { connect } from 'react-redux';
-import { addToCart, setCartFromStorage } from '../../actions/index';
-import { setCart } from '../../utilities';
+import { addToCart, setCartFromStorage } from '../actions/index';
+import { setCart } from '../utilities';
 
 class Product extends React.Component {
   state = {

@@ -1,23 +1,22 @@
 import React from 'react';
 import {BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import Home from './pages/Home';
-import Categories from './pages/Categories';
-import Brand from './pages/Brands';
-import Navbar from './navbar/Navbar';
-import Product from './pages/Product';
-import LogIn from './pages/auth/Login';
+import Home from '../pages/Home';
+import Categories from '../pages/Categories';
+import Brand from '../pages/Brands';
+import Navbar from '../components/navbar/Navbar';
+import Product from '../pages/Product';
+import LogIn from '../pages/auth/Login';
 import { BaseCSS } from 'styled-bootstrap-grid';
 
 import BootstrapProvider from '@bootstrap-styled/provider/lib/BootstrapProvider';
-import Cart from './pages/Cart';
+import Cart from '../pages/Cart';
 import { getCart } from '../utilities';
 import { connect } from 'react-redux';
 
 import { setCartFromStorage } from '../actions/index';
-import UserPage from './pages/User';
+import UserPage from '../pages/User';
 import { syncLogout } from './Auth';
-
 
 window.addEventListener('storage', (event) => syncLogout(event));
 

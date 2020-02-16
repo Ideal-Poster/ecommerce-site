@@ -1,6 +1,6 @@
 import React from 'react';
-import { createUser } from '../../components/requests';
-import { logIn, logging, logout } from '../Auth';
+import { createUser } from '../components/requests';
+import { logIn, logging, logout } from '../components/Auth';
 
 class UserPage extends React.Component { 
 	state = {
@@ -29,7 +29,6 @@ class UserPage extends React.Component {
 		});
 
 		const jwt_token = await response.json();
-		// console.log({jwt_token});
 		logIn(jwt_token);
 	}
 

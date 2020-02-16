@@ -3,7 +3,7 @@ import { Col } from '@bootstrap-styled/v4';
 
 import { Link } from 'react-router-dom';
 
-import { GridUnitContainer, GridUnitImgContainer, GridUnitImg, GridUnitText } from "./pages/styled/GridUnit";
+import { GridUnitContainer, GridUnitImgContainer, GridUnitImg, GridUnitText } from "../pages/styled/GridUnit";
 
 const GridUnit = (props) => {
   const {product} = props;

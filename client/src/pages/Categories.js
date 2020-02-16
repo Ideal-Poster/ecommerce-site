@@ -1,8 +1,8 @@
 import React from 'react';
 import { Container, Row } from '@bootstrap-styled/v4';
-import { requestProductsByCategory } from '../requests';
-import GridUnit from '../GridUnit';
-import TitleText from '../TitleText';
+import { requestProductsByCategory } from '../components/requests';
+import GridUnit from '../components/GridUnit';
+import TitleText from '../components/TitleText';
 
 class Categories extends React.Component {
   state = {

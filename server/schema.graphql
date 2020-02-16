@@ -8,10 +8,7 @@ type Query {
   filterByCategory(name: String!): [Product]
   filterByBrand(name: String!): [Product]
   createUser(username: String!, email: String!, password: String!) : User
-}
-
-type Post {
-  
+  userExist(email: String!): User
 }
 
 type Product {

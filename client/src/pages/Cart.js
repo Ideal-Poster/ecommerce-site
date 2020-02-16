@@ -1,8 +1,8 @@
 import React from 'react';
 import { Container, Row, Col } from '@bootstrap-styled/v4';
 import { connect } from 'react-redux';
-import { calculatePrice, setCart } from '../../utilities/index';
-import { deleteFromCart } from '../../actions/index';
+import { calculatePrice, setCart } from '../utilities/index';
+import { deleteFromCart } from '../actions/index';
 
 class Cart extends React.Component {
 
