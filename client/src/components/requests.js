@@ -1,31 +1,34 @@
-import { ApolloClient, HttpLink, InMemoryCache, ApolloLink, concat } from 'apollo-boost';
+// import { ApolloClient, HttpLink, InMemoryCache, ApolloLink, concat } from 'apollo-boost';
 import gql from 'graphql-tag';
 import { returnInMemoryToken } from './Auth';
 import { onError } from 'apollo-link-error';
 import { logout } from './Auth';
 
+import { ApolloClient } from 'apollo-client';
+import { setContext } from 'apollo-link-context';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { HttpLink } from 'apollo-link-http';
+
+let appJWTToken = returnInMemoryToken();
 
 const apiUrl = process.env.API_URL || 'http://localhost:8091/graphql';
 const httpLink = new HttpLink({uri: apiUrl});
 
 const logoutLink = onError(({ networkError }) => {
   if (networkError.statusCode === 401) logout();
- })
-
-let appJWTToken = returnInMemoryToken();
-const authMiddleware = new ApolloLink((operation, forward)=> {
-  if (appJWTToken) {
-    operation.setContext({
-      headers: {
-        Authorization: `Bearer ${appJWTToken}`
-      }
-    });
-  } 
-  return forward(operation);
  });
 
+const authLink = setContext((_, { headers }) => {
+  return {
+    headers: {
+      ...headers,
+      authorization: appJWTToken ? `Bearer ${appJWTToken}` : "",
+    }
+  }
+});
+
 const client = new ApolloClient({
-  link: logoutLink.concat(concat(authMiddleware, httpLink)) ,
+  link: logoutLink.concat(authLink.concat(httpLink)),
   cache: new InMemoryCache()
 });
 
@@ -149,7 +152,8 @@ export const footwearStock = async ({product: {id}}) => {
 
 export const createUser = async (username, email, password) => {
   try {
-    const query = gql`{
+    const query = gql`
+     mutation {
         createUser(username: "${username}", email: "${email}", password: "${password}") {
         username
         email
@@ -161,5 +165,6 @@ export const createUser = async (username, email, password) => {
     console.log(error);
   }
 }
+
 
 

@@ -1,4 +1,3 @@
-
 let inMemoryToken;
 
 export const isTokenPresent = () => {
@@ -7,10 +6,18 @@ export const isTokenPresent = () => {
 	} 
 };
 
-export const logIn = token => {
-	inMemoryToken = token
-	console.log(inMemoryToken);
-};
+export const logIn  = async (email, password) => {
+	const response = await fetch('http://localhost:8092/login', {
+		method: 'POST', 
+		headers: {
+			'Content-Type': 'application/json',
+			authorization: `Bearer ${inMemoryToken}`
+		},
+		body: JSON.stringify({email: email, password: password})
+	});
+  const data = await response.json()
+	return data;
+}
 
 export const logout = event => {
 	event.preventDefault();
@@ -32,5 +39,3 @@ export const logging = event => {
     event.preventDefault();
     console.log(inMemoryToken);
 };
-
-// window.addEventListener('storage', syncLogout());

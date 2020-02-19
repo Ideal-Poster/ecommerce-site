@@ -6,6 +6,7 @@
     "client": "cd client && yarn start",
     "server": "cd server && yarn start",
     "auth": "cd server && yarn start-auth",
+    "servers": "concurrently --kill-others-on-fail \"yarn server\" \"yarn auth\"",
     "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\" \"yarn auth\""
   },
   "dependencies": {

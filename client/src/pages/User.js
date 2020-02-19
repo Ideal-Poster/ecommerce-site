@@ -16,20 +16,13 @@ class UserPage extends React.Component {
 	onFormSubmit = event => {
 		event.preventDefault();
 		const { username, email, password } = this.state;
-		createUser(username, email, password)
+		createUser(username, email, password);
 	}
 
-	logIn = async (event) => {
+	logIn = async event => {
+    const { email, password } = this.state
 		event.preventDefault();
-		// Make the login API call
-		const { email, password } = this.state;
-		const response = await fetch('http://localhost:8091/login', {
-			method: 'POST',
-			body: JSON.stringify({ email, password })
-		});
-
-		const jwt_token = await response.json();
-		logIn(jwt_token);
+    logIn(email, password);
 	}
 
 	render() { 

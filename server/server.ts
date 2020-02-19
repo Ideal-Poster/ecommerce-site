@@ -15,15 +15,11 @@ const typeDefs : string = fs.readFileSync('./schema.graphql', {encoding: 'utf-8'
 const graphqlServer : ApolloServer = new ApolloServer({
   typeDefs,
   resolvers,
-  context: async () => {
-    return { models: {user: User, product: Product} };
+  context: async (req) => {
+    // console.log(req);
+    return { models: {user: User, product: Product}, req: req };
   }
 });
 graphqlServer.applyMiddleware({app});
-
 app.use(cors(), bodyParser.json());
-
-
-
-// Routes
 app.listen(process.env.PORT || 8091, () : void => console.log('Listening on port 8091.\n'));

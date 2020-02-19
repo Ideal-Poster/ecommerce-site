@@ -5,31 +5,31 @@ const pool : Pool = new Pool({connectionString: process.env.DB_CONNECTION_STRING
 
 export const Product = {
 	getById: async (id: any) =>  {
-      const client : PoolClient = await pool.connect();
-			try {
-				const res : QueryResult = await client.query(
-					`SELECT
-						product.id,
-						brand.name AS brand,
-						product.name,
-						category.name AS category,
-						color.name AS color,
-						product.description,
-						product.price,
-						product.images
-					FROM
-						product
-					JOIN brand ON product.brand_id = brand.id
-					JOIN category ON product.category_id = category.id
-					JOIN color ON product.color_id = color.id
-					WHERE product.id = '${id}'`
-				);
-				return res.rows[0] || null;
-			} catch (err) {
-				console.log(err);
-			} finally {
-				client.release();
-			};
+    const client : PoolClient = await pool.connect();
+    try {
+      const res : QueryResult = await client.query(
+        `SELECT
+          product.id,
+          brand.name AS brand,
+          product.name,
+          category.name AS category,
+          color.name AS color,
+          product.description,
+          product.price,
+          product.images
+        FROM
+          product
+        JOIN brand ON product.brand_id = brand.id
+        JOIN category ON product.category_id = category.id
+        JOIN color ON product.color_id = color.id
+        WHERE product.id = '${id}'`
+      );
+      return res.rows[0] || null;
+    } catch (err) {
+      console.log(err);
+    } finally {
+      client.release();
+    };
 	},
 	getAll: async () => {
     const client : PoolClient = await pool.connect();

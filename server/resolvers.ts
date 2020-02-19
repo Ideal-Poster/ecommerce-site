@@ -1,9 +1,3 @@
-import { Pool } from 'pg';
-
-const pool : Pool = new Pool({
-  connectionString: process.env.DB_CONNECTION_STRING
-});
-
 const Query = {
   getProductById: async (root: any, {id}: any, {models}: any) =>  {
     return await models.product.getById(id);
@@ -28,10 +22,13 @@ const Query = {
   },
   filterByBrand: async (root: any, {name}: any, {models}: any) => {
     return await models.product.filterByBrand(name);
-  },
-  createUser: async (root: any, {email, username, password}: any, {models}: any ) => {
-    return await models.user.create(email, username, password);
   }
 };
 
-export default {Query};
+const Mutation = {
+  createUser: async (root: any, {email, username, password}: any, {models}: any) => {
+    return await models.user.create(email, username, password);
+  }
+}
+
+export default {Query, Mutation};

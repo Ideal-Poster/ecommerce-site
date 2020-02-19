@@ -1,3 +1,8 @@
+type schema {
+  query: Query
+  mutation: Mutation
+}
+
 type Query {
   getProductById(id: ID!): Product
   getAllProducts: [Product]
@@ -7,8 +12,11 @@ type Query {
   brands: [Brand]
   filterByCategory(name: String!): [Product]
   filterByBrand(name: String!): [Product]
+  # createUser(username: String!, email: String!, password: String!) : User
+}
+
+type Mutation {
   createUser(username: String!, email: String!, password: String!) : User
-  userExist(email: String!): User
 }
 
 type Product {
