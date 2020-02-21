@@ -37,10 +37,6 @@ class Home extends React.Component {
   async componentDidMount() {
     this.galleryImages = document.querySelectorAll('.slide');
     this.setSlideshowImages();
-
-    console.log(process.env.DB_CONNECTION_STRING);
-
-    
   }
 
   carouselRight = () => {

@@ -16,16 +16,18 @@ import { connect } from 'react-redux';
 
 import { setCartFromStorage } from '../actions/index';
 import UserPage from '../pages/User';
-import { syncLogout } from './Auth';
+import { syncLogout } from './requests';
 
 window.addEventListener('storage', (event) => syncLogout(event));
-
 
 class App extends React.Component {
 
   componentDidMount() {
     const cartLength = Object.keys(getCart()).length;
-    if(cartLength > 0) this.props.setCartFromStorage(getCart());
+    if(cartLength > 0) {
+      // this.props.setCartFromStorage() ||
+      this.props.setCartFromStorage(getCart());
+    }
   }
 
   render() {

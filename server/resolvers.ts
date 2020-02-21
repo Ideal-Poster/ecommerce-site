@@ -1,3 +1,7 @@
+import { authenticateToken } from './utilities';
+const jwt = require('jsonwebtoken')
+
+
 const Query = {
   getProductById: async (root: any, {id}: any, {models}: any) =>  {
     return await models.product.getById(id);
@@ -22,6 +26,11 @@ const Query = {
   },
   filterByBrand: async (root: any, {name}: any, {models}: any) => {
     return await models.product.filterByBrand(name);
+  },
+  userCart: async (root: any, email: any, {models}: any) => {
+    const token = models.authHeader && models.authHeader.split(' ')[1];
+    const user = authenticateToken(token);
+    models.user.cart(user.email);
   }
 };
 

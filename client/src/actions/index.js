@@ -24,3 +24,12 @@ export const deleteFromCart = item => {
     }
   }
 }
+
+export const loggedIn = boolean => {
+  return {
+    type: 'LOGGED_IN',
+    payload: {
+      boolean
+    }
+  }
+}

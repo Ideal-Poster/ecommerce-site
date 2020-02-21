@@ -1,16 +1,11 @@
-// import { ApolloClient, HttpLink, InMemoryCache, ApolloLink, concat } from 'apollo-boost';
 import gql from 'graphql-tag';
-import { returnInMemoryToken } from './Auth';
 import { onError } from 'apollo-link-error';
-import { logout } from './Auth';
-
 import { ApolloClient } from 'apollo-client';
 import { setContext } from 'apollo-link-context';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { HttpLink } from 'apollo-link-http';
 
-let appJWTToken = returnInMemoryToken();
-
+let inMemoryToken;
 const apiUrl = process.env.API_URL || 'http://localhost:8091/graphql';
 const httpLink = new HttpLink({uri: apiUrl});
 
@@ -22,7 +17,7 @@ const authLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
-      authorization: appJWTToken ? `Bearer ${appJWTToken}` : "",
+      authorization: inMemoryToken ? `Bearer ${inMemoryToken}` : "",
     }
   }
 });
@@ -153,12 +148,12 @@ export const footwearStock = async ({product: {id}}) => {
 export const createUser = async (username, email, password) => {
   try {
     const query = gql`
-     mutation {
+      mutation {
         createUser(username: "${username}", email: "${email}", password: "${password}") {
-        username
-        email
-     }
-    }`
+          username
+          email
+        }
+      }`;
     const {data: {createUser}} = await client.query({query});
     return createUser;
   } catch (error) {
@@ -166,5 +161,58 @@ export const createUser = async (username, email, password) => {
   }
 }
 
+export const getUserCart = async email => {
+  try {
+    const query = gql`
+      {
+        userCart(email: "${email}") {
+          name
+        }
+      }`;
+   const {data: {userCart}} = await client.query({query});
+   return userCart;
+  } catch (error) {
+    console.log(error);
+  }
+}
 
+//------------------------------------------------------------------------------------------
+// Authentication Requests
 
+export const isTokenPresent = () => {
+	if (!inMemoryToken) {
+		this.props.history.push('/login');
+	} 
+};
+
+export const logIn = async (email, password) => {
+	const response = await fetch('http://localhost:8092/login', {
+		method: 'POST', 
+		headers: {
+			'Content-Type': 'application/json',
+      authorization: `Bearer ${inMemoryToken}`
+			// authorization: `${inMemoryToken}`
+		},
+		body: JSON.stringify({email: email, password: password})
+	});
+  const data = await response.json();
+  if (data) inMemoryToken = data.accessToken;
+  console.log(inMemoryToken);
+}
+
+export const logout = event => {
+	event.preventDefault();
+	inMemoryToken = null;
+	window.localStorage.setItem('logout', Date.now());
+};
+
+export const syncLogout = event => {
+  if (event.key === 'logout') {
+    console.log('logged out from storage!')
+  }
+}
+
+export const logging = event => {
+    event.preventDefault();
+    console.log(inMemoryToken);
+};

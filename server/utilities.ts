@@ -23,12 +23,18 @@ export async function validatePassword(plainTextPassword: any, password: any) {
 }
 
 export function generateAccessToken(user: any) {
-  return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15s' })
+  return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15m' })
 };
 
-// export function authenticateToken(req: any, res: any, next: any) {
-//   const authHeader = req.headers['authorization']
-// }
+export function authenticateToken(token: any) {
+  return jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err:any, user:any) => {
+    if (err) {
+      console.log(err);
+      return err
+    }
+    return user
+  });
+}
 
 export async function findUser(email: any) {
  const client : PoolClient = await pool.connect();

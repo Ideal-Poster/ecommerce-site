@@ -1,6 +1,9 @@
 import React from 'react';
 import { createUser } from '../components/requests';
-import { logIn, logging, logout } from '../components/Auth';
+import { logIn, logging, logout} from '../components/requests';
+import { connect } from 'react-redux';
+import { loggedIn } from '../actions/index';
+
 
 class UserPage extends React.Component { 
 	state = {
@@ -22,7 +25,8 @@ class UserPage extends React.Component {
 	logIn = async event => {
     const { email, password } = this.state
 		event.preventDefault();
-    logIn(email, password);
+    await logIn(email, password);
+    this.props.loggedIn(true);
 	}
 
 	render() { 
@@ -62,10 +66,11 @@ class UserPage extends React.Component {
 						<button onClick={this.logIn}>Log in</button>
 						<button onClick={logout}>Log out</button>
 						<button onClick={logging}>log</button>
+
 					</form>
 			</div>
 		)
 	}
 }
 
-export default UserPage;
+export default connect(null, { loggedIn })(UserPage) ;

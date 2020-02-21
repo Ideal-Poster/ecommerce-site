@@ -198,5 +198,18 @@ export const User = {
 		} finally {
 			client.release();
 		}
-	}
+  },
+  cart: async (email: string) => { 
+    const client : PoolClient = await pool.connect();
+    try {
+      const res : QueryResult = await client.query(
+        `SELECT cart FROM users WHERE email = '${email}'`
+      );
+      return res.rows;
+    } catch (err) {
+      console.log(err);
+    } finally {
+      client.release();
+    };
+  }
 };

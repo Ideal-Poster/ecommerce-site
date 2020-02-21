@@ -33,6 +33,16 @@ const cartReducer = (state = [], action) => {
   }
 }
 
+const logInReducer= (state = [], action) => {
+  switch (action.type) {
+    case 'LOGGED_IN':
+      return action.payload;
+    default:
+      return false
+  }
+};
+
 export default combineReducers({
-  cart: cartReducer
+  cart: cartReducer,
+  loggedIn: logInReducer
 });
