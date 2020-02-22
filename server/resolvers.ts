@@ -27,16 +27,23 @@ const Query = {
   filterByBrand: async (root: any, {name}: any, {models}: any) => {
     return await models.product.filterByBrand(name);
   },
-  userCart: async (root: any, email: any, {models}: any) => {
-    const token = models.authHeader && models.authHeader.split(' ')[1];
-    const user = authenticateToken(token);
-    models.user.cart(user.email);
+  getUserCart: async (root: any, args: null, {models}: any) => {
+    // const token = models.authHeader && models.authHeader.split(' ')[1];
+    // const user = authenticateToken(token);
+    return models.user.getCart('eiwne@gmail.com');
   }
 };
 
 const Mutation = {
   createUser: async (root: any, {email, username, password}: any, {models}: any) => {
     return await models.user.create(email, username, password);
+  },
+  setUserCart: async (root: any, {cart}: any, {models}: any) => {
+    // const token = models.authHeader && models.authHeader.split(' ')[1];
+    // const user = authenticateToken(token);
+    // console.log(cart);
+    
+    return models.user.setCart('eiwne@gmail.com', cart);
   }
 }
 

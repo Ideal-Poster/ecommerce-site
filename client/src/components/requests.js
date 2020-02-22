@@ -147,15 +147,15 @@ export const footwearStock = async ({product: {id}}) => {
 
 export const createUser = async (username, email, password) => {
   try {
-    const query = gql`
-      mutation {
-        createUser(username: "${username}", email: "${email}", password: "${password}") {
-          username
-          email
-        }
-      }`;
-    const {data: {createUser}} = await client.query({query});
-    return createUser;
+    client.mutate({
+      mutation: gql`
+        mutation {
+          createUser(username: "${username}", email: "${email}", password: "${password}") {
+            username
+            email
+          }
+        }`,
+    });
   } catch (error) {
     console.log(error);
   }
@@ -165,12 +165,26 @@ export const getUserCart = async email => {
   try {
     const query = gql`
       {
-        userCart(email: "${email}") {
-          name
+        getUserCart(email: "${email}") {
         }
       }`;
-   const {data: {userCart}} = await client.query({query});
-   return userCart;
+   const {data: {getUserCart}} = await client.query({query});
+   return getUserCart;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const setUserCart = async (cart) => {
+  try {
+    client.mutate({
+      mutation: gql`
+        mutation {
+          setUserCart(cart: "${cart}") {
+            name
+          }
+        }`,
+    });
   } catch (error) {
     console.log(error);
   }
@@ -191,7 +205,6 @@ export const logIn = async (email, password) => {
 		headers: {
 			'Content-Type': 'application/json',
       authorization: `Bearer ${inMemoryToken}`
-			// authorization: `${inMemoryToken}`
 		},
 		body: JSON.stringify({email: email, password: password})
 	});

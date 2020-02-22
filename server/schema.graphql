@@ -12,11 +12,12 @@ type Query {
   brands: [Brand]
   filterByCategory(name: String!): [Product]
   filterByBrand(name: String!): [Product]
-  userCart(email: String!): [Product]
+  getUserCart(email: String!): String
 }
 
 type Mutation {
   createUser(username: String!, email: String!, password: String!) : User
+  setUserCart(cart: String!): [Product]
 }
 
 type Product {

@@ -12,7 +12,7 @@ export const setCart= (value, cartKey = CART_KEY) => {
     }
 };
 
-export const getCart = (cartKey = CART_KEY) => {
+export const getLocalCart = (cartKey = CART_KEY) => {
     if (localStorage && localStorage.getItem(cartKey)) {
         return JSON.parse(localStorage.getItem(cartKey));
     }
