@@ -16,18 +16,17 @@ import { connect } from 'react-redux';
 
 import { setCartFromStorage } from '../actions/index';
 import UserPage from '../pages/User';
-import { syncLogout } from './requests';
+import { syncLogout, getUserCart } from './requests';
 
 window.addEventListener('storage', (event) => syncLogout(event));
 
 class App extends React.Component {
 
-  componentDidMount() {
-    const cartLength = Object.keys(getLocalCart()).length;
-    // if(cartLength > 0) {
-      // this.props.setCartFromStorage() ||
-      this.props.setCartFromStorage(getLocalCart());
-    // }
+  componentDidMount = async () => {
+    const { loggedIn, setCartFromStorage } = this.props;
+    const localCartLength = Object.keys(getLocalCart()).length;
+    if(!loggedIn && localCartLength > 0) setCartFromStorage(getLocalCart());
+    if(loggedIn) setCartFromStorage(await getUserCart());
   }
 
   render() {
@@ -55,4 +54,10 @@ class App extends React.Component {
   }
 }
 
-export default connect(null, { setCartFromStorage })(App);
+const mapStateToProps = state =>{
+  return {
+    loggedIn: state.loggedIn
+  }
+}
+
+export default connect(mapStateToProps, { setCartFromStorage })(App);

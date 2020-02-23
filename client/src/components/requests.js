@@ -4,6 +4,7 @@ import { ApolloClient } from 'apollo-client';
 import { setContext } from 'apollo-link-context';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { HttpLink } from 'apollo-link-http';
+import { simplifiedCart } from '../utilities';
 
 let inMemoryToken;
 const apiUrl = process.env.API_URL || 'http://localhost:8091/graphql';
@@ -162,25 +163,29 @@ export const createUser = async (username, email, password) => {
 }
 
 export const getUserCart = async email => {
+  let collection = [];
   try {
-    const query = gql`
-      {
-        getUserCart(email: "${email}") {
-        }
-      }`;
-   const {data: {getUserCart}} = await client.query({query});
-   return getUserCart;
+    const query = gql`{ getUserCart(email: "eiwne@gmail.com") }`;
+    const {data: {getUserCart}} = await client.query({query});
+    const userCart = JSON.parse(getUserCart);
+
+    for (let i = 0; i < userCart.length; i++) {
+      const product = await requestProduct({product: {id: userCart[i].id} });
+      collection.push({...product ,size: userCart[i].size});
+    }
+    return collection;
   } catch (error) {
     console.log(error);
   }
 }
 
-export const setUserCart = async (cart) => {
+export const setUserCart = async () => {
+  const cartString = `${JSON.stringify(simplifiedCart())}`.split("\"").join("\\\"");
   try {
     client.mutate({
       mutation: gql`
         mutation {
-          setUserCart(cart: "${cart}") {
+          setUserCart(cart: "${cartString}") {
             name
           }
         }`,

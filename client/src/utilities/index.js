@@ -18,3 +18,9 @@ export const getLocalCart = (cartKey = CART_KEY) => {
     }
     return [];
 };
+
+export const simplifiedCart = () => {
+   return getLocalCart().map((item) => {
+    return {id: item.id, size: item.size}
+  });
+}

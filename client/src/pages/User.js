@@ -1,10 +1,7 @@
 import React from 'react';
-import { createUser } from '../components/requests';
-import { logIn, logout, setUserCart} from '../components/requests';
+import { logIn, setUserCart, createUser} from '../components/requests';
 import { connect } from 'react-redux';
-import { loggedIn } from '../actions/index';
-import { getLocalCart } from '../utilities/index';
-
+import { loggedIn, setCartFromStorage } from '../actions/index';
 
 class UserPage extends React.Component { 
 	state = {
@@ -30,12 +27,9 @@ class UserPage extends React.Component {
     this.props.loggedIn(true);
   }
   
-  setUserCart = async event => {
+  setUserCart = event => {
     event.preventDefault();    
-    const cart = getLocalCart().map((item) => {
-      return {id: item.id, size: item.size}
-    });
-    setUserCart(`${JSON.stringify(cart)}`.split("\"").join("\\\"")); 
+    setUserCart(); 
   }
 
 	render() { 
@@ -73,13 +67,12 @@ class UserPage extends React.Component {
 						</p>
 						<button onClick={ this.onFormSubmit }>sign Up</button>
 						<button onClick={ this.logIn }>Log in</button>
-						<button onClick={ logout }>Log out</button>
+						{/* <button onClick={ logout }>Log out</button> */}
 						<button onClick={ this.setUserCart }>set User Cart</button>
-
 					</form>
 			</div>
 		)
 	}
 }
 
-export default connect(null, { loggedIn })(UserPage) ;
+export default connect(null, { loggedIn, setCartFromStorage })(UserPage) ;

@@ -205,7 +205,7 @@ export const User = {
       const res : QueryResult = await client.query(
         `SELECT cart FROM users WHERE email = '${email}'`
       );
-      return res.rows;
+      return res.rows[0]['cart']; 
     } catch (err) {
       console.log(err);
     } finally {

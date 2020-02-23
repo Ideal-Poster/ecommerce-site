@@ -150,4 +150,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, { addToCart , setCartFromStorage })(Product);
+export default connect(mapStateToProps, { addToCart, setCartFromStorage })(Product);
