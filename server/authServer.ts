@@ -5,15 +5,20 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import { generateAccessToken, validateUser } from './utilities';
 
+var cookieParser = require('cookie-parser');
 const { check } = require('express-validator');
 const jwt = require('jsonwebtoken');
 const app : express.Express = express();
 
 let refreshTokens: Array<any> = [];
-app.use(cors(), bodyParser.urlencoded({
-  extended: true
-}));
-
+app.use(
+  cors({ 
+    origin: 'http://localhost:3000',
+    credentials: true
+  })
+);
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(cookieParser());
 app.use(express.json());
 
 const validationRules = [
@@ -25,7 +30,13 @@ const validationRules = [
 app.post('/login', validationRules, validateUser, async (req: any, res: any) => {
   const accessToken = generateAccessToken(req.body);
   const refreshToken = jwt.sign(req.body.email, process.env.REFRESH_TOKEN_SECRET);
-	refreshTokens.push(refreshToken);
+  refreshTokens.push(refreshToken);
+  res.cookie('refresh_token', 'fffff', {
+    maxAge: 60 * 60 * 1000, // convert from minute to milliseconds
+    httpOnly: true,
+    // secure: false
+  });
+  console.log(req.cookies);
   res.json({ accessToken, refreshToken });
 });
 

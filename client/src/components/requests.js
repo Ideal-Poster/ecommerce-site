@@ -8,6 +8,7 @@ import { simplifiedCart } from '../utilities';
 
 let inMemoryToken;
 const apiUrl = process.env.API_URL || 'http://localhost:8091/graphql';
+const authApiUrl = process.env.AUTH_API_URL || 'http://localhost:8092/';
 const httpLink = new HttpLink({uri: apiUrl});
 
 const logoutLink = onError(({ networkError }) => {
@@ -205,7 +206,8 @@ export const isTokenPresent = () => {
 };
 
 export const logIn = async (email, password) => {
-	const response = await fetch('http://localhost:8092/login', {
+	const response = await fetch( authApiUrl + 'login', {
+    credentials: 'include',
 		method: 'POST', 
 		headers: {
 			'Content-Type': 'application/json',
