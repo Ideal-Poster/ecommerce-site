@@ -1,5 +1,5 @@
 import React from 'react';
-import { logIn, setUserCart, createUser} from '../components/requests';
+import { logIn, setUserCart, createUser, getUserCart, silentRefresh } from '../components/requests';
 import { connect } from 'react-redux';
 import { loggedIn, setCartFromStorage } from '../actions/index';
 
@@ -30,6 +30,16 @@ class UserPage extends React.Component {
   setUserCart = event => {
     event.preventDefault();    
     setUserCart(); 
+  }
+  
+  getUserCart = event => {
+    event.preventDefault();    
+    getUserCart();
+  }
+
+  silentRefresh = event => {
+    event.preventDefault();
+    silentRefresh();
   }
 
 	render() { 
@@ -68,7 +78,10 @@ class UserPage extends React.Component {
 						<button onClick={ this.onFormSubmit }>sign Up</button>
 						<button onClick={ this.logIn }>Log in</button>
 						{/* <button onClick={ logout }>Log out</button> */}
-						<button onClick={ this.setUserCart }>set User Cart</button>
+						{/* <button onClick={ this.getUserCart }>get User Cart</button> */}
+						<button onClick={ this.silentRefresh }>silent refresh</button>
+
+						{/* <button onClick={ this.setUserCart }>set User Cart</button> */}
 					</form>
 			</div>
 		)

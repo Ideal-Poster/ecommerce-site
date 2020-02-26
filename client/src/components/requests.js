@@ -7,8 +7,8 @@ import { HttpLink } from 'apollo-link-http';
 import { simplifiedCart } from '../utilities';
 
 let inMemoryToken;
-const apiUrl = process.env.API_URL || 'http://localhost:8091/graphql';
-const authApiUrl = process.env.AUTH_API_URL || 'http://localhost:8092/';
+const apiUrl = 'http://localhost:8091/graphql';
+const authApiUrl = 'http://localhost:8092/';
 const httpLink = new HttpLink({uri: apiUrl});
 
 const logoutLink = onError(({ networkError }) => {
@@ -46,7 +46,7 @@ export const requestProductsByBrand = async ({brand}) => {
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 export const requestProductsByCategory = async ({category}) => {
   try {
@@ -65,7 +65,7 @@ export const requestProductsByCategory = async ({category}) => {
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 export const requestProduct = async ({product: {id}}) => {
   try {
@@ -84,7 +84,7 @@ export const requestProduct = async ({product: {id}}) => {
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 export const requestBrands = async () => {
   try {
@@ -98,7 +98,7 @@ export const requestBrands = async () => {
   } catch (error){
     console.log(error);
   }
-}
+};
 
 export const requestCategories = async () => {
   try {
@@ -112,7 +112,7 @@ export const requestCategories = async () => {
   } catch (error){
     console.log(error);
   }
-}
+};
 
 export const requestProductApparelSizes = async ({product: {id}}) => {
   try {
@@ -128,7 +128,7 @@ export const requestProductApparelSizes = async ({product: {id}}) => {
   } catch(error) {
     console.log(error);
   }
-}
+};
 
 export const footwearStock = async ({product: {id}}) => {
   try {
@@ -145,7 +145,7 @@ export const footwearStock = async ({product: {id}}) => {
   } catch(error) {
     console.log(error);
   }
-}
+};
 
 export const createUser = async (username, email, password) => {
   try {
@@ -161,24 +161,26 @@ export const createUser = async (username, email, password) => {
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 export const getUserCart = async email => {
   let collection = [];
   try {
     const query = gql`{ getUserCart(email: "eiwne@gmail.com") }`;
-    const {data: {getUserCart}} = await client.query({query});
+    const { data: {getUserCart}} = await client.query({query} );
     const userCart = JSON.parse(getUserCart);
 
     for (let i = 0; i < userCart.length; i++) {
       const product = await requestProduct({product: {id: userCart[i].id} });
       collection.push({...product ,size: userCart[i].size});
     }
+    console.log(userCart);
+    
     return collection;
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 export const setUserCart = async () => {
   const cartString = `${JSON.stringify(simplifiedCart())}`.split("\"").join("\\\"");
@@ -194,7 +196,7 @@ export const setUserCart = async () => {
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 //------------------------------------------------------------------------------------------
 // Authentication Requests
@@ -206,7 +208,7 @@ export const isTokenPresent = () => {
 };
 
 export const logIn = async (email, password) => {
-	const response = await fetch( authApiUrl + 'login', {
+	const response = await fetch(authApiUrl + 'login', {
     credentials: 'include',
 		method: 'POST', 
 		headers: {
@@ -218,7 +220,29 @@ export const logIn = async (email, password) => {
   const data = await response.json();
   if (data) inMemoryToken = data.accessToken;
   console.log(inMemoryToken);
-}
+
+  const timeout = parseInt((data.expiryTime + '000').replace('s', ''));
+  // console.log(timeout);
+  setTimeout(() => { silentRefresh() }, (timeout - 10000));
+};
+
+export const silentRefresh = async () => {
+  const response = await fetch(authApiUrl + 'refresh_token', {
+    credentials: 'include',
+		method: 'POST', 
+		headers: {
+			'Content-Type': 'application/json'
+      // authorization: `Bearer ${inMemoryToken}`
+		}
+	});
+  const data = await response.json();
+  if (data) inMemoryToken = data.accessToken;
+  console.log(inMemoryToken);
+
+  const timeout = parseInt((data.expiryTime + '000').replace('s', ''));
+  // console.log(timeout);
+  setTimeout(() => { silentRefresh() }, (timeout - 10000));
+};
 
 export const logout = event => {
 	event.preventDefault();

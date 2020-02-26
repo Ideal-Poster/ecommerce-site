@@ -224,5 +224,18 @@ export const User = {
     } finally {
       client.release();
     };
+  },
+  find: async (email: string) => {
+    const client : PoolClient = await pool.connect();
+    try {
+      const res : QueryResult = await client.query(
+        `SELECT username, email, password FROM users WHERE email = '${email}'`
+      );
+      return res.rows[0];
+    } catch (err) {
+      console.log(err);
+    } finally {
+      client.release();
+    };
   }
 };

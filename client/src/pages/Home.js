@@ -12,7 +12,6 @@ import {
 import slideImg1 from '../static/photo-1513531926349-466f15ec8cc7.jpeg';
 import slideImg2 from '../static/warren-wong-248636-unsplash.jpg';
 import slideImg3 from '../static/photo-1527905804285-2f67b86e3bf6.jpeg';
-require('dotenv').config();
 
 interface Position {
   left: string | number,
