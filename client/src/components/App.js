@@ -14,19 +14,33 @@ import Cart from '../pages/Cart';
 import { getLocalCart } from '../utilities';
 import { connect } from 'react-redux';
 
-import { setCartFromStorage } from '../actions/index';
+import { setReduxCart, loggedIn } from '../actions/index';
 import UserPage from '../pages/User';
-import { syncLogout, getUserCart } from './requests';
+import { syncLogout, getUserCart, silentRefresh } from './requests';
 
 window.addEventListener('storage', (event) => syncLogout(event));
 
 class App extends React.Component {
+  async componentDidMount() {
+    const validToken = await silentRefresh();
+    console.log(validToken);
+    
+    if (validToken) {
+      await this.fetchAndSetUserCart() 
+    } else {
+      this.props.loggedIn(false);
+      this.setReduxCartFromStorage();
+    }
+  }
 
-  componentDidMount = async () => {
-    const { loggedIn, setCartFromStorage } = this.props;
+  async fetchAndSetUserCart() {
+    const cart = await getUserCart();
+    this.props.setReduxCart(cart);
+  }
+
+  setReduxCartFromStorage() {
     const localCartLength = Object.keys(getLocalCart()).length;
-    if(!loggedIn && localCartLength > 0) setCartFromStorage(getLocalCart());
-    if(loggedIn) setCartFromStorage(await getUserCart());
+    if(localCartLength > 0) this.props.setReduxCart(getLocalCart());
   }
 
   render() {
@@ -60,4 +74,4 @@ const mapStateToProps = state =>{
   }
 }
 
-export default connect(mapStateToProps, { setCartFromStorage })(App);
+export default connect(mapStateToProps, { loggedIn ,setReduxCart })(App);

@@ -7,7 +7,7 @@ export const addToCart = item => {
   }
 }
 
-export const setCartFromStorage = cart => {
+export const setReduxCart = cart => {
   return { 
     type: 'SET_CART',
     payload: { 

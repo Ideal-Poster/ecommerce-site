@@ -4,7 +4,7 @@ import { ApolloClient } from 'apollo-client';
 import { setContext } from 'apollo-link-context';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { HttpLink } from 'apollo-link-http';
-import { simplifiedCart } from '../utilities';
+import { simplifiedCart, setLocalStorageCart } from '../utilities';
 
 let inMemoryToken;
 const apiUrl = 'http://localhost:8091/graphql';
@@ -174,8 +174,9 @@ export const getUserCart = async email => {
       const product = await requestProduct({product: {id: userCart[i].id} });
       collection.push({...product ,size: userCart[i].size});
     }
-    console.log(userCart);
+    // console.log(userCart);
     
+    if (collection) setLocalStorageCart(collection);
     return collection;
   } catch (error) {
     console.log(error);
@@ -208,40 +209,47 @@ export const isTokenPresent = () => {
 };
 
 export const logIn = async (email, password) => {
-	const response = await fetch(authApiUrl + 'login', {
-    credentials: 'include',
-		method: 'POST', 
-		headers: {
-			'Content-Type': 'application/json',
-      authorization: `Bearer ${inMemoryToken}`
-		},
-		body: JSON.stringify({email: email, password: password})
-	});
-  const data = await response.json();
-  if (data) inMemoryToken = data.accessToken;
-  console.log(inMemoryToken);
-
-  const timeout = parseInt((data.expiryTime + '000').replace('s', ''));
-  // console.log(timeout);
-  setTimeout(() => { silentRefresh() }, (timeout - 10000));
+  try {
+    const response = await fetch(authApiUrl + 'login', {
+      credentials: 'include',
+      method: 'POST', 
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${inMemoryToken}`
+      },
+      body: JSON.stringify({email: email, password: password})
+    });
+    const data = await response.json();
+    if (data) {
+      inMemoryToken = data.accessToken;
+      const timeout = parseInt((data.expiryTime + '000').replace('s', ''));
+      setTimeout(() => { silentRefresh() }, (timeout - 10000));
+    }
+  } catch(err) {
+   console.log(err);
+  }
 };
 
 export const silentRefresh = async () => {
-  const response = await fetch(authApiUrl + 'refresh_token', {
-    credentials: 'include',
-		method: 'POST', 
-		headers: {
-			'Content-Type': 'application/json'
-      // authorization: `Bearer ${inMemoryToken}`
-		}
-	});
-  const data = await response.json();
-  if (data) inMemoryToken = data.accessToken;
-  console.log(inMemoryToken);
-
-  const timeout = parseInt((data.expiryTime + '000').replace('s', ''));
-  // console.log(timeout);
-  setTimeout(() => { silentRefresh() }, (timeout - 10000));
+  try {
+    const response = await fetch(authApiUrl + 'refresh_token', {
+      credentials: 'include',
+      method: 'POST', 
+      headers: {
+        'Content-Type': 'application/json'
+        // authorization: `Bearer ${inMemoryToken}`
+      }
+    });
+    const data = await response.json();
+    if (data) {
+      inMemoryToken = data.accessToken;
+      const timeout = parseInt((data.expiryTime + '000').replace('s', ''));
+      setTimeout(() => { silentRefresh() }, (timeout - 10000));
+      return true
+    }
+  } catch(err) {
+    console.log(err);
+  }
 };
 
 export const logout = event => {

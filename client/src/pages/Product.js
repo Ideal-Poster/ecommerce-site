@@ -17,8 +17,8 @@ import {
 import SizeSelection from '../components/SizeSelection';
 
 import { connect } from 'react-redux';
-import { addToCart, setCartFromStorage } from '../actions/index';
-import { setCart } from '../utilities';
+import { addToCart, setReduxCart } from '../actions/index';
+import { setLocalStorageCart } from '../utilities';
 
 class Product extends React.Component {
   state = {
@@ -68,7 +68,7 @@ class Product extends React.Component {
   addToCart = async product => {
     if(this.state.product.size) {
       await this.props.addToCart(product);
-      setCart(this.props.cart);
+      setLocalStorageCart(this.props.cart);
       this.setState({notice: false});
     } else {
       this.setState({notice: true});
@@ -150,4 +150,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, { addToCart, setCartFromStorage })(Product);
+export default connect(mapStateToProps, { addToCart, setReduxCart })(Product);
