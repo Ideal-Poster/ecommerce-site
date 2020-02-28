@@ -23,17 +23,17 @@ window.addEventListener('storage', (event) => syncLogout(event));
 class App extends React.Component {
   async componentDidMount() {
     const validToken = await silentRefresh();
-    console.log(validToken);
-    
+    // console.log(validToken);
+
     if (validToken) {
-      await this.fetchAndSetUserCart() 
+      await this.fetchUserCart();
     } else {
       this.props.loggedIn(false);
       this.setReduxCartFromStorage();
     }
   }
 
-  async fetchAndSetUserCart() {
+  async fetchUserCart() {
     const cart = await getUserCart();
     this.props.setReduxCart(cart);
   }

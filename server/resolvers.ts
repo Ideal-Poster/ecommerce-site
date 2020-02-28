@@ -1,3 +1,5 @@
+import { authenticateToken } from "./utilities";
+
  const Query = {
   getProductById: async (root: any, {id}: any, {models}: any) =>  {
     return await models.product.getById(id);
@@ -24,8 +26,8 @@
     return await models.product.filterByBrand(name);
   },
   getUserCart: async (root: any, args: null, {models}: any) => {
-    // const token = models.authHeader && models.authHeader.split(' ')[1];
-    // const user = authenticateToken(token);
+    const token = models.authHeader && models.authHeader.split(' ')[1];
+    const user = authenticateToken(token);
     return models.user.getCart('eiwne@gmail.com');
   }
 };
@@ -35,8 +37,8 @@ const Mutation = {
     return await models.user.create(email, username, password);
   },
   setUserCart: async (root: any, {cart}: any, {models}: any) => {
-    // const token = models.authHeader && models.authHeader.split(' ')[1];
-    // const user = authenticateToken(token);
+    const token = models.authHeader && models.authHeader.split(' ')[1];
+    const user = authenticateToken(token);
     // console.log(cart);
     return models.user.setCart('eiwne@gmail.com', cart);
   }

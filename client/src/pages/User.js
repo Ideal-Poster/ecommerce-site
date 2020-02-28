@@ -1,7 +1,9 @@
 import React from 'react';
-import { logIn, setUserCart, createUser, getUserCart, silentRefresh } from '../components/requests';
+import { logIn, setUserCart, createUser, getUserCart, silentRefresh, logout } from '../components/requests';
 import { connect } from 'react-redux';
 import { loggedIn, setReduxCart } from '../actions/index';
+import { getLocalCart } from '../utilities';
+
 
 class UserPage extends React.Component { 
 	state = {
@@ -21,10 +23,14 @@ class UserPage extends React.Component {
 	}
 
 	logIn = async event => {
-    const { email, password } = this.state
 		event.preventDefault();
-    await logIn(email, password);
-    this.props.loggedIn(true);
+    const { email, password } = this.state
+
+    const loggedIn = await logIn(email, password);
+    if (loggedIn) this.props.loggedIn(true);
+    
+    const cart  = await getUserCart();
+    this.props.setReduxCart(cart);
   }
   
   setUserCart = event => {
@@ -42,6 +48,15 @@ class UserPage extends React.Component {
   silentRefresh = event => {
     event.preventDefault();
     silentRefresh();
+  }
+
+  logout = async event => {
+    event.preventDefault();
+    const loggedOut = await logout();
+    if (loggedOut) {
+      this.props.loggedIn(false);
+      this.props.setReduxCart(getLocalCart());
+    }
   }
 
 	render() { 
@@ -77,11 +92,12 @@ class UserPage extends React.Component {
 								onChange={this.handleChange}
 							/>
 						</p>
-						<button onClick={ this.onFormSubmit }>sign Up</button>
+						{/* <button onClick={ this.onFormSubmit }>sign Up</button> */}
 						<button onClick={ this.logIn }>Log in</button>
 						{/* <button onClick={ logout }>Log out</button> */}
-						<button onClick={ this.getUserCart }>get User Cart</button>
-						<button onClick={ this.silentRefresh }>silent refresh</button>
+            <button onClick={ this.logout }>logout</button>
+						{/* <button onClick={ this.getUserCart }>get User Cart</button> */}
+						{/* <button onClick={ this.silentRefresh }>silent refresh</button> */}
 
 						<button onClick={ this.setUserCart }>set User Cart</button>
 					</form>

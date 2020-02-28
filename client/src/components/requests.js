@@ -176,7 +176,7 @@ export const getUserCart = async email => {
     }
     // console.log(userCart);
     
-    if (collection) setLocalStorageCart(collection);
+    // if (collection) setLocalStorageCart(collection);
     return collection;
   } catch (error) {
     console.log(error);
@@ -224,6 +224,7 @@ export const logIn = async (email, password) => {
       inMemoryToken = data.accessToken;
       const timeout = parseInt((data.expiryTime + '000').replace('s', ''));
       setTimeout(() => { silentRefresh() }, (timeout - 10000));
+      return true
     }
   } catch(err) {
    console.log(err);
@@ -252,10 +253,21 @@ export const silentRefresh = async () => {
   }
 };
 
-export const logout = event => {
-	event.preventDefault();
+export const logout = async event => {
 	inMemoryToken = null;
-	window.localStorage.setItem('logout', Date.now());
+  // window.localStorage.setItem(authApiUrl + 'logout', Date.now());
+  try {
+    const data = await fetch(authApiUrl + 'logout', {
+      credentials: 'include',
+      method: 'GET', 
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    if (data.status === 200) return true
+  } catch(err) {
+    console.log(err);
+  }
 };
 
 export const syncLogout = event => {

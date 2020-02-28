@@ -27,7 +27,7 @@ const validationRules = [
   check('username').isAlphanumeric()
 ];
 
-app.post('/login', validationRules, validateUser, async (req: any, res: any) => { 
+app.post('/login', validationRules, validateUser, (req: any, res: any) => { 
   const expiryTime = process.env.TOKEN_EXPIRY_TIME;
   const accessToken = generateAccessToken({ email: req.body.email });
   const refreshToken = generateAccessToken({ email: req.body.email });
@@ -54,6 +54,12 @@ app.post('/refresh_token', (req: any, res: any) => {
     // secure: false
   });
   res.json({ accessToken, expiryTime });
+});
+
+app.get('/logout', (req: any, res: any) => {
+  res.clearCookie('refresh_token');
+  res.send('cookie foo cleared');
+
 });
 
 app.listen(process.env.PORT || 8092, () : void => console.log('Listening on port 8092.\n'));
