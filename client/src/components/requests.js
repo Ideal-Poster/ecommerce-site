@@ -4,7 +4,7 @@ import { ApolloClient } from 'apollo-client';
 import { setContext } from 'apollo-link-context';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { HttpLink } from 'apollo-link-http';
-import { simplifiedCart, setLocalStorageCart } from '../utilities';
+import { simplifiedCart } from '../utilities';
 
 let inMemoryToken;
 const apiUrl = 'http://localhost:8091/graphql';
@@ -163,7 +163,7 @@ export const createUser = async (username, email, password) => {
   }
 };
 
-export const getUserCart = async email => {
+export const fetchUserCart = async email => {
   let collection = [];
   try {
     const query = gql`{ getUserCart(email: "eiwne@gmail.com") }`;
@@ -174,9 +174,6 @@ export const getUserCart = async email => {
       const product = await requestProduct({product: {id: userCart[i].id} });
       collection.push({...product ,size: userCart[i].size});
     }
-    // console.log(userCart);
-    
-    // if (collection) setLocalStorageCart(collection);
     return collection;
   } catch (error) {
     console.log(error);
@@ -255,7 +252,7 @@ export const silentRefresh = async () => {
 
 export const logout = async event => {
 	inMemoryToken = null;
-  // window.localStorage.setItem(authApiUrl + 'logout', Date.now());
+  window.localStorage.setItem('logout', Date.now());
   try {
     const data = await fetch(authApiUrl + 'logout', {
       credentials: 'include',

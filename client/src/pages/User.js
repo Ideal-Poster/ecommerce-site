@@ -1,9 +1,8 @@
 import React from 'react';
-import { logIn, setUserCart, createUser, getUserCart, silentRefresh, logout } from '../components/requests';
+import { logIn, createUser, fetchUserCart, logout } from '../components/requests';
 import { connect } from 'react-redux';
-import { loggedIn, setReduxCart } from '../actions/index';
-import { getLocalCart } from '../utilities';
-
+import { setReduxCart } from '../actions/index';
+import { getLocalCart, logInStatus } from '../utilities';
 
 class UserPage extends React.Component { 
 	state = {
@@ -26,35 +25,17 @@ class UserPage extends React.Component {
 		event.preventDefault();
     const { email, password } = this.state
 
-    const loggedIn = await logIn(email, password);
-    if (loggedIn) this.props.loggedIn(true);
-    
-    const cart  = await getUserCart();
+    const logRequestResult = await logIn(email, password);
+    if (logRequestResult) logInStatus(true);
+    const cart = await fetchUserCart();
     this.props.setReduxCart(cart);
-  }
-  
-  setUserCart = event => {
-    event.preventDefault();    
-    setUserCart(); 
-  }
-  
-  getUserCart = async event => {
-    event.preventDefault();    
-    const cart  = await getUserCart();
-    console.log(cart);
-    this.props.setReduxCart(cart);
-  }
-
-  silentRefresh = event => {
-    event.preventDefault();
-    silentRefresh();
   }
 
   logout = async event => {
     event.preventDefault();
     const loggedOut = await logout();
     if (loggedOut) {
-      this.props.loggedIn(false);
+      logInStatus(false);
       this.props.setReduxCart(getLocalCart());
     }
   }
@@ -92,13 +73,8 @@ class UserPage extends React.Component {
 								onChange={this.handleChange}
 							/>
 						</p>
-						{/* <button onClick={ this.onFormSubmit }>sign Up</button> */}
 						<button onClick={ this.logIn }>Log in</button>
-						{/* <button onClick={ logout }>Log out</button> */}
             <button onClick={ this.logout }>logout</button>
-						{/* <button onClick={ this.getUserCart }>get User Cart</button> */}
-						{/* <button onClick={ this.silentRefresh }>silent refresh</button> */}
-
 						<button onClick={ this.setUserCart }>set User Cart</button>
 					</form>
 			</div>
@@ -106,4 +82,4 @@ class UserPage extends React.Component {
 	}
 }
 
-export default connect(null, { loggedIn, setReduxCart })(UserPage) ;
+export default connect(null, { setReduxCart })(UserPage) ;

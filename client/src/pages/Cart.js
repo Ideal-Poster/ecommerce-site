@@ -1,14 +1,16 @@
 import React from 'react';
 import { Container, Row, Col } from '@bootstrap-styled/v4';
 import { connect } from 'react-redux';
-import { calculatePrice, setLocalStorageCart } from '../utilities/index';
+import { calculatePrice, setLocalStorageCart, loggedIn } from '../utilities/index';
 import { deleteFromCart } from '../actions/index';
+import { setUserCart } from '../components/requests';
 
 class Cart extends React.Component {
 
 	async deleteItemFromCart(item) {
 	 	await this.props.deleteFromCart(item);
-		setLocalStorageCart(this.props.cart);
+    setLocalStorageCart(this.props.cart);
+    if(loggedIn()) setUserCart();
 	}
 
 	render() {

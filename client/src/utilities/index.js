@@ -19,8 +19,16 @@ export const getLocalCart = (cartKey = CART_KEY) => {
   return [];
 };
 
+export const logInStatus = (status: Boolean) => {
+  window.localStorage.setItem('loggedIn', status);
+};
+
+export const loggedIn = () => {
+  return window.localStorage.loggedIn;
+};
+
 export const simplifiedCart = () => {
   return getLocalCart().map((item) => {
     return {id: item.id, size: item.size}
   });
-}
+};

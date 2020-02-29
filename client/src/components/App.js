@@ -11,12 +11,12 @@ import { BaseCSS } from 'styled-bootstrap-grid';
 
 import BootstrapProvider from '@bootstrap-styled/provider/lib/BootstrapProvider';
 import Cart from '../pages/Cart';
-import { getLocalCart } from '../utilities';
+import { getLocalCart, logInStatus } from '../utilities';
 import { connect } from 'react-redux';
 
-import { setReduxCart, loggedIn } from '../actions/index';
+import { setReduxCart } from '../actions/index';
 import UserPage from '../pages/User';
-import { syncLogout, getUserCart, silentRefresh } from './requests';
+import { syncLogout, fetchUserCart, silentRefresh } from './requests';
 
 window.addEventListener('storage', (event) => syncLogout(event));
 
@@ -24,24 +24,23 @@ class App extends React.Component {
   async componentDidMount() {
     const validToken = await silentRefresh();
     // console.log(validToken);
-
     if (validToken) {
-      await this.fetchUserCart();
+      await this.getUserCart();
     } else {
-      this.props.loggedIn(false);
+      logInStatus(false);
       this.setReduxCartFromStorage();
-    }
-  }
+    };
+  };
 
-  async fetchUserCart() {
-    const cart = await getUserCart();
+  async getUserCart() {
+    const cart = await fetchUserCart();
     this.props.setReduxCart(cart);
-  }
+  };
 
   setReduxCartFromStorage() {
     const localCartLength = Object.keys(getLocalCart()).length;
     if(localCartLength > 0) this.props.setReduxCart(getLocalCart());
-  }
+  };
 
   render() {
     return(
@@ -66,12 +65,6 @@ class App extends React.Component {
       </div>
     );
   }
-}
+};
 
-const mapStateToProps = state =>{
-  return {
-    loggedIn: state.loggedIn
-  }
-}
-
-export default connect(mapStateToProps, { loggedIn ,setReduxCart })(App);
+export default connect(null, { setReduxCart })(App);

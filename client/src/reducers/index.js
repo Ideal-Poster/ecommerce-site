@@ -30,21 +30,9 @@ const cartReducer = (state = [], action) => {
       return action.payload.cart;
     default:
       return [];
-  }
-}
-
-const logInReducer= (state, action) => {
-  switch (action.type) {
-    case 'LOGGED_IN':
-      window.localStorage.setItem('loggedIn', action.payload.boolean);
-      console.log(state);
-      return action.payload.boolean;
-    default:
-      return false
-  }
+  };
 };
 
 export default combineReducers({
-  cart: cartReducer,
-  loggedIn: logInReducer
+  cart: cartReducer
 });

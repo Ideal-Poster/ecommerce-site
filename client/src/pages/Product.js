@@ -12,13 +12,14 @@ import {
 import {
   requestProduct,
   requestProductApparelSizes,
-  footwearStock
+  footwearStock,
+  setUserCart
 } from '../components/requests';
 import SizeSelection from '../components/SizeSelection';
 
 import { connect } from 'react-redux';
 import { addToCart, setReduxCart } from '../actions/index';
-import { setLocalStorageCart } from '../utilities';
+import { setLocalStorageCart, loggedIn } from '../utilities';
 
 class Product extends React.Component {
   state = {
@@ -73,11 +74,12 @@ class Product extends React.Component {
     } else {
       this.setState({notice: true});
     }
-  }
+    if(loggedIn()) setUserCart();
+  };
 
   selectImage = i => {
     this.setState({ imageSelect: i });
-  }
+  };
 
   renderImageSelection(i) {
     return(
@@ -89,7 +91,7 @@ class Product extends React.Component {
           src={`${this.state.product.images[i]}`} alt="" />
       </Col>
     );
-  }
+  };
 
   render() {
     const product = this.state.product
@@ -136,7 +138,7 @@ class Product extends React.Component {
             <p>Please Select a size</p>
           }
           <button onClick={ () => this.addToCart(product) }>poop</button>
-          <button onClick={ () => localStorage.clear() }>Clear localStorage</button>
+          {/* <button onClick={ () => localStorage.clear() }>Clear localStorage</button> */}
 
         </ProductSidebarContainer>
       </Container>
