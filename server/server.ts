@@ -8,7 +8,6 @@ import { ApolloServer } from 'apollo-server-express';
 import resolvers from './resolvers';
 import { User, Product } from './models';
 
-
 const app : express.Express = express();
 // Configure Apollo server
 const typeDefs : string = fs.readFileSync('./schema.graphql', {encoding: 'utf-8'});

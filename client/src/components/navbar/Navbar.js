@@ -12,11 +12,14 @@ import {
   Selections,
   Sections,
   CartImage,
-  CartInfo
+  CartInfo,
+  LogInIcon,
+  CartIcon,
+  UserIcon
  } from './styled/Navbar';
 
 import { connect } from 'react-redux';
-import { calculatePrice } from '../../utilities/index';
+import { calculatePrice, loggedIn } from '../../utilities/index';
 
 
 class Navbar extends React.Component {
@@ -47,7 +50,7 @@ class Navbar extends React.Component {
 
   isNavHidden = () => {
     return this.offset < window.pageYOffset &&
-    window.pageYOffset > 400 &&
+    window.pageYOffset > 150 &&
     !this.navIsAnimating &&
     this.navDisplayed
   }
@@ -184,36 +187,18 @@ class Navbar extends React.Component {
         <Navigation className="navMenu">
           <IconContainer>
             <Link to="/" style={{textDecoration: 'none'}}>
-              <Icon>
-                Rebel
-              </Icon>
+              <Icon>Rebel</Icon>
             </Link>
           </IconContainer>
+          
           <Selections>
             { optionLinks }
-
-            <Link to={`/user`}>
-              <i 
-                style={{
-                  fontSize: '19px',
-                  position: 'absolute',
-                  right: '40px',
-                  top: '20px',
-                  paddingRight: '25px'
-                }}
-                className="fa fa-user-circle"/>
-            </Link>
-            <i 
-              onClick={this.toggleCart}
-              style={{
-                fontSize: '16px',
-                position: 'absolute',
-                right: '0',
-                top: '21px',
-                paddingRight: '25px'
-              }}
-              className="fas fa-shopping-cart"/>
-
+            {
+              loggedIn() ?
+              <Link to={`/login`}><LogInIcon/></Link> :
+              <Link to={`/user`}><UserIcon/></Link>
+            }
+            <CartIcon onClick={this.toggleCart} />
           </Selections>
         </Navigation>
 
@@ -221,19 +206,9 @@ class Navbar extends React.Component {
           className="sections"
           onMouseEnter={ () => this.sectionHoverEnter(this.activeHover) }
           onMouseLeave={ () => this.sectionHoverLeave(this.activeHover) } >
-
-          {
-            this.state.brandsOpen &&
-            <BrandsDropdown/>
-          }
-
-          {
-            this.state.categoriesOpen &&
-            <CategoriesDropdown/>
-          }
-
-          {
-            this.state.cartOpen &&
+          { this.state.brandsOpen && <BrandsDropdown/> }
+          { this.state.categoriesOpen && <CategoriesDropdown/> }
+          { this.state.cartOpen &&
             <div
               style={{
                 position: 'fixed',
@@ -244,15 +219,15 @@ class Navbar extends React.Component {
                 
               <div style={{display: 'inline-block'}}>
                 {this.props.cart.map(item => (
-                    <div key={'navbar-cart-' + item.name}>
-                      <CartImage src={item.images[0]} alt="cart item"/>
-                      <div style={{display: 'inline-block'}}>
-                        <p style={{paddingLeft: '20px'}}>{item.name}</p> 
-                        <CartInfo>$ {item.price}</CartInfo>
-                        <CartInfo>size: {item.size}</CartInfo>
-                        <CartInfo>quantity: {item.quantity}</CartInfo>
-                      </div>
+                  <div key={'navbar-cart-' + item.name}>
+                    <CartImage src={item.images[0]} alt="cart item"/>
+                    <div style={{display: 'inline-block'}}>
+                      <p style={{paddingLeft: '20px'}}>{item.name}</p> 
+                      <CartInfo>$ {item.price}</CartInfo>
+                      <CartInfo>size: {item.size}</CartInfo>
+                      <CartInfo>quantity: {item.quantity}</CartInfo>
                     </div>
+                  </div>
                 ))}
               </div>
               <div style={{

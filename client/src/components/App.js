@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import {BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 
 import Home from '../pages/Home';
 import Categories from '../pages/Categories';
@@ -11,14 +11,38 @@ import { BaseCSS } from 'styled-bootstrap-grid';
 
 import BootstrapProvider from '@bootstrap-styled/provider/lib/BootstrapProvider';
 import Cart from '../pages/Cart';
-import { getLocalCart, logInStatus } from '../utilities';
+import { getLocalCart, logInStatus, loggedIn } from '../utilities';
 import { connect } from 'react-redux';
 
-import { setReduxCart } from '../actions/index';
-import UserPage from '../pages/User';
+import { setReduxCart } from '../actions';
+import User from '../pages/User';
 import { syncLogout, fetchUserCart, silentRefresh } from './requests';
 
 window.addEventListener('storage', (event) => syncLogout(event));
+
+
+const LoggedOutOnly = ({component: Component, ...rest}) => (
+  <Route {...rest} render={props => (
+    loggedIn() ?
+    <Component {...props}/> :
+    <Redirect to={{
+      pathname: '/',
+      state: { from: props.location }
+    }}/>
+  )}/>
+);
+
+const PrivateRoute = ({component: Component, ...rest}) => (
+  <Route {...rest} render={props => (
+    !loggedIn() ?
+    <Component {...props}/> :
+    <Redirect to={{
+      pathname: '/',
+      state: { from: props.location }
+    }}/>
+  )}/>
+);
+
 
 class App extends React.Component {
   async componentDidMount() {
@@ -55,9 +79,9 @@ class App extends React.Component {
                 <Route path="/categories/:category" component={Categories}/>
                 <Route path="/brands/:brand" component={Brand}/>
                 <Route path="/product/:productId" component={Product}/>
-                <Route path="/LogIn" component={LogIn}/>
+                <LoggedOutOnly path="/login" component={LogIn}/>
                 <Route path="/cart" component={Cart}/>
-                <Route path="/user" component={UserPage}/>
+                <PrivateRoute path="/user" component={User}/>
               </div>
             </Switch>
           </Router>

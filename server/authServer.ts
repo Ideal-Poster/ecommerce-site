@@ -23,8 +23,8 @@ app.use(express.json());
 
 const validationRules = [
   check('email').isEmail(),
-  check('password').isLength({ min: 6 }),
-  check('username').isAlphanumeric()
+  check('password').isLength({ min: 6 })
+  // check('username').isAlphanumeric()
 ];
 
 app.post('/login', validationRules, validateUser, (req: any, res: any) => { 
