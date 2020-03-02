@@ -220,7 +220,7 @@ export const logIn = async (email, password) => {
     if (data) {
       inMemoryToken = data.accessToken;
       const timeout = parseInt((data.expiryTime + '000').replace('s', ''));
-      setTimeout(() => { silentRefresh() }, (timeout - 10000));
+      // setTimeout(() => { silentRefresh() }, (timeout - 10000));
       return true
     }
   } catch(err) {

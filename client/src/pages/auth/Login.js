@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { setReduxCart } from '../../actions';
 import { getLocalCart, logInStatus } from '../../utilities';
 import { FormInput } from '../styled/Form';
+import { Col } from '@bootstrap-styled/v4';
 class LogIn extends React.Component { 
 	state = {
 		username: "",
@@ -59,6 +60,26 @@ class LogIn extends React.Component {
     </p>
   );
 
+  signInText = () => (
+    <p>Don't have an account&nbsp;
+      <span 
+        style={{ color: 'blue', cursor: 'pointer'}}
+        onClick={ this.toggleLoginSignUp }>
+        Sign Up
+      </span>
+    </p>
+  );
+
+  logInText = () => (
+    <p>Have an account?&nbsp;
+      <span 
+        style={{ color: 'blue', cursor: 'pointer'}}
+        onClick={ this.toggleLoginSignUp }> 
+        Log In
+      </span>
+    </p>
+  );
+
   emailAndPasswordForms = () => (
     <div>
       <p>
@@ -86,16 +107,27 @@ class LogIn extends React.Component {
 	render() { 
     const { registeredUser } = this.state
 		return(
-			<div>
+			<div style={{paddingTop: '20px'}}>
+        <Col xs={12} sm={{ size: 6, offset: 3 }}>  
 					<form>
             { !registeredUser && this.usernameForm() }
             { this.emailAndPasswordForms() }
-            <button onClick={ this.toggleLoginSignUp }>
-              {registeredUser ? 'Sign Up': 'Log In'}
-            </button>
-						<button onClick={ this.logIn }>Log in</button>
+
+            {
+              registeredUser ?
+              <button onClick={ this.logIn }>Log in</button> :
+              <button onClick={ this.onFormSubmit }>Sign up</button>
+            }
+            <div style={{ border: '1px solid black', paddingLeft: '10px' }}>
+              {
+                registeredUser ? 
+                this.signInText() :
+                this.logInText()
+              }
+            </div>
             {/* <button onClick={ this.logout }>logout</button> */}
 					</form>
+        </Col>
 			</div>
 		);
 	};
