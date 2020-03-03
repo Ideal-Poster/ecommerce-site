@@ -15,7 +15,8 @@ import {
   CartInfo,
   LogInIcon,
   CartIcon,
-  UserIcon
+  UserIcon,
+  CartDropdown
  } from './styled/Navbar';
 
 import {setLogIn} from '../../actions/index';
@@ -33,14 +34,14 @@ class Navbar extends React.Component {
   navIsAnimating : boolean = false;
   isAnimating : boolean = false;
   navDisplayed : boolean = true;
-  options = ['brands', 'categories', 'releases'];
-  activeHover;
+  navSelectionNames = ['brands', 'categories', 'releases'];
   offset : number;
 
   componentDidMount() {
     this.offset = window.pageYOffset;
     this.hideAnimation = anime({});
     this.displayAnimation = anime({});
+    this.cartDisplayAnimation = anime({});
     window.addEventListener('scroll',
       () => {
         this.hideNavMenu();
@@ -110,14 +111,14 @@ class Navbar extends React.Component {
     this.offset = window.pageYOffset;
   }
 
-  displayDropdown = i => {
+  displayDropdown = selectionName => {
     const duration = 200;
     // interupt and finish hide animation
     this.hideAnimation.seek(duration);
 
-    this.setState({ [this.options[i]+'Open']: true }, () => {
+    this.setState({ [selectionName + 'Open']: true }, () => {
       this.displayAnimation = anime({
-        targets: '.' + this.options[i] + 'Comp',
+        targets: '#' + selectionName + '-dropdown',
         autoplay: false,
         easing: 'easeInOutQuad',
         opacity: 1,
@@ -130,56 +131,55 @@ class Navbar extends React.Component {
       this.isAnimating = true;
       this.displayAnimation.play();
     });
-  }
+  };
 
-  hideDropdown = i => {
+  hideDropdown = selectionName => {
     const duration = 200;
     this.hideAnimation = anime({
-      targets: '.' + this.options[i] + 'Comp',
+      targets: '#' + selectionName + '-dropdown',
       autoplay: false,
       easing: 'easeInOutQuad',
       opacity: 0,
       duration,
       complete: () => {
-        this.setState({ [this.options[i]+ 'Open']: false });
+        this.setState({[selectionName + 'Open']: false });
         this.activeHover = false;
       }
     });
     this.hideAnimation.play();
-  }
+  };
 
-  sectionHoverEnter = (i) => {
+  sectionHoverEnter = () => {
     this.hideAnimation.reset();
-  }
+  };
 
   sectionHoverLeave = () => {
     this.hideAnimation.play();
-  }
+  };
 
   toggleCart = () => {
-    this.setState({ cartOpen: !this.state.cartOpen})
-  }
+    this.state.cartOpen ? this.hideDropdown("cart") : this.displayDropdown("cart");
+  };
 
 
   render() {
     const activeLink = 'releases';
-    const optionLinks = this.options.map((link, i) => {
+    const optionLinks = this.navSelectionNames.map((navSelectionName, i) => {
       return(
-        link === activeLink ?
+        navSelectionName === activeLink ?
         <Link
-          to={`${link}`}
+          to={`${navSelectionName}`}
           key={`link-${i}`}
-          onMouseEnter={ () => this.displayDropdown(i) }
-          onMouseLeave={ () => this.hideDropdown(i) }
+          onMouseEnter={ () => this.displayDropdown(navSelectionName) }
+          onMouseLeave={ () => this.hideDropdown(navSelectionName) }
           onClick={ this.sectionHoverLeave }>
-          <NavLink>{`${link}`}</NavLink>
+          <NavLink>{`${navSelectionName}`}</NavLink>
         </Link> :
-
         <div key={`navbar-link-${i}`}>
           <NavLink
-            onMouseEnter={ () =>this.displayDropdown(i) }
-            onMouseLeave={ () => this.hideDropdown(i) } >
-            {`${link}`}
+            onMouseEnter={ () => this.displayDropdown(navSelectionName) }
+            onMouseLeave={ () => this.hideDropdown(navSelectionName) } >
+            {`${navSelectionName}`}
           </NavLink>
         </div>
       );
@@ -196,32 +196,23 @@ class Navbar extends React.Component {
           
           <Selections>
             { optionLinks }
-            {/* <button onClick={()=>this.props.setLogIn(true)}>set redux login</button>
-            <p>hello{`${this.props.isLoggedIn}`}</p> */}
             {
               this.props.isLoggedIn ?
               <Link to={`/user`}><UserIcon/></Link> :
               <Link to={`/login`}><LogInIcon/></Link>
             }
-            <CartIcon onClick={this.toggleCart} />
+            <CartIcon onClick= {this.toggleCart} />
           </Selections>
         </Navigation>
 
         <Sections
           className="sections"
-          onMouseEnter={ () => this.sectionHoverEnter(this.activeHover) }
-          onMouseLeave={ () => this.sectionHoverLeave(this.activeHover) } >
+          onMouseEnter={ this.sectionHoverEnter }
+          onMouseLeave={ this.sectionHoverLeave } >
           { this.state.brandsOpen && <BrandsDropdown/> }
           { this.state.categoriesOpen && <CategoriesDropdown/> }
           { this.state.cartOpen &&
-            <div
-              style={{
-                position: 'fixed',
-                width: '400px',
-                background: 'purple',
-                right: '0'
-              }}>
-                
+            <CartDropdown id="cart-dropdown">
               <div style={{display: 'inline-block'}}>
                 {this.props.cart.map(item => (
                   <div key={'navbar-cart-' + item.name}>
@@ -236,7 +227,7 @@ class Navbar extends React.Component {
                 ))}
               </div>
               <div style={{
-                width: '100px',
+                width: '225px',
                 display: 'inline-block',
                 background: 'green',
                 verticalAlign: 'center'
@@ -247,7 +238,7 @@ class Navbar extends React.Component {
               <Link to={`/cart`}>
                 <div 
                 style={{
-                  width: '100px',
+                  width: '225px',
                   display: 'inline-block',
                   background: 'green',
                   verticalAlign: 'center'
@@ -255,7 +246,7 @@ class Navbar extends React.Component {
                   <p>checkout</p>
                 </div>
               </Link>
-            </div>
+            </CartDropdown>
           }
         </Sections>
       </div>

@@ -6,7 +6,8 @@ import {
   ProductView, 
   ImageSelect,
   ProductSidebarContainer,
-  SubContainer
+  SubContainer,
+  AddToCartButton
 } from './styled/Product';
 
 import {
@@ -71,10 +72,10 @@ class Product extends React.Component {
       await this.props.addToCart(product);
       setLocalStorageCart(this.props.cart);
       this.setState({notice: false});
+      if(loggedIn()) setUserCart();
     } else {
       this.setState({notice: true});
-    }
-    if(loggedIn()) setUserCart();
+    };
   };
 
   selectImage = i => {
@@ -117,7 +118,7 @@ class Product extends React.Component {
           </SubContainer>
 
           <SubContainer>
-            <h5>{ price }</h5>
+            <h5>$ { price }</h5>
           </SubContainer>
 
           <SubContainer>
@@ -135,10 +136,9 @@ class Product extends React.Component {
 
           {
           this.state.notice &&
-            <p>Please Select a size</p>
+            <p style={{paddingLeft: '20px'}}>Please Select a size</p>
           }
-          <button onClick={ () => this.addToCart(product) }>poop</button>
-          {/* <button onClick={ () => localStorage.clear() }>Clear localStorage</button> */}
+          <AddToCartButton onClick={ () => this.addToCart(product) }>Add To Cart</AddToCartButton>
 
         </ProductSidebarContainer>
       </Container>

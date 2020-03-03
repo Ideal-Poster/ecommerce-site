@@ -53,8 +53,9 @@ export const Sections = styled.div`
   z-index: 10000;
 `;
 
-export const DropdownText = styled.li`
-  color: black;
+export const DropdownText = styled.li`  
+list-style: none;
+color: black;
   &:hover {
     color: gray;
    }
@@ -91,6 +92,7 @@ export const CartIcon = styled(ShoppingCart)`
   right: 28px;
   top: 20px;
   paddingRight: 25px;
+  z-index: 5000;
 `;
 
 export const UserIcon = styled(UserCircle)`
@@ -101,4 +103,12 @@ export const UserIcon = styled(UserCircle)`
   top: 15px;
   paddingRight: 25px;
   color: white;
+`;
+
+export const CartDropdown = styled.div`
+  position: fixed;
+  width: 450px;
+  background: purple;
+  right: 0;
+  opacity: 0;
 `;

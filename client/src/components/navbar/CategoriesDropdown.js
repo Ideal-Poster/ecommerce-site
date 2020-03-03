@@ -6,16 +6,14 @@ import { DropdownText } from './styled/Navbar';
 import { requestCategories } from '../requests';
 
 class CategoriesDropdown extends React.Component {
-  state = {
-    categories: []
-  }
+  state = { categories: [] };
 
   async componentDidMount() {
     const categoriesRequest = await requestCategories();
     let categories = [];
     categoriesRequest.forEach((category) => categories.push(category.name));
     this.setState({ categories });
-  }
+  };
 
   render() {
     const { categories } = this.state;
@@ -27,9 +25,8 @@ class CategoriesDropdown extends React.Component {
         <DropdownText>{ category }</DropdownText>
       </Link>
     ));
-
     return(
-      <TriDropdown className="categoriesComp">
+      <TriDropdown id="categories-dropdown">
         <TriSection>
           <ul>
             { categoryNames }

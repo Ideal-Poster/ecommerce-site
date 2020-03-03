@@ -9,7 +9,7 @@ export const ArrowLeft = styled(ChevronLeft)`
   top: calc(50% - 55px);
   position: absolute;
   left: 0;
-  padding-left: 10px;
+  // padding-left: 10px;
   opacity: 0.6;
   cursor: pointer;
   &:hover {
@@ -24,7 +24,7 @@ export const ArrowRight = styled(ChevronRight)`
   top: calc(50% - 55px);
   position: absolute;
   right: 0;
-  padding-right: 10px;
+  // padding-right: 10px;
   opacity: 0.6;
   cursor: pointer;
   &:hover {

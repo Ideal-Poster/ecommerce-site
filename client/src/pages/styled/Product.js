@@ -30,15 +30,15 @@ export const ProductSidebarContainer = styled.div`
   top: 0;
   right: 0;
   width: 380px;
-  min-height: 850px;
+  min-height: 950px;
   border: 1px solid black;
   padding-top: 85px;
-  background: yellow;
+  // background: yellow; 
 `;
 
 export const SubContainer = styled.div`
   border-bottom: 1px solid black;
-  padding-bottom: 30px;
+  // padding-bottom: 20px;
   padding-left: 20px;
   padding-right: 20px;
 `;
@@ -63,11 +63,20 @@ export const SizeButtonGreyedOut = styled.div`
 
 export const SizeButtonText = styled.p`
   position: relative;
-  font-size: 13px;
+  font-size: 12px;
   height: 100%;
   text-align: center;
   margin: 7px 0px 0px 0px;
   cursor: default;
+`;
+
+export const AddToCartButton = styled.button`
+  width: 125px;
+  margin-top: 20px;
+  margin-left: 5px;
+  background: black;
+  height: 35px;
+  color: white;
 `;
 
 

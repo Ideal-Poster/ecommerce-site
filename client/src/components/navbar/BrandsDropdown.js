@@ -6,16 +6,15 @@ import { DropdownText, DropdownImage } from './styled/Navbar';
 import { requestBrands } from '../requests';
 
 class BrandsDropdown extends React.Component {
-  state = {
-    brands: []
-  }
+  state = { brands: [] };
+
   async componentDidMount() {
     let brandsRequest = [];
     brandsRequest = await requestBrands();
     let brands = [];
     brandsRequest.forEach((brand) => brands.push(brand.name));
     this.setState({ brands });
-  }
+  };
 
   render() {
     const brandNames = this.state.brands.map((brand, i) => (
@@ -27,7 +26,7 @@ class BrandsDropdown extends React.Component {
       </Link>
     ));
     return(
-      <QuadDropdown className="brandsComp">
+      <QuadDropdown id="brands-dropdown">
         <QuadSection>
           <ul>
             {brandNames}
@@ -43,7 +42,7 @@ class BrandsDropdown extends React.Component {
         <QuadSection/>
       </QuadDropdown>
     );
-  }
-}
+  };
+};
 
 export default BrandsDropdown;
