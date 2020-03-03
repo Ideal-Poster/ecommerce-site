@@ -1,5 +1,6 @@
 import React from 'react';
-import {BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import {BrowserRouter as Router, Switch, Route, Redirect, useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
 
 import Home from '../pages/Home';
 import Categories from '../pages/Categories';
@@ -18,6 +19,7 @@ import { setLogIn ,setReduxCart } from '../actions';
 import User from '../pages/User';
 import { syncLogout, fetchUserCart, silentRefresh } from './requests';
 
+
 window.addEventListener('storage', (event) => syncLogout(event));
 
 const LoggedOutOnly = ({component: Component, ...rest}) => (
@@ -33,7 +35,7 @@ const LoggedOutOnly = ({component: Component, ...rest}) => (
 
 const PrivateRoute = ({component: Component, ...rest}) => (
   <Route {...rest} render={props => (
-    !loggedIn() ?
+    loggedIn() ?
     <Component {...props}/> :
     <Redirect to={{
       pathname: '/',
@@ -42,6 +44,15 @@ const PrivateRoute = ({component: Component, ...rest}) => (
   )}/>
 );
 
+export function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
 
 class App extends React.Component {
   async componentDidMount() {
@@ -55,6 +66,7 @@ class App extends React.Component {
     };
   };
 
+ 
   async getUserCart() {
     const cart = await fetchUserCart();
     this.props.setReduxCart(cart);
@@ -70,7 +82,9 @@ class App extends React.Component {
       <div>
         <BaseCSS />
         <BootstrapProvider injectGlobal={true}>
-          <Router>
+          <Router onUpdate={() => window.scrollTo(0, 0)}>
+          <ScrollToTop />
+
             <Navbar/>
             <Switch>
               <div style={{marginTop: '60px'}}>
@@ -85,6 +99,7 @@ class App extends React.Component {
             </Switch>
           </Router>
         </BootstrapProvider>
+
       </div>
     );
   }

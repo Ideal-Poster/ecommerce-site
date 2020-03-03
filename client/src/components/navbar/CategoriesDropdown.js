@@ -20,8 +20,11 @@ class CategoriesDropdown extends React.Component {
   render() {
     const { categories } = this.state;
     const categoryNames = categories.map((category, i) => (
-      <Link key={`category-${i}`} to={`/categories/${category}/`}>
-        <DropdownText >{ category }</DropdownText>
+      <Link 
+        style={{ textDecoration: 'none'}}
+        key={`category-${i}`}
+        to={`/categories/${category}/`}>
+        <DropdownText>{ category }</DropdownText>
       </Link>
     ));
 

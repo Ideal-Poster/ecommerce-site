@@ -54,7 +54,10 @@ export const Sections = styled.div`
 `;
 
 export const DropdownText = styled.li`
-  list-style: none;
+  color: black;
+  &:hover {
+    color: gray;
+   }
 `;
 
 export const DropdownImage = styled.img`

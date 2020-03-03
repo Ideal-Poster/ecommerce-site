@@ -13,6 +13,8 @@ import slideImg1 from '../static/photo-1513531926349-466f15ec8cc7.jpeg';
 import slideImg2 from '../static/warren-wong-248636-unsplash.jpg';
 import slideImg3 from '../static/photo-1527905804285-2f67b86e3bf6.jpeg';
 
+import { ArrowRight, ArrowLeft } from '../pages/styled/Home';
+
 interface Position {
   left: string | number,
   right: string | number
@@ -137,16 +139,8 @@ class Home extends React.Component {
     return (
       <div>
         <Carousel>
-          {/* <Arrows>
-            <Previous
-              className="previous"
-              size='large'
-              onClick={this.carouselLeft} />
-            <Next
-              className="next"
-              size='large'
-              onClick={this.carouselRight} />
-          </Arrows> */}
+          <ArrowRight onClick={this.carouselRight}/>
+          <ArrowLeft onClick={this.carouselLeft}/>
           {slides}
           <SlideIndicators>
             {
