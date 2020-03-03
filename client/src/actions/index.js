@@ -24,3 +24,12 @@ export const deleteFromCart = item => {
     }
   }
 }
+
+export const setLogIn = boolean => {
+  return {
+    type: 'SET_LOGIN',
+    payload: {
+      boolean
+    }
+  }
+} 

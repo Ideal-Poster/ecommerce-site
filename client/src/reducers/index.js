@@ -1,4 +1,16 @@
 import { combineReducers } from 'redux';
+import { setLogInStatus } from '../utilities';
+
+const logInReducer = (state = false, action) => {  
+  switch (action.type) {
+    case 'SET_LOGIN':
+      setLogInStatus(action.payload.boolean);
+      const boolean = action.payload.boolean;
+      return boolean;
+    default:
+      return state
+  };
+};
 
 const cartReducer = (state = [], action) => {
   switch (action.type) {
@@ -27,12 +39,17 @@ const cartReducer = (state = [], action) => {
       );
       return filteredItems;
     case 'SET_CART':
-      return action.payload.cart;
+      const setCart = action.payload.cart
+      return setCart ;
     default:
       return [];
   };
 };
 
+
+
+
 export default combineReducers({
-  cart: cartReducer
+  cart: cartReducer,
+  isLoggedIn: logInReducer
 });

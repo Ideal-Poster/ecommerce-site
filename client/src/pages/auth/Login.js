@@ -2,9 +2,11 @@ import React from 'react';
 import { logIn, createUser, fetchUserCart, logout } from '../../components/requests';
 import { connect } from 'react-redux';
 import { setReduxCart } from '../../actions';
-import { getLocalCart, logInStatus } from '../../utilities';
+import { getLocalCart } from '../../utilities';
 import { FormInput } from '../styled/Form';
 import { Col } from '@bootstrap-styled/v4';
+import {setLogIn} from '../../actions';
+
 class LogIn extends React.Component { 
 	state = {
 		username: "",
@@ -28,7 +30,9 @@ class LogIn extends React.Component {
     const { email, password } = this.state
 
     const logRequestResult = await logIn(email, password);
-    if (logRequestResult) logInStatus(true);
+    // if (logRequestResult) setLogInStatus(true);
+    if (logRequestResult) this.props.setLogIn(true);
+
     const cart = await fetchUserCart();
     this.props.setReduxCart(cart);
   }
@@ -37,7 +41,7 @@ class LogIn extends React.Component {
     event.preventDefault();
     const loggedOut = await logout();
     if (loggedOut) {
-      logInStatus(false);
+      this.props.setLogIn(false);
       this.props.setReduxCart(getLocalCart());
     }
   }
@@ -112,20 +116,15 @@ class LogIn extends React.Component {
 					<form>
             { !registeredUser && this.usernameForm() }
             { this.emailAndPasswordForms() }
-
             {
               registeredUser ?
               <button onClick={ this.logIn }>Log in</button> :
               <button onClick={ this.onFormSubmit }>Sign up</button>
             }
             <div style={{ border: '1px solid black', paddingLeft: '10px' }}>
-              {
-                registeredUser ? 
-                this.signInText() :
-                this.logInText()
-              }
+              { registeredUser ? this.signInText() : this.logInText() }
             </div>
-            {/* <button onClick={ this.logout }>logout</button> */}
+            <button onClick={ this.logout }>logout</button>
 					</form>
         </Col>
 			</div>
@@ -133,4 +132,10 @@ class LogIn extends React.Component {
 	};
 };
 
-export default connect(null, { setReduxCart })(LogIn) ;
+const mapStateToProps = state => {
+  return {
+    isLoggedIn: state.isLoggedIn
+  }
+}
+
+export default connect(mapStateToProps, { setLogIn, setReduxCart })(LogIn) ;

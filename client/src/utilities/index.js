@@ -1,33 +1,33 @@
 const CART_KEY = 'cart';
 
-export const calculatePrice = items => {
+export function calculatePrice(items) {
   return `$${items
     .reduce((acc, item) => acc + item.quantity * item.price, 0)
     .toFixed(2)}`;
 };
 
-export const setLocalStorageCart = (value, cartKey = CART_KEY) => {
+export function setLocalStorageCart(value, cartKey = CART_KEY) {
   if (localStorage) {
       localStorage.setItem(cartKey, JSON.stringify(value));
   }
 };
 
-export const getLocalCart = (cartKey = CART_KEY) => {
+export function getLocalCart(cartKey = CART_KEY) {
   if (localStorage && localStorage.getItem(cartKey)) {
       return JSON.parse(localStorage.getItem(cartKey));
   }
   return [];
 };
 
-export const logInStatus = (status: Boolean) => {
-  window.localStorage.setItem('loggedIn', status);
+export function setLogInStatus(status: Boolean) {
+  window.localStorage.setItem('loggedIn', status);  
 };
 
-export const loggedIn = () => {
+export function loggedIn() {
   return window.localStorage.loggedIn;
 };
 
-export const simplifiedCart = () => {
+export function simplifiedCart() {
   return getLocalCart().map((item) => {
     return {id: item.id, size: item.size}
   });

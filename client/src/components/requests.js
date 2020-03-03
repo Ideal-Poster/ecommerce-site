@@ -166,7 +166,7 @@ export const createUser = async (username, email, password) => {
 export const fetchUserCart = async email => {
   let collection = [];
   try {
-    const query = gql`{ getUserCart(email: "eiwne@gmail.com") }`;
+    const query = gql`{ getUserCart(email: "${email}") }`;
     const { data: {getUserCart}} = await client.query({query} );
     const userCart = JSON.parse(getUserCart);
 
@@ -265,6 +265,7 @@ export const logout = async event => {
   } catch(err) {
     console.log(err);
   }
+  
 };
 
 export const syncLogout = event => {

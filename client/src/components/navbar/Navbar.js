@@ -18,8 +18,9 @@ import {
   UserIcon
  } from './styled/Navbar';
 
+import {setLogIn} from '../../actions/index';
 import { connect } from 'react-redux';
-import { calculatePrice, loggedIn } from '../../utilities/index';
+import { calculatePrice } from '../../utilities/index';
 
 
 class Navbar extends React.Component {
@@ -46,6 +47,8 @@ class Navbar extends React.Component {
         this.showNavMenu();
       }
     );
+
+    console.log(this.props.isLoggedIn);
   }
 
   isNavHidden = () => {
@@ -193,10 +196,12 @@ class Navbar extends React.Component {
           
           <Selections>
             { optionLinks }
+            {/* <button onClick={()=>this.props.setLogIn(true)}>set redux login</button>
+            <p>hello{`${this.props.isLoggedIn}`}</p> */}
             {
-              loggedIn() ?
-              <Link to={`/login`}><LogInIcon/></Link> :
-              <Link to={`/user`}><UserIcon/></Link>
+              this.props.isLoggedIn ?
+              <Link to={`/user`}><UserIcon/></Link> :
+              <Link to={`/login`}><LogInIcon/></Link>
             }
             <CartIcon onClick={this.toggleCart} />
           </Selections>
@@ -260,8 +265,9 @@ class Navbar extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    cart: state.cart
+    cart: state.cart,
+    isLoggedIn: state.isLoggedIn
   }
 }
 
-export default connect(mapStateToProps)(Navbar);
+export default connect(mapStateToProps, {setLogIn})(Navbar);

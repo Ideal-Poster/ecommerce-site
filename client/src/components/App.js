@@ -11,15 +11,14 @@ import { BaseCSS } from 'styled-bootstrap-grid';
 
 import BootstrapProvider from '@bootstrap-styled/provider/lib/BootstrapProvider';
 import Cart from '../pages/Cart';
-import { getLocalCart, logInStatus, loggedIn } from '../utilities';
+import { getLocalCart, loggedIn } from '../utilities';
 import { connect } from 'react-redux';
 
-import { setReduxCart } from '../actions';
+import { setLogIn ,setReduxCart } from '../actions';
 import User from '../pages/User';
 import { syncLogout, fetchUserCart, silentRefresh } from './requests';
 
 window.addEventListener('storage', (event) => syncLogout(event));
-
 
 const LoggedOutOnly = ({component: Component, ...rest}) => (
   <Route {...rest} render={props => (
@@ -47,11 +46,11 @@ const PrivateRoute = ({component: Component, ...rest}) => (
 class App extends React.Component {
   async componentDidMount() {
     const validToken = await silentRefresh();
-    // console.log(validToken);
     if (validToken) {
-      await this.getUserCart();
+      this.props.setLogIn(true);
+      this.getUserCart();
     } else {
-      logInStatus(false);
+      this.props.setLogIn(false);
       this.setReduxCartFromStorage();
     };
   };
@@ -91,4 +90,4 @@ class App extends React.Component {
   }
 };
 
-export default connect(null, { setReduxCart })(App);
+export default connect(null, {  setLogIn ,setReduxCart })(App);

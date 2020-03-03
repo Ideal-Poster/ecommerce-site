@@ -46,8 +46,8 @@ app.post('/refresh_token', (req: any, res: any) => {
   if (!refreshToken) return res.sendStatus(401);
   const user = authenticateToken(refreshToken);
   if(!user) return res.sendStatus(403);
-  const accessToken = generateAccessToken({ username: user.email });
-  const newRefreshToken = generateAccessToken({ username: user.email });
+  const accessToken = generateAccessToken({ usernam: user.usernam, email: user.email });
+  const newRefreshToken = generateAccessToken({ usernam: user.usernam, email: user.email });
   res.cookie('refresh_token', newRefreshToken, {
     // maxAge: 1000 * 60 * 15 , // 15 minutes
     httpOnly: true,

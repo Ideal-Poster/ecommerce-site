@@ -27,8 +27,8 @@ import { authenticateToken } from "./utilities";
   },
   getUserCart: async (root: any, args: null, {models}: any) => {
     const token = models.authHeader && models.authHeader.split(' ')[1];
-    const user = authenticateToken(token);
-    return models.user.getCart('eiwne@gmail.com');
+    const user = authenticateToken(token);    
+    if (user)return models.user.getCart(`${user.email}`);
   }
 };
 
@@ -39,8 +39,7 @@ const Mutation = {
   setUserCart: async (root: any, {cart}: any, {models}: any) => {
     const token = models.authHeader && models.authHeader.split(' ')[1];
     const user = authenticateToken(token);
-    // console.log(cart);
-    return models.user.setCart('eiwne@gmail.com', cart);
+    if(user) return models.user.setCart(`${user.email}`, cart);
   }
 }
 
