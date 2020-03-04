@@ -19,7 +19,6 @@ import { setLogIn ,setReduxCart } from '../actions';
 import User from '../pages/User';
 import { syncLogout, fetchUserCart, silentRefresh } from './requests';
 
-
 window.addEventListener('storage', (event) => syncLogout(event));
 
 const LoggedOutOnly = ({component: Component, ...rest}) => (
@@ -66,7 +65,6 @@ class App extends React.Component {
     };
   };
 
- 
   async getUserCart() {
     const cart = await fetchUserCart();
     this.props.setReduxCart(cart);
@@ -84,7 +82,6 @@ class App extends React.Component {
         <BootstrapProvider injectGlobal={true}>
           <Router onUpdate={() => window.scrollTo(0, 0)}>
           <ScrollToTop />
-
             <Navbar/>
             <Switch>
               <div style={{marginTop: '60px'}}>
@@ -99,7 +96,6 @@ class App extends React.Component {
             </Switch>
           </Router>
         </BootstrapProvider>
-
       </div>
     );
   }

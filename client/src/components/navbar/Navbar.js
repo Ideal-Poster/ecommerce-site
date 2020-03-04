@@ -16,12 +16,14 @@ import {
   LogInIcon,
   CartIcon,
   UserIcon,
-  CartDropdown
+  CartDropdown,
+  CartTotalCircle,
+  CartTotalText
  } from './styled/Navbar';
 
-import {setLogIn} from '../../actions/index';
+import {setLogIn} from '../../actions';
 import { connect } from 'react-redux';
-import { calculatePrice } from '../../utilities/index';
+import { calculatePrice, totalCartCount } from '../../utilities';
 
 
 class Navbar extends React.Component {
@@ -37,6 +39,7 @@ class Navbar extends React.Component {
   navSelectionNames = ['brands', 'categories', 'releases'];
   offset : number;
 
+
   componentDidMount() {
     this.offset = window.pageYOffset;
     this.hideAnimation = anime({});
@@ -48,8 +51,6 @@ class Navbar extends React.Component {
         this.showNavMenu();
       }
     );
-
-    console.log(this.props.isLoggedIn);
   }
 
   isNavHidden = () => {
@@ -68,17 +69,17 @@ class Navbar extends React.Component {
       this.navIsAnimating = true;
       anime({
         targets: '.navMenu',
-        easing: 'easeInOutQuad',
+        easing: 'easeOutCubic',
         translateY: '-60px',
-        duration: 400,
+        duration: 500,
         delay: 100
       });
 
       anime({
         targets: '.sections',
-        easing: 'easeInOutQuad',
+        easing: 'easeOutCubic',
         translateY: '-60px',
-        duration: 400,
+        duration: 500,
         delay: 100,
         complete: () => {
           this.navIsAnimating = false;
@@ -93,15 +94,15 @@ class Navbar extends React.Component {
       this.navIsAnimating = true;
       anime({
         targets: '.navMenu',
-        easing: 'easeInOutQuad',
+        easing: 'easeOutCubic',
         translateY: '0px',
-        duration: 400
+        duration: 500
       });
       anime({
         targets: '.sections',
-        easing: 'easeInOutQuad',
+        easing: 'easeOutCubic',
         translateY: '0px',
-        duration: 400,
+        duration: 500,
         complete: () => {
           this.navIsAnimating = false;
           this.navDisplayed = true;
@@ -111,7 +112,7 @@ class Navbar extends React.Component {
     this.offset = window.pageYOffset;
   }
 
-  displayDropdown = selectionName => {
+  displayDropdown = (selectionName, cart = null) => {
     const duration = 200;
     // interupt and finish hide animation
     this.hideAnimation.seek(duration);
@@ -120,7 +121,7 @@ class Navbar extends React.Component {
       this.displayAnimation = anime({
         targets: '#' + selectionName + '-dropdown',
         autoplay: false,
-        easing: 'easeInOutQuad',
+        easing: 'easeOutCubic',
         opacity: 1,
         duration,
         complete: () => {
@@ -138,7 +139,7 @@ class Navbar extends React.Component {
     this.hideAnimation = anime({
       targets: '#' + selectionName + '-dropdown',
       autoplay: false,
-      easing: 'easeInOutQuad',
+      easing: 'easeOutCubic',
       opacity: 0,
       duration,
       complete: () => {
@@ -161,6 +162,10 @@ class Navbar extends React.Component {
     this.state.cartOpen ? this.hideDropdown("cart") : this.displayDropdown("cart");
   };
 
+  flashCart = () => {
+    this.toggleCart();
+    setTimeout(() => { this.toggleCart() }, 5000);
+  }
 
   render() {
     const activeLink = 'releases';
@@ -184,12 +189,11 @@ class Navbar extends React.Component {
         </div>
       );
     })
-
     return (
       <div>
         <Navigation className="navMenu">
           <IconContainer>
-            <Link to="/" style={{textDecoration: 'none'}}>
+            <Link to="/" style={{ textDecoration: 'none' }}>
               <Icon>Rebel</Icon>
             </Link>
           </IconContainer>
@@ -201,16 +205,24 @@ class Navbar extends React.Component {
               <Link to={`/user`}><UserIcon/></Link> :
               <Link to={`/login`}><LogInIcon/></Link>
             }
-            <CartIcon onClick= {this.toggleCart} />
+            <CartIcon onClick={ this.toggleCart } />
+            { this.props.cart.length > 0 &&
+
+            <CartTotalCircle>
+              <CartTotalText>{  totalCartCount(this.props.cart) }</CartTotalText> 
+            </CartTotalCircle>
+            }
           </Selections>
         </Navigation>
 
         <Sections
           className="sections"
           onMouseEnter={ this.sectionHoverEnter }
-          onMouseLeave={ this.sectionHoverLeave } >
+          onMouseLeave={ this.sectionHoverLeave }>
           { this.state.brandsOpen && <BrandsDropdown/> }
           { this.state.categoriesOpen && <CategoriesDropdown/> }
+        </Sections>
+
           { this.state.cartOpen &&
             <CartDropdown id="cart-dropdown">
               <div style={{display: 'inline-block'}}>
@@ -227,28 +239,29 @@ class Navbar extends React.Component {
                 ))}
               </div>
               <div style={{
-                width: '225px',
+                width: '220px',
                 display: 'inline-block',
-                background: 'green',
-                verticalAlign: 'center'
+                color: 'white',
+                verticalAlign: 'center',
+                paddingLeft: '15px'
               }}>
-                <p>total: { calculatePrice(this.props.cart) }</p>
+                <p style={{ color: 'black' }}>total: { calculatePrice(this.props.cart) }</p>
               </div>
 
               <Link to={`/cart`}>
                 <div 
                 style={{
-                  width: '225px',
+                  width: '220px',
                   display: 'inline-block',
-                  background: 'green',
-                  verticalAlign: 'center'
+                  background: '#101010',
+                  verticalAlign: 'center',
+                  paddingLeft: '15px'
                 }}>
                   <p>checkout</p>
                 </div>
               </Link>
             </CartDropdown>
           }
-        </Sections>
       </div>
     )
   }

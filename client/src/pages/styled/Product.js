@@ -17,7 +17,6 @@ export const ProductView = styled.div`
   background-repeat: no-repeat;
   background-position: center center;
   background-size: 90%;
-  /* border: 1px solid black; */
 `;
 
 export const ImageSelect = styled.img`
@@ -33,12 +32,10 @@ export const ProductSidebarContainer = styled.div`
   min-height: 950px;
   border: 1px solid black;
   padding-top: 85px;
-  // background: yellow; 
 `;
 
 export const SubContainer = styled.div`
   border-bottom: 1px solid black;
-  // padding-bottom: 20px;
   padding-left: 20px;
   padding-right: 20px;
 `;

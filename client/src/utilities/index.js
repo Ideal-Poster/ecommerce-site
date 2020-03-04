@@ -1,5 +1,13 @@
 const CART_KEY = 'cart';
 
+export function totalCartCount(cart) {
+  let total = 0; 
+  cart.forEach(item => {
+    total = item.quantity + total
+  });
+  return total
+};
+
 export function calculatePrice(items) {
   return `$${items
     .reduce((acc, item) => acc + item.quantity * item.price, 0)

@@ -46,9 +46,6 @@ const cartReducer = (state = [], action) => {
   };
 };
 
-
-
-
 export default combineReducers({
   cart: cartReducer,
   isLoggedIn: logInReducer

@@ -19,7 +19,7 @@ import {
 import SizeSelection from '../components/SizeSelection';
 
 import { connect } from 'react-redux';
-import { addToCart, setReduxCart } from '../actions/index';
+import { addToCart, setReduxCart } from '../actions';
 import { setLocalStorageCart, loggedIn } from '../utilities';
 
 class Product extends React.Component {
@@ -72,7 +72,7 @@ class Product extends React.Component {
       await this.props.addToCart(product);
       setLocalStorageCart(this.props.cart);
       this.setState({notice: false});
-      if(loggedIn()) setUserCart();
+      if(loggedIn() === true) setUserCart();
     } else {
       this.setState({notice: true});
     };

@@ -6,6 +6,8 @@ export const TriDropdown = styled.div`
   display: flex;
   opacity: 0;
   background: orange;
+  box-shadow: 0px 0px 8px;
+  font-size: 18px;
 `;
 
  export const TriSection = styled.div`

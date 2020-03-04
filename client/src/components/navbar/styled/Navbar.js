@@ -54,11 +54,11 @@ export const Sections = styled.div`
 `;
 
 export const DropdownText = styled.li`  
-list-style: none;
-color: black;
-  &:hover {
-    color: gray;
-   }
+  list-style: none;
+  color: black;
+    &:hover {
+      color: gray;
+    }
 `;
 
 export const DropdownImage = styled.img`
@@ -68,11 +68,14 @@ export const DropdownImage = styled.img`
 export const CartImage = styled.img`
   height: 70px;
   display: inline-block;
+  padding-left: 10px;
 `;
 
 export const CartInfo = styled.p`
+  position: relative;
   display: inline-block;
   padding-left: 20px;
+  top: -10px;
 `;
 
 export const LogInIcon = styled(LogIn)`
@@ -108,7 +111,27 @@ export const UserIcon = styled(UserCircle)`
 export const CartDropdown = styled.div`
   position: fixed;
   width: 450px;
-  background: purple;
   right: 0;
   opacity: 0;
+  background: white;
+  z-index: 4000;
+  box-shadow: 0px 0px 8px;
 `;
+
+export const CartTotalCircle = styled.div`
+  position: absolute;
+   height: 18px;
+   width: 18px;
+   background: crimson;
+   border-radius: 100px;
+   right: 15px;
+   z-index: 5000;
+`;
+
+export const CartTotalText = styled.p`
+  font-size: 16px;
+  position: absolute;
+  top: -19px;
+  right: 6px;
+`;
+

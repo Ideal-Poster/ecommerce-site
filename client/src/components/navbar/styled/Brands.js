@@ -5,6 +5,8 @@ export const QuadDropdown = styled.div`
   position: fixed;
   display: flex;
   opacity: 0;
+  box-shadow: 0px 0px 8px;
+  font-size: 18px;
 `;
 
 export const QuadSection = styled.div`
