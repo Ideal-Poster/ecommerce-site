@@ -18,12 +18,14 @@ import {
   UserIcon,
   CartDropdown,
   CartTotalCircle,
-  CartTotalText
+  CartTotalText,
+  CartCheckoutLink,
+  CartPrice
  } from './styled/Navbar';
 
 import {setLogIn} from '../../actions';
 import { connect } from 'react-redux';
-import { calculatePrice, totalCartCount } from '../../utilities';
+import { calculatePrice, totalCartCount, nameTooLong } from '../../utilities';
 
 
 class Navbar extends React.Component {
@@ -38,7 +40,6 @@ class Navbar extends React.Component {
   navDisplayed : boolean = true;
   navSelectionNames = ['brands', 'categories', 'releases'];
   offset : number;
-
 
   componentDidMount() {
     this.offset = window.pageYOffset;
@@ -55,23 +56,27 @@ class Navbar extends React.Component {
 
   isNavHidden = () => {
     return this.offset < window.pageYOffset &&
-    window.pageYOffset > 150 &&
+    window.pageYOffset > 250 &&
     !this.navIsAnimating &&
     this.navDisplayed
   }
 
   isNavDisplayed = () => {
-    return this.offset > window.pageYOffset && !this.navIsAnimating && !this.navDisplayed
+    return this.offset > window.pageYOffset
+    && !this.navIsAnimating
+    && !this.navDisplayed
   }
 
   hideNavMenu = () => {
+    const duration = 300;
+
     if (this.isNavHidden()) {
       this.navIsAnimating = true;
       anime({
         targets: '.navMenu',
         easing: 'easeOutCubic',
         translateY: '-60px',
-        duration: 500,
+        duration,
         delay: 100
       });
 
@@ -79,7 +84,7 @@ class Navbar extends React.Component {
         targets: '.sections',
         easing: 'easeOutCubic',
         translateY: '-60px',
-        duration: 500,
+        duration,
         delay: 100,
         complete: () => {
           this.navIsAnimating = false;
@@ -90,19 +95,20 @@ class Navbar extends React.Component {
   }
 
   showNavMenu = () => {
+    const duration = 250;
     if (this.isNavDisplayed()) {
       this.navIsAnimating = true;
       anime({
         targets: '.navMenu',
         easing: 'easeOutCubic',
         translateY: '0px',
-        duration: 500
+        duration
       });
       anime({
         targets: '.sections',
         easing: 'easeOutCubic',
         translateY: '0px',
-        duration: 500,
+        duration,
         complete: () => {
           this.navIsAnimating = false;
           this.navDisplayed = true;
@@ -112,7 +118,7 @@ class Navbar extends React.Component {
     this.offset = window.pageYOffset;
   }
 
-  displayDropdown = (selectionName, cart = null) => {
+  displayDropdown = selectionName => {
     const duration = 200;
     // interupt and finish hide animation
     this.hideAnimation.seek(duration);
@@ -162,11 +168,6 @@ class Navbar extends React.Component {
     this.state.cartOpen ? this.hideDropdown("cart") : this.displayDropdown("cart");
   };
 
-  flashCart = () => {
-    this.toggleCart();
-    setTimeout(() => { this.toggleCart() }, 5000);
-  }
-
   render() {
     const activeLink = 'releases';
     const optionLinks = this.navSelectionNames.map((navSelectionName, i) => {
@@ -206,11 +207,11 @@ class Navbar extends React.Component {
               <Link to={`/login`}><LogInIcon/></Link>
             }
             <CartIcon onClick={ this.toggleCart } />
-            { this.props.cart.length > 0 &&
-
-            <CartTotalCircle>
-              <CartTotalText>{  totalCartCount(this.props.cart) }</CartTotalText> 
-            </CartTotalCircle>
+            { 
+              this.props.cart.length > 0 &&
+              <CartTotalCircle onClick={ this.toggleCart }>
+                <CartTotalText>{  totalCartCount(this.props.cart) }</CartTotalText> 
+              </CartTotalCircle>
             }
           </Selections>
         </Navigation>
@@ -222,43 +223,31 @@ class Navbar extends React.Component {
           { this.state.brandsOpen && <BrandsDropdown/> }
           { this.state.categoriesOpen && <CategoriesDropdown/> }
         </Sections>
-
           { this.state.cartOpen &&
-            <CartDropdown id="cart-dropdown">
+            <CartDropdown id="cart-dropdown" className="sections">
               <div style={{display: 'inline-block'}}>
                 {this.props.cart.map(item => (
-                  <div key={'navbar-cart-' + item.name}>
-                    <CartImage src={item.images[0]} alt="cart item"/>
-                    <div style={{display: 'inline-block'}}>
-                      <p style={{paddingLeft: '20px'}}>{item.name}</p> 
-                      <CartInfo>$ {item.price}</CartInfo>
-                      <CartInfo>size: {item.size}</CartInfo>
-                      <CartInfo>quantity: {item.quantity}</CartInfo>
+                  <Link to={`/product/${item.id}`}>
+                    <div key={'navbar-cart-' + item.name} style={{color: 'black'}}>
+                      <CartImage src={item.images[0]} alt="cart item"/>
+                      <div style={{display: 'inline-block', maxWidth: '360px'}}>
+                        <p style={{paddingLeft: '20px'}}>{nameTooLong(item.name, 37)}</p> 
+                        <CartInfo>$ {item.price}</CartInfo>
+                        <CartInfo>size: {item.size}</CartInfo>
+                        <CartInfo>quantity: {item.quantity}</CartInfo>
+                      </div>
                     </div>
-                  </div>
+                  </Link>
                 ))}
               </div>
-              <div style={{
-                width: '220px',
-                display: 'inline-block',
-                color: 'white',
-                verticalAlign: 'center',
-                paddingLeft: '15px'
-              }}>
+              <CartPrice>
                 <p style={{ color: 'black' }}>total: { calculatePrice(this.props.cart) }</p>
-              </div>
+              </CartPrice>
 
               <Link to={`/cart`}>
-                <div 
-                style={{
-                  width: '220px',
-                  display: 'inline-block',
-                  background: '#101010',
-                  verticalAlign: 'center',
-                  paddingLeft: '15px'
-                }}>
+                <CartCheckoutLink>
                   <p>checkout</p>
-                </div>
+                </CartCheckoutLink>
               </Link>
             </CartDropdown>
           }

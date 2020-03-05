@@ -1,9 +1,10 @@
 import React from 'react';
 import { Container, Row, Col } from '@bootstrap-styled/v4';
 import { connect } from 'react-redux';
-import { calculatePrice, setLocalStorageCart, loggedIn } from '../utilities';
+import { calculatePrice, setLocalStorageCart, loggedIn, nameTooLong } from '../utilities';
 import { deleteFromCart } from '../actions';
 import { setUserCart } from '../components/requests';
+import { Link } from 'react-router-dom';
 
 class Cart extends React.Component {
 
@@ -29,16 +30,18 @@ class Cart extends React.Component {
               <p>quantity</p>
             </Col>
             <Col sm={1}>
-              <p>price</p>
-            </Col>
+              <p>price</p></Col>
           </Row>
 
           {
             this.props.cart.map(item => (
             <Row key={'item-row-' + item.name}>
+
               <Col sm={8}>
-                <img style={{display: 'inline-block',height: '70px'}} src={item.images[0]} alt="product"/>
-                <p style={{display: 'inline-block', verticalAlign: 'top'}}>{ item.name }</p>
+                <Link to={`/product/${item.id}`} >
+                  <img style={{display: 'inline-block',height: '70px'}} src={item.images[0]} alt="product"/>
+                  <p style={{display: 'inline-block', verticalAlign: 'top', color: 'black'}}>{ item.name }</p>
+                </Link>
               </Col>
               <Col sm={1}>
                 <p>{ item.size }</p>

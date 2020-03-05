@@ -21,7 +21,8 @@ interface Position {
 }
 class Home extends React.Component {
   state = {
-    activeSlide: 1
+    activeSlide: 1,
+    carouselMouseOver: false
   }
   isAnimating : boolean = false;
   position : Array<Position> = [
@@ -38,6 +39,9 @@ class Home extends React.Component {
   async componentDidMount() {
     this.galleryImages = document.querySelectorAll('.slide');
     this.setSlideshowImages();
+    setInterval(() => {
+      if (this.state.carouselMouseOver === false)this.carouselRight();
+    }, 10000);
   }
 
   carouselRight = () => {
@@ -130,6 +134,12 @@ class Home extends React.Component {
       left: '-100vw'
     });
   }
+  carouselMouseEnter = () => {
+    if(this.state.carouselMouseOver ===false) this.setState({ carouselMouseOver: true});
+  }
+  carouselMouseLeave = () => {
+    if(this.state.carouselMouseOver === true) this.setState({ carouselMouseOver: false});
+  }
 
   render() {
     let slides = [ slideImg1, slideImg2, slideImg3 ].map((i) => (
@@ -138,7 +148,9 @@ class Home extends React.Component {
 
     return (
       <div>
-        <Carousel>
+        <Carousel
+          onMouseEnter={this.carouselMouseEnter}
+          onMouseLeave={this.carouselMouseLeave}>
           <ArrowLeftContainer onClick={this.carouselLeft}>
             <ArrowLeft/>
           </ArrowLeftContainer>
@@ -165,15 +177,6 @@ class Home extends React.Component {
             }
           </SlideIndicators>
         </Carousel>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <p>hello</p>
-
       </div>
     );
   }

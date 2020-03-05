@@ -25,6 +25,7 @@ export const IconContainer = styled.div`
 export const Icon = styled.h2`
   color: white;
   height:  100%;
+  font-family: 'Oxanium', cursive;
 `;
 export const Selections = styled.div`
   flex: 1;
@@ -35,6 +36,7 @@ export const Selections = styled.div`
 `;
 export const NavLink = styled.p`
   transition: color 0.25s;
+  font-family: 'Oxanium', cursive;
   color: white;
   padding-top: 5px;
   height: 100%;
@@ -120,18 +122,37 @@ export const CartDropdown = styled.div`
 
 export const CartTotalCircle = styled.div`
   position: absolute;
-   height: 18px;
-   width: 18px;
+   height: 17px;
+   width: 17px;
    background: crimson;
    border-radius: 100px;
-   right: 15px;
+   top: 10px;
+   right: 20px;
    z-index: 5000;
+   cursor: pointer;
 `;
 
 export const CartTotalText = styled.p`
-  font-size: 16px;
+  font-size: 14px;
   position: absolute;
-  top: -19px;
-  right: 6px;
+  top: -15px;
+  right: 5px;
+  font-family: 'Oxanium', cursive;
+`;
+
+export const CartPrice = styled.div`
+  width: 220px;
+  display: inline-block;
+  color: white;
+  vertical-align: center;
+  padding-left: 15px;
+`;
+
+export const CartCheckoutLink = styled.div`
+  width: 220px;
+  display: inline-block;
+  background: #101010;
+  vertical-align: center;
+  padding-left: 15px;
 `;
 

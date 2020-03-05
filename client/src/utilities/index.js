@@ -40,3 +40,16 @@ export function simplifiedCart() {
     return {id: item.id, size: item.size}
   });
 };
+
+export function nameTooLong(name, limit) {
+  let shortenedName
+  function nameEdit(letter, index) {
+    if (index < limit) {
+      return letter
+    } else if(index === limit) {
+      return '...'
+    }
+  }
+  (name.length > limit) ? shortenedName = [...name].map(nameEdit) : shortenedName = name;
+  return shortenedName;
+};
