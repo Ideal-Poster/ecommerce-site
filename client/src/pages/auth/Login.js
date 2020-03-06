@@ -92,6 +92,8 @@ class LogIn extends React.Component {
           type="text"
           name="password"
           placeholder="Password"
+          autocomplete="off" readonly 
+          onfocus="this.removeAttribute('readonly');"
           onChange={this.handleChange}
         />
       </p>

@@ -154,5 +154,6 @@ export const CartCheckoutLink = styled.div`
   background: #101010;
   vertical-align: center;
   padding-left: 15px;
+  color: white;
 `;
 
