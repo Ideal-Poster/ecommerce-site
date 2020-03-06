@@ -25,7 +25,7 @@ export function generateAccessToken(user: any) {
 };
 
 export function generateRefreshToken(email: any,) {
-  jwt.sign(email, process.env.REFRESH_TOKEN_SECRET, { expiresIn: process.env.TOKEN_EXPIRY_TIME });
+  jwt.sign(email, process.env.REFRESH_TOKEN_SECRET, { expiresIn: process.env.REFRESH_TOKEN_EXPIRY_TIME });
 }
 
 export function authenticateToken(token: any) {

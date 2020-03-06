@@ -172,7 +172,7 @@ export const fetchUserCart = async email => {
 
     for (let i = 0; i < userCart.length; i++) {
       const product = await requestProduct({product: {id: userCart[i].id} });
-      collection.push({...product ,size: userCart[i].size});
+      collection.push({...product , size: userCart[i].size, quantity: userCart[i].quantity });
     }
     return collection;
   } catch (error) {

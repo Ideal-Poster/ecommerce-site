@@ -3,7 +3,7 @@ dotenv.config();
 import cors from 'cors';
 import express from 'express';
 import bodyParser from 'body-parser';
-import { generateAccessToken, validateUser, authenticateToken } from './utilities';
+import { generateRefreshToken, generateAccessToken, validateUser, authenticateToken } from './utilities';
 
 var cookieParser = require('cookie-parser');
 const { check } = require('express-validator');
@@ -47,7 +47,7 @@ app.post('/refresh_token', (req: any, res: any) => {
   const user = authenticateToken(refreshToken);
   if(!user) return res.sendStatus(403);
   const accessToken = generateAccessToken({ usernam: user.usernam, email: user.email });
-  const newRefreshToken = generateAccessToken({ usernam: user.usernam, email: user.email });
+  const newRefreshToken = generateRefreshToken({ usernam: user.usernam, email: user.email });
   res.cookie('refresh_token', newRefreshToken, {
     // maxAge: 1000 * 60 * 15 , // 15 minutes
     httpOnly: true,
