@@ -1,11 +1,10 @@
 import React from 'react';
-import { logIn, createUser, fetchUserCart, logout } from '../../components/requests';
+import { logIn, createUser, fetchUserCart } from '../../components/requests';
 import { connect } from 'react-redux';
 import { setReduxCart } from '../../actions';
-import { getLocalCart } from '../../utilities';
 import { FormInput } from '../styled/Form';
 import { Col } from '@bootstrap-styled/v4';
-import {setLogIn} from '../../actions';
+import { setLogIn } from '../../actions';
 
 class LogIn extends React.Component { 
 	state = {
@@ -30,20 +29,11 @@ class LogIn extends React.Component {
     const { email, password } = this.state
 
     const logRequestResult = await logIn(email, password);
-    // if (logRequestResult) setLogInStatus(true);
     if (logRequestResult) this.props.setLogIn(true);
 
     const cart = await fetchUserCart();
     this.props.setReduxCart(cart);
-  }
-
-  logout = async event => {
-    event.preventDefault();
-    const loggedOut = await logout();
-    if (loggedOut) {
-      this.props.setLogIn(false);
-      this.props.setReduxCart(getLocalCart());
-    }
+    this.props.history.push('/');
   }
 
   toggleLoginSignUp = (event) => {
@@ -124,7 +114,6 @@ class LogIn extends React.Component {
             <div style={{ border: '1px solid black', paddingLeft: '10px' }}>
               { registeredUser ? this.signInText() : this.logInText() }
             </div>
-            <button onClick={ this.logout }>logout</button>
 					</form>
         </Col>
 			</div>

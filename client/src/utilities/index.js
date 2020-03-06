@@ -37,7 +37,7 @@ export function loggedIn() {
 
 export function simplifiedCart() {
   return getLocalCart().map((item) => {
-    return {id: item.id, size: item.size}
+    return { id: item.id, size: item.size, quantity: item.quantity }
   });
 };
 
