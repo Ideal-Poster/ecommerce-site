@@ -2,6 +2,7 @@
 An Ecommerce Site made using a React frontend and NodeJS backend.
 
 technologies used:
+
 JWT Tokens
 React
 NodeJS
