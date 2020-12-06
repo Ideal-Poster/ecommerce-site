@@ -1,5 +1,5 @@
 # ecommerce-site
-An online clothing store designed by me made using a React frontend and NodeJS backend.
+A personal project created to practice some new technolofies. An online clothing store made using a React frontend and NodeJS backend.
 
 
 technologies used:
