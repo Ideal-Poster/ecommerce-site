@@ -3,16 +3,26 @@ A personal project created to practice some new technolofies. An online clothing
 
 ![](https://media3.giphy.com/media/vR1eH5yPDr3Twn0Mf1/giphy.gif)
 
-technologies used:
+#Technologies
 
 JWT Tokens
-,React
-,NodeJS
-,Bootstrap
-,Styled Components
-,GraphQl
-,Redux
-,AnimeJS
-,Express
-,Postgres
-,Bcrypt
+
+React
+
+NodeJS
+
+Bootstrap
+
+Styled Components
+
+GraphQl
+
+Redux
+
+AnimeJS
+
+Express
+
+Postgres
+
+Bcrypt
